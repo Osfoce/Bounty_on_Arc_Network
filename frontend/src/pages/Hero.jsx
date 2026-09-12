@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import {
   FiArrowUpRight,
   FiCheck,
-  FiCode,
   FiDollarSign,
   FiLayers,
   FiStar,
@@ -28,7 +27,6 @@ export default function Hero() {
   ===================================================== */
   useEffect(() => {
     const currentMessage = heroMessages[heroText];
-
     const typingSpeed = isDeleting ? 45 : 90;
 
     const timer = setTimeout(() => {
@@ -55,7 +53,6 @@ export default function Hero() {
 
         if (nextText.length === 0) {
           setIsDeleting(false);
-
           setHeroText(
             (prev) => (prev + 1) % heroMessages.length
           );
@@ -67,16 +64,16 @@ export default function Hero() {
   }, [displayText, isDeleting, heroText]);
 
   return (
-    <section className="relative min-h-[720px] overflow-hidden bg-[#070708] text-white">
+    <section className="relative min-h-[620px] overflow-hidden bg-[#070708] text-white sm:min-h-[650px]">
       {/* =====================================================
           BACKGROUND GLOW
       ===================================================== */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute left-[-180px] top-[10%] h-[420px] w-[420px] rounded-full bg-[#FF1AC6]/10 blur-[130px]" />
+        <div className="absolute left-[-180px] top-[8%] h-[380px] w-[380px] rounded-full bg-[#FF1AC6]/10 blur-[120px]" />
 
-        <div className="absolute right-[-120px] top-[15%] h-[500px] w-[500px] rounded-full bg-purple-600/10 blur-[150px]" />
+        <div className="absolute right-[-120px] top-[12%] h-[430px] w-[430px] rounded-full bg-purple-600/10 blur-[140px]" />
 
-        <div className="absolute bottom-[-200px] left-[35%] h-[450px] w-[450px] rounded-full bg-[#FF1AC6]/5 blur-[130px]" />
+        <div className="absolute bottom-[-180px] left-[35%] h-[400px] w-[400px] rounded-full bg-[#FF1AC6]/5 blur-[120px]" />
       </div>
 
       {/* =====================================================
@@ -125,16 +122,16 @@ export default function Hero() {
       {/* =====================================================
           MAIN CONTAINER
       ===================================================== */}
-      <div className="relative z-10 mx-auto flex min-h-[720px] max-w-7xl items-center px-5 py-20 sm:px-8 lg:px-10">
-        <div className="grid w-full items-center gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:gap-8">
+      <div className="relative z-10 mx-auto flex min-h-[620px] max-w-7xl items-center px-5 py-12 sm:min-h-[650px] sm:px-8 sm:py-16 lg:px-10">
+        <div className="grid w-full items-center gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-8">
 
           {/* =================================================
               LEFT SIDE
           ================================================= */}
-          <div className="max-w-2xl">
+          <div className="max-w-2xl text-center sm:text-left">
 
             {/* BADGE */}
-            <div className="hero-badge mb-7 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 backdrop-blur-xl">
+            <div className="hero-badge mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 backdrop-blur-xl">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FF1AC6] opacity-60" />
 
@@ -161,8 +158,8 @@ export default function Hero() {
               {/* =================================================
                   TYPING TEXT
               ================================================= */}
-              <div className="relative mt-2 h-[58px] overflow-hidden sm:h-[68px] md:h-[76px]">
-                <div className="hero-changing-text absolute left-0 top-0 flex items-center whitespace-nowrap text-3xl font-bold leading-[1] sm:text-4xl md:text-6xl lg:text-[4.2rem]">
+              <div className="relative mt-1 h-[52px] overflow-hidden sm:h-[64px] md:h-[70px]">
+                <div className="hero-changing-text absolute left-1/2 top-0 flex -translate-x-1/2 items-center whitespace-nowrap text-3xl font-bold leading-[1] sm:left-0 sm:translate-x-0 sm:text-4xl md:text-6xl lg:text-[4.2rem]">
                   <span className="bg-gradient-to-r from-[#FF1AC6] via-pink-400 to-purple-500 bg-clip-text text-transparent">
                     {displayText}
                   </span>
@@ -175,7 +172,7 @@ export default function Hero() {
             {/* =================================================
                 DESCRIPTION
             ================================================= */}
-            <p className="mt-5 max-w-xl text-sm leading-relaxed text-gray-400 sm:text-base">
+            <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-gray-400 sm:mx-0 sm:text-base">
               Complete quests and earn cryptocurrency, tokens, and
               digital rewards. Post bounties and get quality work
               done — fully on-chain.
@@ -184,7 +181,7 @@ export default function Hero() {
             {/* =================================================
                 BUTTONS
             ================================================= */}
-            <div className="mt-7 flex flex-wrap gap-3">
+            <div className="mt-6 flex flex-wrap justify-center gap-3 sm:justify-start">
               <Link
                 to="/dashboard"
                 className="group relative overflow-hidden rounded-lg bg-[#FF1AC6] px-6 py-3 text-sm font-semibold text-white shadow-[0_0_30px_rgba(255,26,198,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#e915ad] hover:shadow-[0_0_35px_rgba(255,26,198,0.25)]"
@@ -211,7 +208,7 @@ export default function Hero() {
             {/* =================================================
                 BOTTOM INDICATORS
             ================================================= */}
-            <div className="mt-8 flex items-center gap-3">
+            <div className="mt-6 flex items-center justify-center gap-3 sm:justify-start">
               <div className="flex gap-1.5">
                 {heroMessages.map((_, index) => (
                   <span
@@ -234,17 +231,17 @@ export default function Hero() {
           {/* =================================================
               RIGHT SIDE — PROFESSIONAL 3D ORBIT
           ================================================= */}
-          <div className="relative flex min-h-[470px] items-center justify-center lg:min-h-[560px]">
+          <div className="relative flex min-h-[360px] items-center justify-center sm:min-h-[430px] lg:min-h-[500px]">
 
             {/* ATMOSPHERIC GLOW */}
-            <div className="absolute h-[300px] w-[300px] rounded-full bg-[#FF1AC6]/10 blur-[100px]" />
+            <div className="absolute h-[250px] w-[250px] rounded-full bg-[#FF1AC6]/10 blur-[90px]" />
 
-            <div className="absolute h-[220px] w-[220px] rounded-full bg-purple-600/10 blur-[80px]" />
+            <div className="absolute h-[190px] w-[190px] rounded-full bg-purple-600/10 blur-[70px]" />
 
             {/* =================================================
                 ORBIT SYSTEM
             ================================================= */}
-            <div className="absolute h-[430px] w-[430px] sm:h-[500px] sm:w-[500px]">
+            <div className="absolute h-[330px] w-[330px] sm:h-[420px] sm:w-[420px] lg:h-[460px] lg:w-[460px]">
 
               {/* OUTER ORBIT */}
               <div className="orbit orbit-outer absolute inset-0 rounded-full border border-white/[0.07]">
@@ -252,45 +249,45 @@ export default function Hero() {
               </div>
 
               {/* MIDDLE ORBIT */}
-              <div className="orbit orbit-middle absolute inset-[35px] rounded-full border border-[#FF1AC6]/10">
+              <div className="orbit orbit-middle absolute inset-[28px] rounded-full border border-[#FF1AC6]/10 sm:inset-[35px]">
                 <span className="orbit-node node-purple" />
               </div>
 
               {/* INNER ORBIT */}
-              <div className="orbit orbit-inner absolute inset-[75px] rounded-full border border-white/[0.05]">
+              <div className="orbit orbit-inner absolute inset-[58px] rounded-full border border-white/[0.05] sm:inset-[65px]">
                 <span className="orbit-node node-white" />
               </div>
 
               {/* HORIZONTAL ORBIT */}
-              <div className="orbit-horizontal absolute left-[-25px] right-[-25px] top-1/2 h-[170px] -translate-y-1/2 rounded-[50%] border border-[#FF1AC6]/10" />
+              <div className="orbit-horizontal absolute left-[-18px] right-[-18px] top-1/2 h-[125px] -translate-y-1/2 rounded-[50%] border border-[#FF1AC6]/10 sm:left-[-25px] sm:right-[-25px] sm:h-[150px]" />
 
               {/* DIAGONAL ORBIT */}
-              <div className="orbit-diagonal absolute left-[20px] right-[20px] top-1/2 h-[250px] -translate-y-1/2 rounded-[50%] border border-purple-500/10" />
+              <div className="orbit-diagonal absolute left-[15px] right-[15px] top-1/2 h-[190px] -translate-y-1/2 rounded-[50%] border border-purple-500/10 sm:left-[20px] sm:right-[20px] sm:h-[220px]" />
             </div>
 
             {/* =================================================
                 CENTRAL 3D CORE
             ================================================= */}
-            <div className="hero-core relative z-20 h-[210px] w-[210px] sm:h-[250px] sm:w-[250px]">
+            <div className="hero-core relative z-20 h-[165px] w-[165px] sm:h-[205px] sm:w-[205px] lg:h-[225px] lg:w-[225px]">
 
               {/* OUTER GLOW */}
-              <div className="absolute -inset-10 rounded-full bg-[#FF1AC6]/10 blur-[55px]" />
+              <div className="absolute -inset-8 rounded-full bg-[#FF1AC6]/10 blur-[45px]" />
 
               {/* GLASS OUTER SHELL */}
-              <div className="absolute inset-0 rounded-full border border-white/10 bg-white/[0.025] shadow-[inset_0_0_50px_rgba(255,255,255,0.025),0_30px_80px_rgba(0,0,0,0.7)] backdrop-blur-xl" />
+              <div className="absolute inset-0 rounded-full border border-white/10 bg-white/[0.025] shadow-[inset_0_0_40px_rgba(255,255,255,0.025),0_25px_60px_rgba(0,0,0,0.7)] backdrop-blur-xl" />
 
               {/* INNER RINGS */}
-              <div className="absolute inset-[15px] rounded-full border border-[#FF1AC6]/20" />
+              <div className="absolute inset-[12px] rounded-full border border-[#FF1AC6]/20" />
 
-              <div className="absolute inset-[27px] rounded-full border border-purple-500/10" />
+              <div className="absolute inset-[22px] rounded-full border border-purple-500/10" />
 
               {/* =================================================
                   3D SPHERE
               ================================================= */}
-              <div className="absolute inset-[42px] overflow-hidden rounded-full bg-gradient-to-br from-[#ff4bd1]/30 via-[#161116] to-purple-900/40 shadow-[inset_-18px_-20px_35px_rgba(0,0,0,0.8),inset_12px_10px_25px_rgba(255,255,255,0.08),0_0_45px_rgba(255,26,198,0.18)]">
+              <div className="absolute inset-[34px] overflow-hidden rounded-full bg-gradient-to-br from-[#ff4bd1]/30 via-[#161116] to-purple-900/40 shadow-[inset_-15px_-18px_30px_rgba(0,0,0,0.8),inset_10px_8px_20px_rgba(255,255,255,0.08),0_0_40px_rgba(255,26,198,0.18)]">
 
                 {/* SPHERE HIGHLIGHT */}
-                <div className="absolute left-[18%] top-[15%] h-[35%] w-[35%] rounded-full bg-white/10 blur-xl" />
+                <div className="absolute left-[18%] top-[15%] h-[35%] w-[35%] rounded-full bg-white/10 blur-lg" />
 
                 {/* SPHERE GRID */}
                 <div className="absolute inset-3 overflow-hidden rounded-full opacity-40">
@@ -299,9 +296,9 @@ export default function Hero() {
 
                 {/* CENTER ICON */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-[#0d0d0e]/80 shadow-[0_0_35px_rgba(255,26,198,0.2)] backdrop-blur-xl sm:h-20 sm:w-20">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-[#0d0d0e]/80 shadow-[0_0_30px_rgba(255,26,198,0.2)] backdrop-blur-xl sm:h-16 sm:w-16">
                     <FiZap
-                      size={30}
+                      size={24}
                       className="text-[#FF1AC6] drop-shadow-[0_0_15px_rgba(255,26,198,0.7)]"
                     />
                   </div>
@@ -319,7 +316,7 @@ export default function Hero() {
             {/* =================================================
                 NETWORK CARD
             ================================================= */}
-            <div className="orbit-data-card absolute right-[1%] top-[8%] z-30 w-[145px] rounded-2xl border border-white/10 bg-[#101011]/80 p-3 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl sm:right-[5%]">
+            <div className="orbit-data-card absolute right-[0%] top-[5%] z-30 w-[130px] rounded-2xl border border-white/10 bg-[#101011]/80 p-3 shadow-[0_20px_45px_rgba(0,0,0,0.5)] backdrop-blur-xl sm:right-[3%] sm:w-[145px]">
 
               <div className="mb-2 flex items-center justify-between">
                 <span className="text-[8px] uppercase tracking-[0.16em] text-gray-500">
@@ -342,7 +339,7 @@ export default function Hero() {
             {/* =================================================
                 REWARD CARD
             ================================================= */}
-            <div className="orbit-reward-card absolute bottom-[8%] left-[1%] z-30 w-[155px] rounded-2xl border border-white/10 bg-[#101011]/85 p-3 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl sm:left-[4%]">
+            <div className="orbit-reward-card absolute bottom-[5%] left-[0%] z-30 w-[140px] rounded-2xl border border-white/10 bg-[#101011]/85 p-3 shadow-[0_20px_45px_rgba(0,0,0,0.5)] backdrop-blur-xl sm:left-[3%] sm:w-[155px]">
 
               <div className="flex items-center gap-2">
 
@@ -368,7 +365,7 @@ export default function Hero() {
             {/* =================================================
                 ORBIT LABEL
             ================================================= */}
-            <div className="absolute bottom-[20%] right-[8%] z-30 hidden rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 backdrop-blur-xl sm:flex sm:items-center sm:gap-2">
+            <div className="absolute bottom-[18%] right-[7%] z-30 hidden rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 backdrop-blur-xl sm:flex sm:items-center sm:gap-2">
 
               <FiLayers
                 size={11}
@@ -726,7 +723,7 @@ export default function Hero() {
               perspective(1000px)
               rotateX(-4deg)
               rotateY(5deg)
-              translateY(-14px);
+              translateY(-12px);
           }
         }
 
@@ -748,7 +745,6 @@ export default function Hero() {
             );
 
           background-size: 18px 18px;
-
           border-radius: 50%;
 
           transform:
@@ -834,7 +830,7 @@ export default function Hero() {
 
 
         /* =================================================
-           FLOATING DATA CARDS
+           FLOATING CARDS
         ================================================= */
 
         .orbit-data-card {
@@ -852,7 +848,7 @@ export default function Hero() {
           }
 
           50% {
-            transform: translateY(-12px) rotate(1deg);
+            transform: translateY(-10px) rotate(1deg);
           }
         }
 
@@ -863,7 +859,7 @@ export default function Hero() {
           }
 
           50% {
-            transform: translateY(10px) rotate(-1deg);
+            transform: translateY(8px) rotate(-1deg);
           }
         }
 
@@ -872,15 +868,68 @@ export default function Hero() {
            MOBILE
         ================================================= */
 
-        @media (max-width: 640px) {
+        @media (max-width: 639px) {
+          .hero-star {
+            font-size: 8px;
+          }
+
+          .star-2,
+          .star-5,
+          .star-9 {
+            display: none;
+          }
+
           .orbit-data-card {
-            right: -5px;
-            transform: scale(0.85);
+            right: -4px;
+            transform: scale(0.78);
           }
 
           .orbit-reward-card {
-            left: -5px;
-            transform: scale(0.85);
+            left: -4px;
+            transform: scale(0.78);
+          }
+
+          .orbit-data-card {
+            animation:
+              dataCardFloatMobile 5s ease-in-out infinite;
+          }
+
+          .orbit-reward-card {
+            animation:
+              rewardCardFloatMobile 6s ease-in-out infinite;
+          }
+        }
+
+        @keyframes dataCardFloatMobile {
+          0%,
+          100% {
+            transform: translateY(0) scale(0.78);
+          }
+
+          50% {
+            transform: translateY(-8px) scale(0.78);
+          }
+        }
+
+        @keyframes rewardCardFloatMobile {
+          0%,
+          100% {
+            transform: translateY(0) scale(0.78);
+          }
+
+          50% {
+            transform: translateY(8px) scale(0.78);
+          }
+        }
+
+
+        /* =================================================
+           TABLET / DESKTOP
+        ================================================= */
+
+        @media (min-width: 640px) {
+          .hero-changing-text {
+            text-align: left;
           }
         }
 
