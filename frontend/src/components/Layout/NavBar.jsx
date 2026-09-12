@@ -122,16 +122,6 @@ function NavBar() {
                 </span>
               </Link>
 
-              <Link
-                to="/setting"
-                className="group flex items-center justify-between border-t border-white/[0.05] px-4 py-3 text-sm text-gray-400 transition-all duration-200 hover:bg-[#FF1AC6]/5 hover:text-white"
-              >
-                <span>Settings</span>
-
-                <span className="text-gray-700 transition-all group-hover:translate-x-1 group-hover:text-[#FF1AC6]">
-                  →
-                </span>
-              </Link>
             </div>
           </div>
 
