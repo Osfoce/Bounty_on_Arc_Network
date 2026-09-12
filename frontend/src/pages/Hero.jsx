@@ -11,10 +11,10 @@ import {
 } from "react-icons/fi";
 
 const heroMessages = [
-  "Earn Crypto",
-  "Complete Quests",
-  "Build Your Skills",
-  "Get Rewarded",
+  "Earn Crypto.",
+  "Complete Quests.",
+  "Build Your Skills.",
+  "Get Rewarded.",
 ];
 
 export default function Hero() {
