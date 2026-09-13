@@ -21,6 +21,7 @@ import BountyCard from "../components/Bounty/BountyCard";
 import injecoin from "../assets/images/injecoin.png";
 import Hero from "./Hero";
 import HowItWorks from "./Howitwork";
+import PlatformStats from "./PlatformStats";
 import eth2 from "../assets/images/eth2.png";
 import ctc from "../assets/images/ctc.jpg";
 
@@ -174,20 +175,7 @@ function LandingPage() {
 
         {/* Purple Glow */}
         <div className="absolute -bottom-40 -right-20 w-96 h-96 bg-purple-600/10 rounded-full blur-[120px] pointer-events-none" />
-
-        {/* SHINING STARS */}
-        <div className="absolute inset-0 pointer-events-none">
-          <span className="hero-star star-1">✦</span>
-          <span className="hero-star star-2">✧</span>
-          <span className="hero-star star-3">✦</span>
-          <span className="hero-star star-4">✧</span>
-          <span className="hero-star star-5">✦</span>
-          <span className="hero-star star-6">✧</span>
-          <span className="hero-star star-7">✦</span>
-          <span className="hero-star star-8">✧</span>
-          <span className="hero-star star-9">✦</span>
-          <span className="hero-star star-10">✧</span>
-        </div>
+        
 
         {/* HERO CONTENT */}
         <div className="relative z-10">
@@ -198,251 +186,19 @@ function LandingPage() {
       {/* =========================================
           HOW IT WORKS
       ========================================== */}
-<HowItWorks />
+      <div>
+      <HowItWorks />  
+      </div>
+
 
       
       {/* =========================================
           LIVE STATS
       ========================================== */}
-      <section
-        ref={statsRef}
-        className="relative z-10 opacity-0 translate-y-10 transition-all duration-700 mx-6 md:mx-10 lg:mx-16 my-12"
-      >
-        <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#151515]/90 backdrop-blur-xl">
-          <div className="absolute -top-20 left-1/2 h-40 w-40 -translate-x-1/2 rounded-full bg-[#FF1AC6]/10 blur-3xl pointer-events-none" />
-
-          <div className="absolute -bottom-20 right-0 h-40 w-40 rounded-full bg-purple-600/10 blur-3xl pointer-events-none" />
-
-          <div className="relative p-5 sm:p-6 md:p-8">
-            <div className="mb-7 text-center">
-              <div className="mx-auto mb-3 flex w-fit items-center gap-2 rounded-full border border-[#FF1AC6]/20 bg-[#FF1AC6]/10 px-3 py-1.5 text-xs font-medium text-[#FF1AC6]">
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#FF1AC6]" />
-                Live Platform Data
-              </div>
-
-              <h2 className="text-2xl font-bold tracking-tight text-white md:text-3xl">
-                Platform{" "}
-                <span className="bg-gradient-to-r from-[#FF1AC6] to-purple-500 bg-clip-text text-transparent">
-                  Stats
-                </span>
-              </h2>
-
-              <p className="mx-auto mt-2 max-w-xl text-xs text-gray-500 md:text-sm">
-                Real-time insights into the Fresh Bounty ecosystem.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-              {/* TOTAL BOUNTIES */}
-              <div className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#FF1AC6]/40 hover:bg-white/[0.04]">
-                <div className="absolute -right-16 -top-16 h-32 w-32 rounded-full bg-[#FF1AC6]/10 blur-3xl transition-all duration-500 group-hover:bg-[#FF1AC6]/20" />
-
-                <div className="relative z-10 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#FF1AC6]/20 bg-[#FF1AC6]/10 text-[#FF1AC6]">
-                      <FiArrowRight className="h-5 w-5 rotate-45" />
-                    </div>
-
-                    <div>
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-gray-500">
-                        Bounties
-                      </p>
-
-                      <p className="mt-0.5 text-[10px] text-gray-600">
-                        Platform activity
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-1 rounded-full border border-green-500/20 bg-green-500/5 px-2 py-1">
-                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-green-400" />
-
-                    <span className="text-[9px] font-semibold uppercase tracking-wider text-green-400">
-                      Live
-                    </span>
-                  </div>
-                </div>
-
-                <div className="relative z-10 mt-6 flex items-end justify-between">
-                  <div>
-                    <div className="flex items-baseline">
-                      <span className="text-4xl font-bold tracking-tight text-white">
-                        {stats.totalBounties}
-                      </span>
-
-                      <span className="ml-1 text-lg font-bold text-[#FF1AC6]">
-                        +
-                      </span>
-                    </div>
-
-                    <p className="mt-1 text-xs text-gray-500">
-                      Total Bounties
-                    </p>
-                  </div>
-
-                  <div className="rounded-md border border-green-500/20 bg-green-500/5 px-2 py-1">
-                    <span className="text-[10px] font-medium text-green-400">
-                      +12.4%
-                    </span>
-                  </div>
-                </div>
-
-                <div className="relative z-10 mt-5">
-                  <div className="mb-1.5 flex justify-between text-[9px] uppercase tracking-wider text-gray-600">
-                    <span>Activity</span>
-                    <span>Active</span>
-                  </div>
-
-                  <div className="h-1 overflow-hidden rounded-full bg-white/[0.06]">
-                    <div className="h-full w-[68%] rounded-full bg-gradient-to-r from-[#FF1AC6] to-pink-400 transition-all duration-700 group-hover:w-[76%]" />
-                  </div>
-                </div>
-              </div>
-
-              {/* REWARDS */}
-              <div className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-purple-400/40 hover:bg-white/[0.04]">
-                <div className="absolute -right-16 -top-16 h-32 w-32 rounded-full bg-purple-500/10 blur-3xl transition-all duration-500 group-hover:bg-purple-500/20" />
-
-                <div className="relative z-10 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-purple-400/20 bg-purple-500/10 text-purple-400">
-                      <FiZap className="h-5 w-5" />
-                    </div>
-
-                    <div>
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-gray-500">
-                        Rewards
-                      </p>
-
-                      <p className="mt-0.5 text-[10px] text-gray-600">
-                        Distributed earnings
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="rounded-full border border-purple-400/20 bg-purple-500/5 px-2 py-1">
-                    <span className="text-[9px] font-semibold uppercase tracking-wider text-purple-400">
-                      Crypto
-                    </span>
-                  </div>
-                </div>
-
-                <div className="relative z-10 mt-6 flex items-end justify-between">
-                  <div>
-                    <div className="flex items-baseline">
-                      <span className="text-4xl font-bold tracking-tight text-white">
-                        ${stats.totalRewards.toLocaleString()}
-                      </span>
-
-                      <span className="ml-1 text-lg font-bold text-purple-400">
-                        +
-                      </span>
-                    </div>
-
-                    <p className="mt-1 text-xs text-gray-500">
-                      Rewards Distributed
-                    </p>
-                  </div>
-
-                  <div className="rounded-md border border-green-500/20 bg-green-500/5 px-2 py-1">
-                    <span className="text-[10px] font-medium text-green-400">
-                      +18.7%
-                    </span>
-                  </div>
-                </div>
-
-                <div className="relative z-10 mt-5">
-                  <div className="mb-1.5 flex justify-between text-[9px] uppercase tracking-wider text-gray-600">
-                    <span>Distribution</span>
-                    <span>Growing</span>
-                  </div>
-
-                  <div className="h-1 overflow-hidden rounded-full bg-white/[0.06]">
-                    <div className="h-full w-[76%] rounded-full bg-gradient-to-r from-purple-500 to-[#FF1AC6] transition-all duration-700 group-hover:w-[84%]" />
-                  </div>
-                </div>
-              </div>
-
-              {/* USERS */}
-              <div className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-blue-400/40 hover:bg-white/[0.04]">
-                <div className="absolute -right-16 -top-16 h-32 w-32 rounded-full bg-blue-500/10 blur-3xl transition-all duration-500 group-hover:bg-blue-500/20" />
-
-                <div className="relative z-10 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-blue-400/20 bg-blue-500/10 text-blue-400">
-                      <FiUsers className="h-5 w-5" />
-                    </div>
-
-                    <div>
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-gray-500">
-                        Community
-                      </p>
-
-                      <p className="mt-0.5 text-[10px] text-gray-600">
-                        Growing network
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-1 rounded-full border border-blue-400/20 bg-blue-500/5 px-2 py-1">
-                    <span className="h-1.5 w-1.5 rounded-full bg-blue-400" />
-
-                    <span className="text-[9px] font-semibold uppercase tracking-wider text-blue-400">
-                      Active
-                    </span>
-                  </div>
-                </div>
-
-                <div className="relative z-10 mt-6 flex items-end justify-between">
-                  <div>
-                    <div className="flex items-baseline">
-                      <span className="text-4xl font-bold tracking-tight text-white">
-                        {stats.totalUsers}
-                      </span>
-
-                      <span className="ml-1 text-lg font-bold text-blue-400">
-                        +
-                      </span>
-                    </div>
-
-                    <p className="mt-1 text-xs text-gray-500">
-                      Active Users
-                    </p>
-                  </div>
-
-                  <div className="rounded-md border border-green-500/20 bg-green-500/5 px-2 py-1">
-                    <span className="text-[10px] font-medium text-green-400">
-                      +9.2%
-                    </span>
-                  </div>
-                </div>
-
-                <div className="relative z-10 mt-5">
-                  <div className="mb-1.5 flex justify-between text-[9px] uppercase tracking-wider text-gray-600">
-                    <span>Community</span>
-                    <span>Growing</span>
-                  </div>
-
-                  <div className="h-1 overflow-hidden rounded-full bg-white/[0.06]">
-                    <div className="h-full w-[52%] rounded-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-700 group-hover:w-[62%]" />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-6 flex flex-col items-center justify-between gap-2 border-t border-white/10 pt-4 text-center sm:flex-row sm:text-left">
-              <p className="text-[10px] text-gray-600">
-                Statistics are updated automatically
-              </p>
-
-              <div className="flex items-center gap-2 text-[10px] text-gray-500">
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-green-500" />
-                System operational
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <div>
+       <PlatformStats /> 
+      </div>
+    
 
       {/* =========================================
           FEATURED BOUNTIES

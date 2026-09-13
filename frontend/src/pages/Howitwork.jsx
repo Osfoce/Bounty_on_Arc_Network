@@ -1,890 +1,1167 @@
-import { useEffect, useRef } from "react";
+
+import { useEffect, useRef, useState } from "react";
 import {
-  FiZap,
-  FiLock,
-  FiUser,
   FiBriefcase,
   FiCheck,
-  FiShield,
   FiGlobe,
+  FiLock,
+  FiShield,
+  FiUser,
   FiUsers,
+  FiZap,
 } from "react-icons/fi";
 
-const HowItWorks = () => {
-  const card1Ref = useRef(null);
-  const card2Ref = useRef(null);
-  const card3Ref = useRef(null);
+export default function HowItWorks() {
+  const sectionRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
 
+  /* =====================================================
+     SCROLL REVEAL
+     DESKTOP ONLY
+  ===================================================== */
   useEffect(() => {
+    const section = sectionRef.current;
+
+    if (!section) return;
+
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("how-it-works-visible");
-          }
-        });
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
       },
-      { threshold: 0.15 }
+      {
+        threshold: 0.2,
+      }
     );
 
-    [card1Ref.current, card2Ref.current, card3Ref.current].forEach((card) => {
-      if (card) observer.observe(card);
-    });
+    observer.observe(section);
 
     return () => observer.disconnect();
   }, []);
 
   return (
-    <>
-      <section className="relative z-10 mx-auto px-6 md:px-10 lg:px-16 py-14 md:py-16 text-white overflow-hidden how-it-works-section">
-        <div className="absolute top-10 left-[-150px] w-[300px] h-[300px] bg-purple-600/10 blur-[110px] rounded-full pointer-events-none how-it-works-glow" />
-        <div className="absolute top-20 right-[-150px] w-[300px] h-[300px] bg-[#FF1AC6]/10 blur-[110px] rounded-full pointer-events-none how-it-works-glow-delay" />
+    <section
+      ref={sectionRef}
+      className={`how-it-works-section ${
+        isVisible ? "how-it-works-visible" : ""
+      }`}
+    >
+      {/* =====================================================
+          SECTION HEADER
+      ===================================================== */}
+      <div className="how-it-works-header">
+        <span className="how-it-works-label">
+          <span className="label-dot" />
+          HOW IT WORKS
+        </span>
 
-        <div className="absolute top-32 left-0 w-20 h-px bg-gradient-to-r from-transparent via-purple-500/30 to-transparent" />
-        <div className="absolute top-40 right-0 w-20 h-px bg-gradient-to-l from-transparent via-pink-500/30 to-transparent" />
+        <h2>
+          Work. Earn.{" "}
+          <span>Build.</span>
+        </h2>
 
-        <span className="how-it-works-particle particle-one" />
-        <span className="how-it-works-particle particle-two" />
-        <span className="how-it-works-particle particle-three" />
-        <span className="how-it-works-particle particle-four" />
-        <span className="how-it-works-particle particle-five" />
+        <p>
+          A simple way to discover Web3 opportunities, complete
+          meaningful work, and earn rewards.
+        </p>
+      </div>
 
-        <div className="relative max-w-6xl mx-auto">
-          <div className="text-center mb-10 md:mb-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.04] backdrop-blur-md mb-4">
-              <FiZap className="text-[#FF1AC6] text-sm how-it-works-badge-icon" />
-              <span className="text-[11px] uppercase tracking-[0.2em] text-gray-400">
-                Simple & Powerful
-              </span>
+      {/* =====================================================
+          CARDS
+      ===================================================== */}
+      <div className="how-it-works-grid">
+        {/* ===================================================
+            CARD 1 — DISCOVER
+        =================================================== */}
+        <div className="how-it-works-card">
+          <div className="card-number">01</div>
+
+          <div className="visual-area">
+            <div className="discover-visual">
+              <div className="discover-wallet">
+                <div className="wallet-top">
+                  <span />
+                  <span />
+                </div>
+
+                <div className="wallet-screen">
+                  <FiZap className="wallet-icon" />
+
+                  <div className="wallet-lines">
+                    <span />
+                    <span />
+                    <span />
+                  </div>
+                </div>
+              </div>
+
+              <div className="discover-orbit orbit-one">
+                <span className="orbit-dot pink-dot" />
+              </div>
+
+              <div className="discover-orbit orbit-two">
+                <span className="orbit-dot purple-dot" />
+              </div>
+
+              <FiZap className="discover-icon" />
+            </div>
+          </div>
+
+          <div className="card-content">
+            <div className="card-icon">
+              <FiGlobe />
             </div>
 
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
-              How It{" "}
-              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-[#FF1AC6] bg-clip-text text-transparent">
-                Works
-              </span>
-            </h2>
+            <h3>Discover Bounties</h3>
 
-            <p className="mt-3 text-sm md:text-base text-gray-500 max-w-xl mx-auto">
-              Connect, choose your role, complete bounties and earn rewards.
+            <p>
+              Explore opportunities from Web3 projects and
+              find work that matches your skills.
             </p>
           </div>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 items-start">
-            <div
-              ref={card1Ref}
-              className="how-it-works-card how-it-works-card-1 opacity-0 translate-y-10"
-            >
-              <div className="how-it-works-number">01</div>
+        {/* ===================================================
+            CARD 2 — CONNECT
+        =================================================== */}
+        <div className="how-it-works-card">
+          <div className="card-number">02</div>
 
-              <div className="how-it-works-visual how-it-works-wallet-visual">
-                <div className="how-it-works-orbit orbit-one" />
-                <div className="how-it-works-orbit orbit-two" />
-                <div className="how-it-works-orbit-particle orbit-particle-one" />
-                <div className="how-it-works-orbit-particle orbit-particle-two" />
+          <div className="visual-area">
+            <div className="connect-visual">
+              <div className="dashboard-window">
+                <div className="dashboard-header">
+                  <span />
+                  <span />
+                  <span />
+                </div>
 
-                <div className="how-it-works-wallet">
-                  <div className="how-it-works-wallet-top">
+                <div className="dashboard-body">
+                  <div className="dashboard-sidebar">
+                    <span />
                     <span />
                     <span />
                     <span />
                   </div>
-                  <div className="how-it-works-wallet-body">
-                    <div className="how-it-works-wallet-icon">
-                      <FiLock />
+
+                  <div className="dashboard-main">
+                    <div className="dashboard-title" />
+
+                    <div className="dashboard-cards">
+                      <span />
+                      <span />
+                      <span />
                     </div>
-                    <span className="how-it-works-wallet-line" />
-                    <span className="how-it-works-wallet-line short" />
+
+                    <div className="dashboard-line" />
+                    <div className="dashboard-line short" />
                   </div>
                 </div>
-
-                <div className="how-it-works-coin">◇</div>
-                <FiLock className="how-it-works-floating-lock" />
               </div>
 
-              <div className="how-it-works-content">
-                <h3>Connect Wallet</h3>
-                <p>
-                  Connect your Web3 wallet securely and get started in seconds.
-                </p>
+              <div className="user-node user-one">
+                <FiUser />
               </div>
 
-              <div className="how-it-works-connection-line" />
-            </div>
-
-            <div
-              ref={card2Ref}
-              className="how-it-works-card how-it-works-card-2 opacity-0 translate-y-10"
-            >
-              <div className="how-it-works-number">02</div>
-
-              <div className="how-it-works-visual how-it-works-role-visual">
-                <div className="how-it-works-beam beam-one" />
-                <div className="how-it-works-beam beam-two" />
-
-                <div className="how-it-works-dashboard">
-                  <div className="how-it-works-browser-top">
-                    <span />
-                    <span />
-                    <span />
-                  </div>
-
-                  <div className="how-it-works-dashboard-content">
-                    <div className="how-it-works-dashboard-sidebar" />
-
-                    <div className="how-it-works-dashboard-main">
-                      <span className="dashboard-line large" />
-                      <span className="dashboard-line" />
-                      <span className="dashboard-line short" />
-
-                      <div className="dashboard-boxes">
-                        <span />
-                        <span />
-                        <span />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="how-it-works-role role-user">
-                  <FiUser />
-                </div>
-
-                <div className="how-it-works-role role-builder">
-                  <FiBriefcase />
-                </div>
-
-                <div className="how-it-works-role-scan" />
+              <div className="user-node user-two">
+                <FiUsers />
               </div>
 
-              <div className="how-it-works-content">
-                <h3>Choose Your Role</h3>
-                <p>
-                  Join as a contributor and earn, or create bounties and find
-                  talented builders.
-                </p>
-              </div>
-
-              <div className="how-it-works-connection-line" />
-            </div>
-
-            <div
-              ref={card3Ref}
-              className="how-it-works-card how-it-works-card-3 opacity-0 translate-y-10"
-            >
-              <div className="how-it-works-number">03</div>
-
-              <div className="how-it-works-visual how-it-works-earn-visual">
-                <div className="energy-ring energy-ring-one" />
-                <div className="energy-ring energy-ring-two" />
-
-                <div className="how-it-works-earning-box">
-                  <div className="earning-icon">
-                    <FiZap />
-                  </div>
-
-                  <div className="earning-text">
-                    <span>Reward</span>
-                    <strong>+250 USDC</strong>
-                  </div>
-
-                  <FiCheck className="earning-check" />
-                </div>
-
-                <FiZap className="earning-zap zap-one" />
-                <FiZap className="earning-zap zap-two" />
-
-                <span className="earning-mini-particle mini-one" />
-                <span className="earning-mini-particle mini-two" />
-                <span className="earning-mini-particle mini-three" />
-              </div>
-
-              <div className="how-it-works-content">
-                <h3>Complete & Earn</h3>
-                <p>
-                  Complete bounties, get verified and receive your rewards
-                  directly.
-                </p>
-              </div>
+              <div className="connection-line line-one" />
+              <div className="connection-line line-two" />
             </div>
           </div>
 
-          <div className="mt-10 md:mt-12 flex justify-center">
-            <div className="how-it-works-bottom">
-              <FiShield />
-              <span>Secure</span>
-              <FiGlobe />
-              <span>Global</span>
-              <FiZap />
-              <span>Fast</span>
-              <FiUsers />
-              <span>Community Powered</span>
+          <div className="card-content">
+            <div className="card-icon">
+              <FiUser />
             </div>
+
+            <h3>Connect & Contribute</h3>
+
+            <p>
+              Join projects, submit your work, and collaborate
+              with teams building the next generation of Web3.
+            </p>
           </div>
         </div>
-      </section>
 
+        {/* ===================================================
+            CARD 3 — COMPLETE
+        =================================================== */}
+        <div className="how-it-works-card">
+          <div className="card-number">03</div>
+
+          <div className="visual-area">
+            <div className="complete-visual">
+              <div className="task-window">
+                <div className="task-header">
+                  <span>BOUNTY</span>
+
+                  <div className="task-status">
+                    <span />
+                    ACTIVE
+                  </div>
+                </div>
+
+                <div className="task-title">
+                  <span />
+                  <span />
+                </div>
+
+                <div className="task-progress">
+                  <div />
+                </div>
+
+                <div className="task-bottom">
+                  <FiCheck />
+
+                  <span>Task completed</span>
+                </div>
+              </div>
+
+              <div className="completion-ring ring-one" />
+              <div className="completion-ring ring-two" />
+
+              <div className="completion-check">
+                <FiCheck />
+              </div>
+            </div>
+          </div>
+
+          <div className="card-content">
+            <div className="card-icon">
+              <FiCheck />
+            </div>
+
+            <h3>Complete the Work</h3>
+
+            <p>
+              Deliver quality work, meet the requirements, and
+              get your contribution reviewed by the project.
+            </p>
+          </div>
+        </div>
+
+        {/* ===================================================
+            CARD 4 — EARN
+        =================================================== */}
+        <div className="how-it-works-card">
+          <div className="card-number">04</div>
+
+          <div className="visual-area">
+            <div className="earn-visual">
+              <div className="earning-box">
+                <div className="earning-icon">
+                  <FiZap />
+                </div>
+
+                <div className="earning-info">
+                  <span>REWARD</span>
+                  <strong>+450 USDC</strong>
+                </div>
+              </div>
+
+              <div className="energy-ring energy-one" />
+              <div className="energy-ring energy-two" />
+
+              <div className="energy-particle particle-one" />
+              <div className="energy-particle particle-two" />
+              <div className="energy-particle particle-three" />
+
+              <FiShield className="earn-shield" />
+            </div>
+          </div>
+
+          <div className="card-content">
+            <div className="card-icon">
+              <FiLock />
+            </div>
+
+            <h3>Get Rewarded</h3>
+
+            <p>
+              Receive your rewards and build your reputation
+              while contributing to the Web3 ecosystem.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* =====================================================
+          CSS
+      ===================================================== */}
       <style>{`
+        /* ========================================
+           SECTION
+        ======================================== */
+
         .how-it-works-section {
-          isolation: isolate;
+          position: relative;
+          width: 100%;
+          padding: 80px 24px;
+          overflow: hidden;
+          background: #070708;
+          color: white;
         }
 
-        .how-it-works-glow {
-          animation: howItWorksGlow 8s ease-in-out infinite;
+        /* ========================================
+           HEADER
+        ======================================== */
+
+        .how-it-works-header {
+          position: relative;
+          z-index: 2;
+          max-width: 760px;
+          margin: 0 auto 50px;
+          text-align: center;
         }
 
-        .how-it-works-glow-delay {
-          animation: howItWorksGlow 9s ease-in-out infinite reverse;
+        .how-it-works-label {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 8px 14px;
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.03);
+          color: #9ca3af;
+          font-size: 10px;
+          font-weight: 600;
+          letter-spacing: 0.16em;
         }
 
-        .how-it-works-particle {
-          position: absolute;
-          width: 3px;
-          height: 3px;
-          border-radius: 50%;
-          background: rgba(255,255,255,.35);
-          pointer-events: none;
+        .label-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 999px;
+          background: #ff1ac6;
+          box-shadow: 0 0 10px rgba(255, 26, 198, 0.8);
         }
 
-        .particle-one {
-          top: 18%;
-          left: 12%;
-          animation: howItWorksParticle 5s ease-in-out infinite;
+        .how-it-works-header h2 {
+          margin: 18px 0 12px;
+          font-size: clamp(2rem, 5vw, 3.5rem);
+          line-height: 1;
+          font-weight: 700;
+          letter-spacing: -0.04em;
         }
 
-        .particle-two {
-          top: 34%;
-          right: 15%;
-          animation: howItWorksParticle 7s ease-in-out infinite .5s;
+        .how-it-works-header h2 span {
+          background: linear-gradient(
+            90deg,
+            #ff1ac6,
+            #ff62d8,
+            #a855f7
+          );
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
         }
 
-        .particle-three {
-          bottom: 24%;
-          left: 8%;
-          animation: howItWorksParticle 6s ease-in-out infinite 1s;
+        .how-it-works-header p {
+          max-width: 580px;
+          margin: 0 auto;
+          color: #71717a;
+          font-size: 14px;
+          line-height: 1.7;
         }
 
-        .particle-four {
-          bottom: 15%;
-          right: 10%;
-          animation: howItWorksParticle 8s ease-in-out infinite 1.5s;
+        /* ========================================
+           GRID
+        ======================================== */
+
+        .how-it-works-grid {
+          position: relative;
+          z-index: 2;
+          display: grid;
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          gap: 18px;
+          max-width: 1400px;
+          margin: 0 auto;
         }
 
-        .particle-five {
-          top: 12%;
-          left: 50%;
-          animation: howItWorksParticle 5s ease-in-out infinite 2s;
-        }
-
-        .how-it-works-badge-icon {
-          animation: howItWorksIconPulse 2s ease-in-out infinite;
-        }
+        /* ========================================
+           OUTER CARD
+           KEPT AS THE ORIGINAL STYLE
+        ======================================== */
 
         .how-it-works-card {
           position: relative;
           min-height: 350px;
           padding: 22px 20px;
-          border: 1px solid rgba(255,255,255,.07);
-          border-radius: 22px;
-          background: linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.015));
-          backdrop-filter: blur(18px);
           overflow: hidden;
-          transition: border-color .4s ease,transform .4s ease,box-shadow .4s ease;
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          border-radius: 22px;
+          background:
+            linear-gradient(
+              145deg,
+              rgba(255, 255, 255, 0.045),
+              rgba(255, 255, 255, 0.015)
+            );
+          transition:
+            border-color 0.35s ease,
+            background 0.35s ease,
+            transform 0.35s ease,
+            box-shadow 0.35s ease;
         }
 
         .how-it-works-card:hover {
-          transform: translateY(-5px);
-          border-color: rgba(255,255,255,.14);
-          box-shadow: 0 20px 50px rgba(0,0,0,.25);
+          border-color: rgba(255, 26, 198, 0.18);
+          background:
+            linear-gradient(
+              145deg,
+              rgba(255, 255, 255, 0.06),
+              rgba(255, 255, 255, 0.02)
+            );
+          transform: translateY(-4px);
+          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
         }
 
-        .how-it-works-number {
+        .card-number {
           position: absolute;
           top: 16px;
           right: 18px;
+          color: rgba(255, 255, 255, 0.2);
           font-size: 10px;
-          letter-spacing: .18em;
-          color: rgba(255,255,255,.25);
-          font-weight: 700;
+          font-weight: 600;
+          letter-spacing: 0.12em;
         }
 
-        .how-it-works-visual {
+        /* ========================================
+           VISUAL AREA
+        ======================================== */
+
+        .visual-area {
           position: relative;
-          height: 150px;
-          margin: 8px auto 18px;
           display: flex;
           align-items: center;
           justify-content: center;
+          width: 100%;
+          height: 155px;
+          margin-bottom: 18px;
         }
 
-        .how-it-works-content {
+        /* ========================================
+           CARD CONTENT
+        ======================================== */
+
+        .card-content {
           position: relative;
-          z-index: 5;
-          text-align: center;
+          z-index: 2;
         }
 
-        .how-it-works-content h3 {
-          margin: 0;
-          font-size: 17px;
-          font-weight: 700;
-          color: white;
-        }
-
-        .how-it-works-content p {
-          margin: 8px auto 0;
-          max-width: 260px;
-          font-size: 12px;
-          line-height: 1.7;
-          color: #737373;
-        }
-
-        .how-it-works-wallet {
-          position: relative;
-          z-index: 4;
-          width: 105px;
-          height: 68px;
-          border: 1px solid rgba(255,255,255,.14);
-          border-radius: 12px;
-          background: linear-gradient(145deg,#191919,#0c0c0c);
-          box-shadow: 0 15px 35px rgba(0,0,0,.45);
-          animation: howItWorksWalletFloat 4s ease-in-out infinite;
-        }
-
-        .how-it-works-wallet-top {
+        .card-icon {
           display: flex;
-          gap: 4px;
-          padding: 7px 8px;
-          border-bottom: 1px solid rgba(255,255,255,.06);
+          align-items: center;
+          justify-content: center;
+          width: 30px;
+          height: 30px;
+          margin-bottom: 12px;
+          border: 1px solid rgba(255, 26, 198, 0.14);
+          border-radius: 9px;
+          background: rgba(255, 26, 198, 0.07);
+          color: #ff1ac6;
+          font-size: 14px;
         }
 
-        .how-it-works-wallet-top span {
+        .card-content h3 {
+          margin: 0 0 8px;
+          color: white;
+          font-size: 16px;
+          font-weight: 600;
+        }
+
+        .card-content p {
+          margin: 0;
+          color: #71717a;
+          font-size: 12px;
+          line-height: 1.65;
+        }
+
+        /* ========================================
+           DISCOVER VISUAL
+        ======================================== */
+
+        .discover-visual {
+          position: relative;
+          width: 175px;
+          height: 85px;
+        }
+
+        .discover-wallet {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          z-index: 3;
+          width: 110px;
+          height: 68px;
+          transform: translate(-50%, -50%);
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          border-radius: 12px;
+          background: rgba(16, 16, 17, 0.92);
+          box-shadow:
+            0 15px 35px rgba(0, 0, 0, 0.45),
+            inset 0 0 20px rgba(255, 255, 255, 0.025);
+          backdrop-filter: blur(15px);
+        }
+
+        .wallet-top {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          height: 18px;
+          padding: 0 8px;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .wallet-top span {
           width: 4px;
           height: 4px;
-          border-radius: 50%;
-          background: rgba(255,255,255,.25);
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.25);
         }
 
-        .how-it-works-wallet-body {
+        .wallet-screen {
           display: flex;
           align-items: center;
-          gap: 8px;
-          padding: 10px;
+          gap: 9px;
+          padding: 11px;
         }
 
-        .how-it-works-wallet-icon {
-          width: 25px;
-          height: 25px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border-radius: 7px;
+        .wallet-icon {
           color: #ff1ac6;
-          background: rgba(255,26,198,.1);
-          font-size: 11px;
+          font-size: 16px;
+          filter: drop-shadow(0 0 8px rgba(255, 26, 198, 0.6));
         }
 
-        .how-it-works-wallet-line {
-          width: 30px;
-          height: 4px;
-          border-radius: 4px;
-          background: rgba(255,255,255,.1);
+        .wallet-lines {
+          display: flex;
+          flex: 1;
+          flex-direction: column;
+          gap: 5px;
         }
 
-        .how-it-works-wallet-line.short {
-          width: 18px;
+        .wallet-lines span {
+          height: 3px;
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.1);
         }
 
-        .how-it-works-orbit {
+        .wallet-lines span:nth-child(1) {
+          width: 75%;
+        }
+
+        .wallet-lines span:nth-child(2) {
+          width: 55%;
+        }
+
+        .wallet-lines span:nth-child(3) {
+          width: 35%;
+        }
+
+        .discover-orbit {
           position: absolute;
-          width: 125px;
-          height: 55px;
-          border: 1px solid rgba(255,26,198,.2);
+          left: 50%;
+          top: 50%;
+          border: 1px solid rgba(255, 255, 255, 0.08);
           border-radius: 50%;
-          transform: rotate(-20deg);
+          transform: translate(-50%, -50%);
         }
 
         .orbit-one {
-          animation: howItWorksOrbit 6s linear infinite;
+          width: 135px;
+          height: 58px;
+          transform:
+            translate(-50%, -50%)
+            rotate(-15deg);
         }
 
         .orbit-two {
-          width: 145px;
-          height: 65px;
-          border-color: rgba(139,92,246,.18);
-          transform: rotate(30deg);
-          animation: howItWorksOrbitReverse 7s linear infinite;
+          width: 155px;
+          height: 68px;
+          border-color: rgba(168, 85, 247, 0.1);
+          transform:
+            translate(-50%, -50%)
+            rotate(25deg);
         }
 
-        .how-it-works-orbit-particle {
+        .orbit-dot {
           position: absolute;
-          width: 5px;
-          height: 5px;
+          top: -4px;
+          left: 50%;
+          width: 7px;
+          height: 7px;
           border-radius: 50%;
+          transform: translateX(-50%);
+        }
+
+        .pink-dot {
           background: #ff1ac6;
-          box-shadow: 0 0 12px #ff1ac6;
+          box-shadow:
+            0 0 8px #ff1ac6,
+            0 0 18px rgba(255, 26, 198, 0.7);
         }
 
-        .orbit-particle-one {
-          animation: howItWorksOrbitParticle 4s linear infinite;
+        .purple-dot {
+          background: #a855f7;
+          box-shadow:
+            0 0 8px #a855f7,
+            0 0 18px rgba(168, 85, 247, 0.7);
         }
 
-        .orbit-particle-two {
-          background: #8b5cf6;
-          box-shadow: 0 0 12px #8b5cf6;
-          animation: howItWorksOrbitParticleReverse 5s linear infinite;
-        }
-
-        .how-it-works-coin {
+        .discover-icon {
           position: absolute;
-          z-index: 5;
-          right: 18%;
-          top: 18%;
-          font-size: 18px;
-          color: #ff1ac6;
-          text-shadow: 0 0 15px rgba(255,26,198,.7);
-          animation: howItWorksCoinFloat 3s ease-in-out infinite;
-        }
-
-        .how-it-works-floating-lock {
-          position: absolute;
-          left: 16%;
-          bottom: 17%;
+          right: 7px;
+          top: 8px;
+          color: rgba(255, 26, 198, 0.6);
           font-size: 13px;
-          color: #8b5cf6;
-          animation: howItWorksLockFloat 3.5s ease-in-out infinite;
         }
 
-        .how-it-works-dashboard {
+        /* ========================================
+           CONNECT VISUAL
+        ======================================== */
+
+        .connect-visual {
           position: relative;
-          z-index: 4;
-          width: 145px;
+          width: 175px;
+          height: 95px;
+        }
+
+        .dashboard-window {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          z-index: 2;
+          width: 155px;
           height: 88px;
-          border: 1px solid rgba(255,255,255,.12);
-          border-radius: 10px;
-          background: #101010;
-          box-shadow: 0 15px 35px rgba(0,0,0,.45);
           overflow: hidden;
-          animation: howItWorksDashboardFloat 4s ease-in-out infinite;
+          transform: translate(-50%, -50%);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 11px;
+          background: rgba(15, 15, 17, 0.95);
+          box-shadow: 0 18px 35px rgba(0, 0, 0, 0.4);
         }
 
-        .how-it-works-browser-top {
+        .dashboard-header {
           display: flex;
+          align-items: center;
           gap: 4px;
-          padding: 6px;
-          border-bottom: 1px solid rgba(255,255,255,.06);
+          height: 17px;
+          padding: 0 7px;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
 
-        .how-it-works-browser-top span {
+        .dashboard-header span {
           width: 4px;
           height: 4px;
           border-radius: 50%;
-          background: rgba(255,255,255,.2);
+          background: rgba(255, 255, 255, 0.2);
         }
 
-        .how-it-works-dashboard-content {
+        .dashboard-body {
           display: flex;
           height: calc(100% - 17px);
         }
 
-        .how-it-works-dashboard-sidebar {
-          width: 25px;
-          border-right: 1px solid rgba(255,255,255,.05);
-          background: rgba(255,255,255,.02);
+        .dashboard-sidebar {
+          display: flex;
+          width: 28px;
+          flex-direction: column;
+          gap: 7px;
+          padding: 8px 7px;
+          border-right: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .how-it-works-dashboard-main {
+        .dashboard-sidebar span {
+          width: 100%;
+          height: 3px;
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.08);
+        }
+
+        .dashboard-sidebar span:first-child {
+          background: rgba(255, 26, 198, 0.5);
+        }
+
+        .dashboard-main {
           flex: 1;
           padding: 9px;
         }
 
-        .dashboard-line {
-          display: block;
-          width: 60%;
-          height: 4px;
-          margin-bottom: 5px;
-          border-radius: 4px;
-          background: rgba(255,255,255,.12);
+        .dashboard-title {
+          width: 48%;
+          height: 5px;
+          margin-bottom: 8px;
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.16);
         }
 
-        .dashboard-line.large {
-          width: 75%;
+        .dashboard-cards {
+          display: flex;
+          gap: 5px;
+          margin-bottom: 8px;
+        }
+
+        .dashboard-cards span {
+          flex: 1;
+          height: 22px;
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          border-radius: 5px;
+          background: rgba(255, 255, 255, 0.035);
+        }
+
+        .dashboard-cards span:first-child {
+          border-color: rgba(255, 26, 198, 0.15);
+          background: rgba(255, 26, 198, 0.06);
+        }
+
+        .dashboard-line {
+          width: 80%;
+          height: 3px;
+          margin-bottom: 5px;
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.08);
         }
 
         .dashboard-line.short {
-          width: 40%;
+          width: 55%;
         }
 
-        .dashboard-boxes {
-          display: flex;
-          gap: 5px;
-          margin-top: 9px;
-        }
-
-        .dashboard-boxes span {
-          flex: 1;
-          height: 22px;
-          border-radius: 4px;
-          background: linear-gradient(135deg,rgba(255,26,198,.18),rgba(139,92,246,.12));
-        }
-
-        .how-it-works-role {
+        .user-node {
           position: absolute;
-          z-index: 6;
-          width: 29px;
-          height: 29px;
+          z-index: 4;
           display: flex;
           align-items: center;
           justify-content: center;
-          border: 1px solid rgba(255,255,255,.12);
-          border-radius: 8px;
-          background: #141414;
-          font-size: 12px;
-        }
-
-        .role-user {
-          left: 8%;
-          top: 25%;
-          color: #8b5cf6;
-          animation: howItWorksRoleFloat 3s ease-in-out infinite;
-        }
-
-        .role-builder {
-          right: 8%;
-          bottom: 18%;
-          color: #ff1ac6;
-          animation: howItWorksRoleFloat 3s ease-in-out infinite .8s;
-        }
-
-        .how-it-works-role-scan {
-          position: absolute;
-          width: 155px;
-          height: 1px;
-          background: linear-gradient(90deg,transparent,#ff1ac6,transparent);
-          animation: howItWorksScan 3s ease-in-out infinite;
-        }
-
-        .how-it-works-beam {
-          position: absolute;
-          width: 65px;
-          height: 1px;
-          background: linear-gradient(90deg,transparent,#8b5cf6,transparent);
-          transform-origin: left;
-        }
-
-        .beam-one {
-          left: 14%;
-          top: 28%;
-          transform: rotate(-20deg);
-          animation: howItWorksBeam 3s ease-in-out infinite;
-        }
-
-        .beam-two {
-          right: 12%;
-          top: 70%;
-          transform: rotate(20deg);
-          animation: howItWorksBeam 3s ease-in-out infinite .7s;
-        }
-
-        .how-it-works-earning-box {
-          position: relative;
-          z-index: 5;
-          width: 155px;
-          min-height: 65px;
-          padding: 10px;
-          display: flex;
-          align-items: center;
-          gap: 9px;
-          border: 1px solid rgba(255,26,198,.18);
-          border-radius: 12px;
-          background: linear-gradient(145deg,rgba(255,26,198,.08),rgba(139,92,246,.06));
-          box-shadow: 0 15px 35px rgba(0,0,0,.4);
-          animation: howItWorksEarningFloat 4s ease-in-out infinite;
-        }
-
-        .earning-icon {
-          width: 32px;
-          height: 32px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-shrink: 0;
-          border-radius: 9px;
-          color: #ff1ac6;
-          background: rgba(255,26,198,.12);
-          font-size: 13px;
-        }
-
-        .earning-text {
-          display: flex;
-          flex-direction: column;
-          gap: 2px;
-        }
-
-        .earning-text span {
-          font-size: 9px;
-          color: #777;
-          text-transform: uppercase;
-          letter-spacing: .12em;
-        }
-
-        .earning-text strong {
-          font-size: 13px;
-          color: white;
-        }
-
-        .earning-check {
-          margin-left: auto;
-          color: #4ade80;
-          font-size: 14px;
-        }
-
-        .energy-ring {
-          position: absolute;
-          border: 1px solid rgba(255,26,198,.16);
+          width: 25px;
+          height: 25px;
+          border: 1px solid rgba(255, 26, 198, 0.2);
           border-radius: 50%;
-        }
-
-        .energy-ring-one {
-          width: 175px;
-          height: 85px;
-          animation: howItWorksEnergy 4s ease-in-out infinite;
-        }
-
-        .energy-ring-two {
-          width: 145px;
-          height: 65px;
-          border-color: rgba(139,92,246,.18);
-          animation: howItWorksEnergy 4s ease-in-out infinite 1s;
-        }
-
-        .earning-zap {
-          position: absolute;
+          background: rgba(20, 20, 22, 0.95);
           color: #ff1ac6;
-          font-size: 13px;
+          font-size: 11px;
+          box-shadow: 0 0 18px rgba(255, 26, 198, 0.12);
         }
 
-        .zap-one {
-          left: 13%;
-          top: 20%;
-          animation: howItWorksZap 2.5s ease-in-out infinite;
+        .user-one {
+          left: -3px;
+          top: 13px;
         }
 
-        .zap-two {
-          right: 13%;
-          bottom: 17%;
-          color: #8b5cf6;
-          animation: howItWorksZap 2.5s ease-in-out infinite .8s;
+        .user-two {
+          right: -3px;
+          bottom: 13px;
+          color: #a855f7;
+          border-color: rgba(168, 85, 247, 0.2);
         }
 
-        .earning-mini-particle {
+        .connection-line {
           position: absolute;
+          z-index: 1;
+          height: 1px;
+          width: 35px;
+          background: linear-gradient(
+            90deg,
+            rgba(255, 26, 198, 0),
+            rgba(255, 26, 198, 0.4)
+          );
+        }
+
+        .line-one {
+          left: 3px;
+          top: 29px;
+          transform: rotate(20deg);
+        }
+
+        .line-two {
+          right: 3px;
+          bottom: 29px;
+          transform: rotate(20deg);
+          background: linear-gradient(
+            90deg,
+            rgba(168, 85, 247, 0.4),
+            rgba(168, 85, 247, 0)
+          );
+        }
+
+        /* ========================================
+           COMPLETE VISUAL
+        ======================================== */
+
+        .complete-visual {
+          position: relative;
+          width: 175px;
+          height: 90px;
+        }
+
+        .task-window {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          z-index: 3;
+          width: 155px;
+          height: 65px;
+          padding: 9px 11px;
+          transform: translate(-50%, -50%);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 11px;
+          background: rgba(15, 15, 17, 0.94);
+          box-shadow: 0 18px 35px rgba(0, 0, 0, 0.4);
+          backdrop-filter: blur(15px);
+        }
+
+        .task-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          color: #5f626a;
+          font-size: 7px;
+          letter-spacing: 0.12em;
+        }
+
+        .task-status {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          color: #6d7280;
+          font-size: 6px;
+        }
+
+        .task-status span {
           width: 4px;
           height: 4px;
           border-radius: 50%;
           background: #ff1ac6;
-          box-shadow: 0 0 10px #ff1ac6;
+          box-shadow: 0 0 7px #ff1ac6;
         }
 
-        .mini-one {
-          left: 20%;
-          bottom: 20%;
-          animation: howItWorksMiniParticle 3s ease-in-out infinite;
+        .task-title {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          margin-top: 7px;
         }
 
-        .mini-two {
-          right: 20%;
-          top: 15%;
-          animation: howItWorksMiniParticle 3.5s ease-in-out infinite .6s;
+        .task-title span {
+          display: block;
+          width: 60%;
+          height: 4px;
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.15);
         }
 
-        .mini-three {
-          right: 28%;
-          bottom: 8%;
-          background: #8b5cf6;
-          box-shadow: 0 0 10px #8b5cf6;
-          animation: howItWorksMiniParticle 4s ease-in-out infinite 1s;
+        .task-title span:last-child {
+          width: 38%;
         }
 
-        .how-it-works-connection-line {
+        .task-progress {
+          width: 100%;
+          height: 3px;
+          margin-top: 8px;
+          overflow: hidden;
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.06);
+        }
+
+        .task-progress div {
+          width: 78%;
+          height: 100%;
+          border-radius: inherit;
+          background: linear-gradient(
+            90deg,
+            #ff1ac6,
+            #a855f7
+          );
+          box-shadow: 0 0 10px rgba(255, 26, 198, 0.4);
+        }
+
+        .task-bottom {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          margin-top: 7px;
+          color: #6b7280;
+          font-size: 6px;
+        }
+
+        .task-bottom svg {
+          color: #ff1ac6;
+          font-size: 9px;
+        }
+
+        .completion-ring {
           position: absolute;
-          right: -25px;
+          left: 50%;
           top: 50%;
-          width: 25px;
-          height: 1px;
-          background: linear-gradient(90deg,rgba(255,26,198,.3),transparent);
+          border: 1px solid rgba(255, 26, 198, 0.1);
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
         }
 
-        .how-it-works-bottom {
+        .ring-one {
+          width: 165px;
+          height: 82px;
+          transform:
+            translate(-50%, -50%)
+            rotate(-12deg);
+        }
+
+        .ring-two {
+          width: 145px;
+          height: 100px;
+          border-color: rgba(168, 85, 247, 0.08);
+          transform:
+            translate(-50%, -50%)
+            rotate(25deg);
+        }
+
+        .completion-check {
+          position: absolute;
+          right: 1px;
+          top: 3px;
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 8px;
-          flex-wrap: wrap;
-          padding: 9px 14px;
-          border: 1px solid rgba(255,255,255,.06);
-          border-radius: 999px;
-          background: rgba(255,255,255,.025);
-          color: #666;
-          font-size: 10px;
+          width: 24px;
+          height: 24px;
+          border: 1px solid rgba(255, 26, 198, 0.18);
+          border-radius: 50%;
+          background: rgba(255, 26, 198, 0.08);
+          color: #ff1ac6;
+          font-size: 11px;
+          box-shadow: 0 0 18px rgba(255, 26, 198, 0.15);
         }
 
-        .how-it-works-bottom svg {
+        /* ========================================
+           EARN VISUAL
+        ======================================== */
+
+        .earn-visual {
+          position: relative;
+          width: 175px;
+          height: 90px;
+        }
+
+        .earning-box {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          z-index: 3;
+          display: flex;
+          align-items: center;
+          gap: 9px;
+          width: 160px;
+          height: 65px;
+          padding: 10px;
+          transform: translate(-50%, -50%);
+          border: 1px solid rgba(255, 26, 198, 0.14);
+          border-radius: 12px;
+          background: rgba(16, 16, 17, 0.95);
+          box-shadow:
+            0 18px 35px rgba(0, 0, 0, 0.45),
+            0 0 30px rgba(255, 26, 198, 0.05);
+          backdrop-filter: blur(15px);
+        }
+
+        .earning-icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 34px;
+          height: 34px;
+          flex-shrink: 0;
+          border: 1px solid rgba(255, 26, 198, 0.15);
+          border-radius: 10px;
+          background: rgba(255, 26, 198, 0.08);
           color: #ff1ac6;
+          box-shadow: 0 0 18px rgba(255, 26, 198, 0.08);
+        }
+
+        .earning-info {
+          display: flex;
+          flex-direction: column;
+          gap: 3px;
+        }
+
+        .earning-info span {
+          color: #666a74;
+          font-size: 7px;
+          letter-spacing: 0.14em;
+        }
+
+        .earning-info strong {
+          color: white;
           font-size: 12px;
         }
 
-        .how-it-works-bottom span {
-          margin-right: 5px;
+        .energy-ring {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          border: 1px solid rgba(255, 26, 198, 0.1);
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
         }
 
-        .how-it-works-card-1.how-it-works-visible {
-          animation: howItWorksCardOne 1s cubic-bezier(.22,1,.36,1) forwards;
+        .energy-one {
+          width: 175px;
+          height: 85px;
+          transform:
+            translate(-50%, -50%)
+            rotate(-12deg);
         }
 
-        .how-it-works-card-2.how-it-works-visible {
-          animation: howItWorksCardTwo 1s cubic-bezier(.22,1,.36,1) .15s forwards;
+        .energy-two {
+          width: 145px;
+          height: 65px;
+          border-color: rgba(168, 85, 247, 0.09);
+          transform:
+            translate(-50%, -50%)
+            rotate(28deg);
         }
 
-        .how-it-works-card-3.how-it-works-visible {
-          animation: howItWorksCardThree 1s cubic-bezier(.22,1,.36,1) .3s forwards;
+        .energy-particle {
+          position: absolute;
+          width: 5px;
+          height: 5px;
+          border-radius: 50%;
         }
 
-        @keyframes howItWorksCardOne {
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+        .particle-one {
+          top: 3px;
+          left: 24px;
+          background: #ff1ac6;
+          box-shadow: 0 0 10px #ff1ac6;
         }
 
-        @keyframes howItWorksCardTwo {
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+        .particle-two {
+          right: 20px;
+          bottom: 7px;
+          background: #a855f7;
+          box-shadow: 0 0 10px #a855f7;
         }
 
-        @keyframes howItWorksCardThree {
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+        .particle-three {
+          right: 3px;
+          top: 24px;
+          background: white;
+          box-shadow: 0 0 9px white;
         }
 
-        @keyframes howItWorksGlow {
-          0%,100% { transform: translate(0,0) scale(1); }
-          50% { transform: translate(20px,-15px) scale(1.08); }
+        .earn-shield {
+          position: absolute;
+          left: 1px;
+          bottom: 2px;
+          color: rgba(255, 26, 198, 0.55);
+          font-size: 13px;
         }
 
-        @keyframes howItWorksParticle {
-          0%,100% { opacity: .2; transform: translateY(0); }
-          50% { opacity: .8; transform: translateY(-12px); }
-        }
+        /* ========================================
+           DESKTOP SCROLL REVEAL
+           ONLY DESKTOP
+        ======================================== */
 
-        @keyframes howItWorksIconPulse {
-          0%,100% { transform: scale(1); }
-          50% { transform: scale(1.2); }
-        }
-
-        @keyframes howItWorksWalletFloat {
-          0%,100% { transform: translateY(0); }
-          50% { transform: translateY(-6px); }
-        }
-
-        @keyframes howItWorksOrbit {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-
-        @keyframes howItWorksOrbitReverse {
-          from { transform: rotate(360deg); }
-          to { transform: rotate(0deg); }
-        }
-
-        @keyframes howItWorksOrbitParticle {
-          0% { transform: rotate(0deg) translateX(62px) rotate(0deg); }
-          100% { transform: rotate(360deg) translateX(62px) rotate(-360deg); }
-        }
-
-        @keyframes howItWorksOrbitParticleReverse {
-          0% { transform: rotate(360deg) translateX(72px) rotate(-360deg); }
-          100% { transform: rotate(0deg) translateX(72px) rotate(0deg); }
-        }
-
-        @keyframes howItWorksCoinFloat {
-          0%,100% { transform: translateY(0) rotate(0deg); }
-          50% { transform: translateY(-9px) rotate(15deg); }
-        }
-
-        @keyframes howItWorksLockFloat {
-          0%,100% { transform: translateY(0); }
-          50% { transform: translateY(-7px); }
-        }
-
-        @keyframes howItWorksDashboardFloat {
-          0%,100% { transform: translateY(0); }
-          50% { transform: translateY(-5px); }
-        }
-
-        @keyframes howItWorksRoleFloat {
-          0%,100% { transform: translateY(0); }
-          50% { transform: translateY(-6px); }
-        }
-
-        @keyframes howItWorksScan {
-          0%,100% { opacity: 0; transform: translateY(-30px); }
-          50% { opacity: 1; transform: translateY(30px); }
-        }
-
-        @keyframes howItWorksBeam {
-          0%,100% { opacity: .2; transform: scaleX(.6) rotate(20deg); }
-          50% { opacity: 1; transform: scaleX(1) rotate(20deg); }
-        }
-
-        @keyframes howItWorksEarningFloat {
-          0%,100% { transform: translateY(0); }
-          50% { transform: translateY(-6px); }
-        }
-
-        @keyframes howItWorksEnergy {
-          0%,100% { transform: scale(.9) rotate(0deg); opacity: .3; }
-          50% { transform: scale(1.05) rotate(8deg); opacity: .8; }
-        }
-
-        @keyframes howItWorksZap {
-          0%,100% { opacity: .25; transform: scale(.8); }
-          50% { opacity: 1; transform: scale(1.15); }
-        }
-
-        @keyframes howItWorksMiniParticle {
-          0%,100% { opacity: .2; transform: translate(0,0); }
-          50% { opacity: 1; transform: translate(8px,-10px); }
-        }
-
-        @media (max-width: 768px) {
+        @media (min-width: 1024px) {
           .how-it-works-card {
-            min-height: 320px;
+            opacity: 0;
+            transform: translateX(80px);
           }
 
-          .how-it-works-visual {
-            height: 135px;
+          .how-it-works-visible .how-it-works-card {
+            animation:
+              howItWorksSlideIn
+              0.8s
+              cubic-bezier(0.22, 1, 0.36, 1)
+              forwards;
           }
 
-          .how-it-works-connection-line {
-            display: none;
+          .how-it-works-visible .how-it-works-card:nth-child(1) {
+            animation-delay: 0.1s;
+          }
+
+          .how-it-works-visible .how-it-works-card:nth-child(2) {
+            animation-delay: 0.3s;
+          }
+
+          .how-it-works-visible .how-it-works-card:nth-child(3) {
+            animation-delay: 0.5s;
+          }
+
+          .how-it-works-visible .how-it-works-card:nth-child(4) {
+            animation-delay: 0.7s;
           }
         }
+
+        @keyframes howItWorksSlideIn {
+          0% {
+            opacity: 0;
+            transform: translateX(80px);
+          }
+
+          65% {
+            opacity: 1;
+            transform: translateX(-6px);
+          }
+
+          100% {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
+        /* ========================================
+           TABLET
+        ======================================== */
+
+        @media (max-width: 1023px) {
+          .how-it-works-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+
+          .how-it-works-card {
+            opacity: 1;
+            transform: none;
+          }
+        }
+
+        /* ========================================
+           MOBILE
+        ======================================== */
+
+        @media (max-width: 639px) {
+          .how-it-works-section {
+            padding: 60px 16px;
+          }
+
+          .how-it-works-header {
+            margin-bottom: 35px;
+          }
+
+          .how-it-works-grid {
+            grid-template-columns: 1fr;
+            gap: 14px;
+          }
+
+          .how-it-works-card {
+            min-height: 350px;
+          }
+        }
+
+        /* ========================================
+           REDUCED MOTION
+        ======================================== */
 
         @media (prefers-reduced-motion: reduce) {
-          .how-it-works-section *,
-          .how-it-works-section *::before,
-          .how-it-works-section *::after {
-            animation-duration: .01ms !important;
-            animation-iteration-count: 1 !important;
+          .how-it-works-card {
+            opacity: 1 !important;
+            transform: none !important;
+            animation: none !important;
           }
         }
       `}</style>
-    </>
+    </section>
   );
-};
-
-export default HowItWorks;
+}
