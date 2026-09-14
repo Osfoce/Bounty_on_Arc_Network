@@ -158,7 +158,7 @@ export default function Hero() {
               {/* =================================================
                   TYPING TEXT
               ================================================= */}
-              <div className="relative mt-1 h-[52px] overflow-hidden sm:h-[64px] md:h-[70px]">
+              <div className="relative mt-1 h-[52px] overflow-hidden sm:h-[64px] md:h-[80px]">
                 <div className="hero-changing-text absolute left-1/2 top-0 flex -translate-x-1/2 items-center whitespace-nowrap text-3xl font-bold leading-[1] sm:left-0 sm:translate-x-0 sm:text-4xl md:text-6xl lg:text-[4.2rem]">
                   <span className="bg-gradient-to-r from-[#FF1AC6] via-pink-400 to-purple-500 bg-clip-text text-transparent">
                     {displayText}
@@ -172,7 +172,7 @@ export default function Hero() {
             {/* =================================================
                 DESCRIPTION
             ================================================= */}
-            <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-gray-400 sm:mx-0 sm:text-base">
+            <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-gray-400 sm:mx-0 sm:text-base md:mt-4">
               Complete quests and earn cryptocurrency, tokens, and
               digital rewards. Post bounties and get quality work
               done — fully on-chain.
