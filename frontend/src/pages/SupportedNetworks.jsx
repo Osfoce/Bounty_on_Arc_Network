@@ -1,11 +1,11 @@
 
 import React from "react";
+
 import eth2 from "../assets/images/eth2.png";
 import ctc from "../assets/images/ctc.jpg";
 import injecoin from "../assets/images/injecoin.png";
 
-
-function SupportedNetworks({ injecoin, eth2, ctc }) {
+function SupportedNetworks() {
   return (
     <section className="relative z-10 px-6 md:px-10 lg:px-16 my-14">
       <style>

@@ -13,9 +13,9 @@ import {
   FiBriefcase,
 } from "react-icons/fi";
 
-import hero from "../assets/images/hero.jpg";
-import Footer from "../components/Layout/Footer";
+
 import NavBar from "../components/Layout/NavBar";
+import hero from "../assets/images/hero.jpg";
 import LiveTricker from "../components/Layout/LiveTricker";
 import BountyCard from "../components/Bounty/BountyCard";
 import Hero from "./Hero";
@@ -24,8 +24,8 @@ import PlatformStats from "./PlatformStats";
 import Features from "./Features";
 import Testimonials from "./Testimonials";
 import SupportedNetworks from "./SupportedNetworks";
-
-
+import CallToAction from "./CallToAction";
+import Footer from "../components/Layout/Footer";
 
 function LandingPage() {
   const [featuredBounties, setFeaturedBounties] = useState([]);
@@ -340,116 +340,10 @@ function LandingPage() {
       {/* =========================================
           FINAL CTA
       ========================================== */}
-      <section className="relative z-10 mx-6 md:mx-10 lg:mx-16 my-12">
-        <div className="relative overflow-hidden rounded-3xl border border-[#FF1AC6]/20 bg-[#0d0d0d]">
-          <div className="absolute -top-24 left-1/2 h-56 w-56 -translate-x-1/2 rounded-full bg-[#FF1AC6]/15 blur-[100px]" />
+      <div>
+        <CallToAction />
+      </div>
 
-          <div className="absolute -bottom-28 -left-16 h-56 w-56 rounded-full bg-purple-600/10 blur-[100px]" />
-
-          <div className="absolute -bottom-28 -right-16 h-56 w-56 rounded-full bg-[#FF1AC6]/10 blur-[100px]" />
-
-          <div
-            className="absolute inset-0 opacity-[0.025]"
-            style={{
-              backgroundImage:
-                "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
-              backgroundSize: "45px 45px",
-            }}
-          />
-
-          <div className="absolute -left-20 top-1/2 h-40 w-40 -translate-y-1/2 rounded-full border border-[#FF1AC6]/10" />
-
-          <div className="absolute -left-12 top-1/2 h-24 w-24 -translate-y-1/2 rounded-full border border-[#FF1AC6]/10" />
-
-          <div className="absolute -right-20 top-1/2 h-40 w-40 -translate-y-1/2 rounded-full border border-purple-500/10" />
-
-          <div className="absolute -right-12 top-1/2 h-24 w-24 -translate-y-1/2 rounded-full border border-purple-500/10" />
-
-          <div className="relative z-10 px-6 py-9 md:px-10 md:py-11 lg:px-16">
-            <div className="mb-4 flex justify-center">
-              <div className="inline-flex items-center gap-2 rounded-full border border-[#FF1AC6]/20 bg-[#FF1AC6]/5 px-3 py-1.5">
-                <span className="relative flex h-1.5 w-1.5">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FF1AC6] opacity-60" />
-
-                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#FF1AC6]" />
-                </span>
-
-                <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#FF1AC6]">
-                  Start Building. Start Earning.
-                </span>
-              </div>
-            </div>
-
-            <h2 className="mx-auto max-w-3xl text-center text-3xl font-extrabold leading-tight tracking-tight text-white md:text-4xl lg:text-5xl">
-              Turn Your{" "}
-              <span className="bg-gradient-to-r from-[#FF1AC6] via-pink-400 to-purple-500 bg-clip-text text-transparent">
-                Skills
-              </span>{" "}
-              Into Rewards.
-            </h2>
-
-            <p className="mx-auto mt-3 max-w-xl text-center text-sm leading-relaxed text-gray-400 md:text-base">
-              Discover Web3 opportunities, complete meaningful tasks, and get
-              rewarded in crypto. Or create a bounty and find skilled
-              contributors ready to get the job done.
-            </p>
-
-            <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Link
-                to="/dashboard"
-                className="group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-[#FF1AC6] px-7 py-3 text-sm font-bold text-white shadow-[0_0_25px_rgba(255,26,198,0.2)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#ff32ce] hover:shadow-[0_0_35px_rgba(255,26,198,0.35)] sm:w-auto"
-              >
-                <span className="relative z-10">
-                  Explore Bounties
-                </span>
-
-                <span className="relative z-10 text-lg transition-transform duration-300 group-hover:translate-x-1">
-                  →
-                </span>
-
-                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
-              </Link>
-
-              <Link
-                to="/create"
-                className="group inline-flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-7 py-3 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#FF1AC6]/40 hover:bg-[#FF1AC6]/5 sm:w-auto"
-              >
-                <span>Create a Bounty</span>
-
-                <span className="text-gray-500 transition-colors duration-300 group-hover:text-[#FF1AC6]">
-                  +
-                </span>
-              </Link>
-            </div>
-
-            <div className="mx-auto mt-6 flex max-w-2xl flex-wrap items-center justify-center gap-x-6 gap-y-2 border-t border-white/[0.06] pt-4">
-              <div className="flex items-center gap-2 text-[11px] text-gray-500">
-                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-green-500/10 text-green-400">
-                  ✓
-                </span>
-
-                Secure Web3 Payments
-              </div>
-
-              <div className="flex items-center gap-2 text-[11px] text-gray-500">
-                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#FF1AC6]/10 text-[#FF1AC6]">
-                  ⚡
-                </span>
-
-                Fast Rewards
-              </div>
-
-              <div className="flex items-center gap-2 text-[11px] text-gray-500">
-                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-purple-500/10 text-purple-400">
-                  ◇
-                </span>
-
-                Multi-Chain
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* =========================================
           FOOTER
