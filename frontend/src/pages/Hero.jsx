@@ -126,7 +126,7 @@ export default function Hero() {
         <div className="grid w-full items-center gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-8">
 
           {/* =================================================
-              LEFT SIDE
+              LEFT SIDE — UNCHANGED
           ================================================= */}
           <div className="max-w-2xl text-center sm:text-left">
 
@@ -143,9 +143,7 @@ export default function Hero() {
               </span>
             </div>
 
-            {/* =================================================
-                HERO TITLE
-            ================================================= */}
+            {/* HERO TITLE */}
             <div className="space-y-0">
               <h1 className="text-4xl font-bold leading-[0.98] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[4.2rem]">
                 Make a
@@ -155,9 +153,7 @@ export default function Hero() {
                 living from
               </h1>
 
-              {/* =================================================
-                  TYPING TEXT
-              ================================================= */}
+              {/* TYPING TEXT */}
               <div className="relative mt-1 h-[52px] overflow-hidden sm:h-[64px] md:h-[80px]">
                 <div className="hero-changing-text absolute left-1/2 top-0 flex -translate-x-1/2 items-center whitespace-nowrap text-3xl font-bold leading-[1] sm:left-0 sm:translate-x-0 sm:text-4xl md:text-6xl lg:text-[4.2rem]">
                   <span className="bg-gradient-to-r from-[#FF1AC6] via-pink-400 to-purple-500 bg-clip-text text-transparent">
@@ -169,18 +165,14 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* =================================================
-                DESCRIPTION
-            ================================================= */}
+            {/* DESCRIPTION */}
             <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-gray-400 sm:mx-0 sm:text-base md:mt-4">
               Complete quests and earn cryptocurrency, tokens, and
               digital rewards. Post bounties and get quality work
               done — fully on-chain.
             </p>
 
-            {/* =================================================
-                BUTTONS
-            ================================================= */}
+            {/* BUTTONS */}
             <div className="mt-6 flex flex-wrap justify-center gap-3 sm:justify-start">
               <Link
                 to="/dashboard"
@@ -205,9 +197,7 @@ export default function Hero() {
               </Link>
             </div>
 
-            {/* =================================================
-                BOTTOM INDICATORS
-            ================================================= */}
+            {/* BOTTOM INDICATORS */}
             <div className="mt-6 flex items-center justify-center gap-3 sm:justify-start">
               <div className="flex gap-1.5">
                 {heroMessages.map((_, index) => (
@@ -229,40 +219,80 @@ export default function Hero() {
           </div>
 
           {/* =================================================
-              RIGHT SIDE — PROFESSIONAL 3D ORBIT
+              RIGHT SIDE — UPGRADED 3D ORBIT SYSTEM
           ================================================= */}
           <div className="relative flex min-h-[360px] items-center justify-center sm:min-h-[430px] lg:min-h-[500px]">
 
-            {/* ATMOSPHERIC GLOW */}
-            <div className="absolute h-[250px] w-[250px] rounded-full bg-[#FF1AC6]/10 blur-[90px]" />
+            {/* =================================================
+                ATMOSPHERIC ENERGY
+            ================================================= */}
+            <div className="orbit-energy absolute h-[280px] w-[280px] rounded-full bg-[#FF1AC6]/10 blur-[100px] sm:h-[350px] sm:w-[350px]" />
 
-            <div className="absolute h-[190px] w-[190px] rounded-full bg-purple-600/10 blur-[70px]" />
+            <div className="orbit-energy-two absolute h-[210px] w-[210px] rounded-full bg-purple-600/10 blur-[80px] sm:h-[270px] sm:w-[270px]" />
+
+            {/* Subtle center pulse */}
+            <div className="core-pulse absolute h-[180px] w-[180px] rounded-full border border-[#FF1AC6]/5 sm:h-[220px] sm:w-[220px]" />
 
             {/* =================================================
-                ORBIT SYSTEM
+                3D ORBIT CONTAINER
             ================================================= */}
-            <div className="absolute h-[330px] w-[330px] sm:h-[420px] sm:w-[420px] lg:h-[460px] lg:w-[460px]">
+            <div className="orbit-system absolute h-[330px] w-[330px] sm:h-[420px] sm:w-[420px] lg:h-[460px] lg:w-[460px]">
 
-              {/* OUTER ORBIT */}
-              <div className="orbit orbit-outer absolute inset-0 rounded-full border border-white/[0.07]">
+              {/* =================================================
+                  OUTER ORBIT
+              ================================================= */}
+              <div className="orbit orbit-outer absolute inset-0 rounded-full border border-white/[0.075]">
                 <span className="orbit-node node-pink" />
+
+                <span className="orbit-particle particle-one" />
+                <span className="orbit-particle particle-two" />
               </div>
 
-              {/* MIDDLE ORBIT */}
+              {/* =================================================
+                  SECOND OUTER ORBIT
+              ================================================= */}
+              <div className="orbit orbit-outer-secondary absolute inset-[14px] rounded-full border border-purple-400/[0.045]">
+                <span className="orbit-node node-purple-secondary" />
+              </div>
+
+              {/* =================================================
+                  MIDDLE ORBIT
+              ================================================= */}
               <div className="orbit orbit-middle absolute inset-[28px] rounded-full border border-[#FF1AC6]/10 sm:inset-[35px]">
                 <span className="orbit-node node-purple" />
+
+                <span className="orbit-particle particle-three" />
               </div>
 
-              {/* INNER ORBIT */}
-              <div className="orbit orbit-inner absolute inset-[58px] rounded-full border border-white/[0.05] sm:inset-[65px]">
+              {/* =================================================
+                  INNER ORBIT
+              ================================================= */}
+              <div className="orbit orbit-inner absolute inset-[58px] rounded-full border border-white/[0.055] sm:inset-[65px]">
                 <span className="orbit-node node-white" />
+
+                <span className="orbit-particle particle-four" />
               </div>
 
-              {/* HORIZONTAL ORBIT */}
-              <div className="orbit-horizontal absolute left-[-18px] right-[-18px] top-1/2 h-[125px] -translate-y-1/2 rounded-[50%] border border-[#FF1AC6]/10 sm:left-[-25px] sm:right-[-25px] sm:h-[150px]" />
+              {/* =================================================
+                  HORIZONTAL ORBIT
+              ================================================= */}
+              <div className="orbit-horizontal absolute left-[-18px] right-[-18px] top-1/2 h-[125px] -translate-y-1/2 rounded-[50%] border border-[#FF1AC6]/10 sm:left-[-25px] sm:right-[-25px] sm:h-[150px]">
+                <span className="horizontal-particle" />
+              </div>
 
-              {/* DIAGONAL ORBIT */}
-              <div className="orbit-diagonal absolute left-[15px] right-[15px] top-1/2 h-[190px] -translate-y-1/2 rounded-[50%] border border-purple-500/10 sm:left-[20px] sm:right-[20px] sm:h-[220px]" />
+              {/* =================================================
+                  DIAGONAL ORBIT
+              ================================================= */}
+              <div className="orbit-diagonal absolute left-[15px] right-[15px] top-1/2 h-[190px] -translate-y-1/2 rounded-[50%] border border-purple-500/10 sm:left-[20px] sm:right-[20px] sm:h-[220px]">
+                <span className="diagonal-particle" />
+              </div>
+
+              {/* =================================================
+                  FINE ENERGY RINGS
+              ================================================= */}
+              <div className="energy-ring energy-ring-one absolute inset-[80px] rounded-full" />
+
+              <div className="energy-ring energy-ring-two absolute inset-[95px] rounded-full" />
             </div>
 
             {/* =================================================
@@ -270,13 +300,20 @@ export default function Hero() {
             ================================================= */}
             <div className="hero-core relative z-20 h-[165px] w-[165px] sm:h-[205px] sm:w-[205px] lg:h-[225px] lg:w-[225px]">
 
-              {/* OUTER GLOW */}
-              <div className="absolute -inset-8 rounded-full bg-[#FF1AC6]/10 blur-[45px]" />
+              {/* Deep glow */}
+              <div className="absolute -inset-12 rounded-full bg-[#FF1AC6]/10 blur-[55px]" />
 
-              {/* GLASS OUTER SHELL */}
+              <div className="absolute -inset-6 rounded-full border border-[#FF1AC6]/5 shadow-[0_0_80px_rgba(255,26,198,0.08)]" />
+
+              {/* =================================================
+                  GLASS OUTER SHELL
+              ================================================= */}
               <div className="absolute inset-0 rounded-full border border-white/10 bg-white/[0.025] shadow-[inset_0_0_40px_rgba(255,255,255,0.025),0_25px_60px_rgba(0,0,0,0.7)] backdrop-blur-xl" />
 
-              {/* INNER RINGS */}
+              {/* Rotating shell */}
+              <div className="core-shell absolute inset-[6px] rounded-full border border-[#FF1AC6]/10" />
+
+              {/* Inner rings */}
               <div className="absolute inset-[12px] rounded-full border border-[#FF1AC6]/20" />
 
               <div className="absolute inset-[22px] rounded-full border border-purple-500/10" />
@@ -284,33 +321,50 @@ export default function Hero() {
               {/* =================================================
                   3D SPHERE
               ================================================= */}
-              <div className="absolute inset-[34px] overflow-hidden rounded-full bg-gradient-to-br from-[#ff4bd1]/30 via-[#161116] to-purple-900/40 shadow-[inset_-15px_-18px_30px_rgba(0,0,0,0.8),inset_10px_8px_20px_rgba(255,255,255,0.08),0_0_40px_rgba(255,26,198,0.18)]">
+              <div className="hero-sphere absolute inset-[34px] overflow-hidden rounded-full bg-gradient-to-br from-[#ff4bd1]/35 via-[#161116] to-purple-900/45 shadow-[inset_-18px_-20px_35px_rgba(0,0,0,0.85),inset_12px_10px_25px_rgba(255,255,255,0.08),0_0_50px_rgba(255,26,198,0.2)]">
 
-                {/* SPHERE HIGHLIGHT */}
-                <div className="absolute left-[18%] top-[15%] h-[35%] w-[35%] rounded-full bg-white/10 blur-lg" />
+                {/* Sphere atmospheric layer */}
+                <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_30%_25%,rgba(255,255,255,0.16),transparent_25%),radial-gradient(circle_at_70%_75%,rgba(168,85,247,0.18),transparent_45%)]" />
 
-                {/* SPHERE GRID */}
-                <div className="absolute inset-3 overflow-hidden rounded-full opacity-40">
-                  <div className="sphere-grid absolute inset-[-40%]" />
+                {/* Sphere highlight */}
+                <div className="sphere-highlight absolute left-[13%] top-[10%] h-[38%] w-[38%] rounded-full bg-white/10 blur-xl" />
+
+                {/* Secondary highlight */}
+                <div className="sphere-highlight-two absolute bottom-[14%] right-[12%] h-[20%] w-[20%] rounded-full bg-[#FF1AC6]/15 blur-lg" />
+
+                {/* Sphere grid */}
+                <div className="absolute inset-3 overflow-hidden rounded-full opacity-50">
+                  <div className="sphere-grid absolute inset-[-45%]" />
                 </div>
 
-                {/* CENTER ICON */}
+                {/* Curved orbital lines */}
+                <div className="sphere-line sphere-line-one absolute left-[-20%] top-[45%] h-[35%] w-[140%] rounded-[50%] border border-white/10" />
+
+                <div className="sphere-line sphere-line-two absolute left-[-20%] top-[30%] h-[55%] w-[140%] rounded-[50%] border border-[#FF1AC6]/10" />
+
+                {/* =================================================
+                    CORE ICON
+                ================================================= */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-[#0d0d0e]/80 shadow-[0_0_30px_rgba(255,26,198,0.2)] backdrop-blur-xl sm:h-16 sm:w-16">
+                  <div className="core-icon-wrap flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-[#0d0d0e]/80 shadow-[0_0_30px_rgba(255,26,198,0.2)] backdrop-blur-xl sm:h-16 sm:w-16">
                     <FiZap
                       size={24}
-                      className="text-[#FF1AC6] drop-shadow-[0_0_15px_rgba(255,26,198,0.7)]"
+                      className="core-icon text-[#FF1AC6] drop-shadow-[0_0_15px_rgba(255,26,198,0.7)]"
                     />
                   </div>
                 </div>
               </div>
 
-              {/* CORE DOTS */}
+              {/* =================================================
+                  CORE FLOATING DOTS
+              ================================================= */}
               <span className="core-dot core-dot-one" />
 
               <span className="core-dot core-dot-two" />
 
               <span className="core-dot core-dot-three" />
+
+              <span className="core-dot core-dot-four" />
             </div>
 
             {/* =================================================
@@ -323,7 +377,7 @@ export default function Hero() {
                   Network
                 </span>
 
-                <span className="h-1.5 w-1.5 rounded-full bg-green-400 shadow-[0_0_8px_rgba(74,222,128,0.8)]" />
+                <span className="network-status h-1.5 w-1.5 rounded-full bg-green-400 shadow-[0_0_8px_rgba(74,222,128,0.8)]" />
               </div>
 
               <div className="text-sm font-semibold text-white">
@@ -342,8 +396,7 @@ export default function Hero() {
             <div className="orbit-reward-card absolute bottom-[5%] left-[0%] z-30 w-[140px] rounded-2xl border border-white/10 bg-[#101011]/85 p-3 shadow-[0_20px_45px_rgba(0,0,0,0.5)] backdrop-blur-xl sm:left-[3%] sm:w-[155px]">
 
               <div className="flex items-center gap-2">
-
-                <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#FF1AC6]/10">
+                <div className="reward-icon flex h-8 w-8 items-center justify-center rounded-xl bg-[#FF1AC6]/10">
                   <FiDollarSign
                     size={14}
                     className="text-[#FF1AC6]"
@@ -519,35 +572,50 @@ export default function Hero() {
 
 
         /* =================================================
-           3D ORBITS
+           3D ORBIT SYSTEM
         ================================================= */
+
+        .orbit-system {
+          transform-style: preserve-3d;
+          perspective: 1100px;
+        }
 
         .orbit {
           transform-style: preserve-3d;
+          will-change: transform;
         }
 
         .orbit-outer {
           transform:
-            perspective(900px)
-            rotateX(68deg)
+            perspective(1000px)
+            rotateX(67deg)
             rotateZ(-18deg);
 
-          animation: outerOrbit 14s linear infinite;
+          animation: outerOrbit 15s linear infinite;
+        }
+
+        .orbit-outer-secondary {
+          transform:
+            perspective(1000px)
+            rotateX(67deg)
+            rotateZ(18deg);
+
+          animation: secondaryOuterOrbit 19s linear infinite reverse;
         }
 
         .orbit-middle {
           transform:
-            perspective(900px)
-            rotateX(68deg)
+            perspective(1000px)
+            rotateX(66deg)
             rotateZ(32deg);
 
-          animation: middleOrbit 10s linear infinite reverse;
+          animation: middleOrbit 11s linear infinite reverse;
         }
 
         .orbit-inner {
           transform:
-            perspective(900px)
-            rotateX(68deg)
+            perspective(1000px)
+            rotateX(64deg)
             rotateZ(-55deg);
 
           animation: innerOrbit 8s linear infinite;
@@ -556,31 +624,47 @@ export default function Hero() {
         @keyframes outerOrbit {
           from {
             transform:
-              perspective(900px)
-              rotateX(68deg)
+              perspective(1000px)
+              rotateX(67deg)
               rotateZ(-18deg);
           }
 
           to {
             transform:
-              perspective(900px)
-              rotateX(68deg)
+              perspective(1000px)
+              rotateX(67deg)
               rotateZ(342deg);
+          }
+        }
+
+        @keyframes secondaryOuterOrbit {
+          from {
+            transform:
+              perspective(1000px)
+              rotateX(67deg)
+              rotateZ(18deg);
+          }
+
+          to {
+            transform:
+              perspective(1000px)
+              rotateX(67deg)
+              rotateZ(-342deg);
           }
         }
 
         @keyframes middleOrbit {
           from {
             transform:
-              perspective(900px)
-              rotateX(68deg)
+              perspective(1000px)
+              rotateX(66deg)
               rotateZ(32deg);
           }
 
           to {
             transform:
-              perspective(900px)
-              rotateX(68deg)
+              perspective(1000px)
+              rotateX(66deg)
               rotateZ(-328deg);
           }
         }
@@ -588,15 +672,15 @@ export default function Hero() {
         @keyframes innerOrbit {
           from {
             transform:
-              perspective(900px)
-              rotateX(68deg)
+              perspective(1000px)
+              rotateX(64deg)
               rotateZ(-55deg);
           }
 
           to {
             transform:
-              perspective(900px)
-              rotateX(68deg)
+              perspective(1000px)
+              rotateX(64deg)
               rotateZ(305deg);
           }
         }
@@ -614,6 +698,7 @@ export default function Hero() {
           height: 8px;
           border-radius: 9999px;
           transform: translateX(-50%);
+          z-index: 4;
         }
 
         .node-pink {
@@ -630,6 +715,13 @@ export default function Hero() {
             0 0 20px rgba(168, 85, 247, 0.7);
         }
 
+        .node-purple-secondary {
+          background: #c084fc;
+          box-shadow:
+            0 0 7px #c084fc,
+            0 0 18px rgba(192, 132, 252, 0.6);
+        }
+
         .node-white {
           background: white;
           box-shadow:
@@ -639,32 +731,155 @@ export default function Hero() {
 
 
         /* =================================================
-           EXTRA ORBITS
+           MOVING ORBIT PARTICLES
+        ================================================= */
+
+        .orbit-particle {
+          position: absolute;
+          width: 4px;
+          height: 4px;
+          border-radius: 9999px;
+          transform-origin: center;
+        }
+
+        .particle-one {
+          left: 18%;
+          top: 6%;
+          background: #ff1ac6;
+          box-shadow:
+            0 0 8px #ff1ac6,
+            0 0 18px rgba(255, 26, 198, 0.8);
+          animation: particleOne 5s linear infinite;
+        }
+
+        .particle-two {
+          right: 15%;
+          bottom: 8%;
+          width: 3px;
+          height: 3px;
+          background: white;
+          box-shadow: 0 0 10px white;
+          animation: particleTwo 7s linear infinite;
+        }
+
+        .particle-three {
+          left: 8%;
+          top: 45%;
+          width: 4px;
+          height: 4px;
+          background: #a855f7;
+          box-shadow:
+            0 0 8px #a855f7,
+            0 0 18px rgba(168, 85, 247, 0.8);
+          animation: particleThree 4s linear infinite;
+        }
+
+        .particle-four {
+          right: 12%;
+          top: 35%;
+          width: 3px;
+          height: 3px;
+          background: #ff1ac6;
+          box-shadow: 0 0 10px #ff1ac6;
+          animation: particleFour 3.5s linear infinite;
+        }
+
+        @keyframes particleOne {
+          0% {
+            transform: translate(0, 0) scale(0.6);
+            opacity: 0.2;
+          }
+
+          50% {
+            transform: translate(110px, 45px) scale(1.3);
+            opacity: 1;
+          }
+
+          100% {
+            transform: translate(210px, 0) scale(0.5);
+            opacity: 0.1;
+          }
+        }
+
+        @keyframes particleTwo {
+          0% {
+            transform: translate(0, 0);
+            opacity: 0.15;
+          }
+
+          50% {
+            transform: translate(-100px, -55px);
+            opacity: 1;
+          }
+
+          100% {
+            transform: translate(-210px, 0);
+            opacity: 0.1;
+          }
+        }
+
+        @keyframes particleThree {
+          0% {
+            transform: translate(0, 0);
+            opacity: 0.2;
+          }
+
+          50% {
+            transform: translate(150px, -65px);
+            opacity: 1;
+          }
+
+          100% {
+            transform: translate(280px, 10px);
+            opacity: 0.15;
+          }
+        }
+
+        @keyframes particleFour {
+          0% {
+            transform: translate(0, 0) scale(0.5);
+            opacity: 0.15;
+          }
+
+          50% {
+            transform: translate(-90px, 60px) scale(1.2);
+            opacity: 1;
+          }
+
+          100% {
+            transform: translate(-180px, 0) scale(0.5);
+            opacity: 0.1;
+          }
+        }
+
+
+        /* =================================================
+           HORIZONTAL / DIAGONAL ORBITS
         ================================================= */
 
         .orbit-horizontal {
           transform:
-            perspective(800px)
+            perspective(900px)
             rotateX(70deg)
             rotateZ(-5deg);
 
-          animation: horizontalOrbit 9s ease-in-out infinite;
+          animation: horizontalOrbit 10s ease-in-out infinite;
         }
 
         .orbit-diagonal {
           transform:
-            perspective(800px)
-            rotateX(70deg)
+            perspective(900px)
+            rotateX(69deg)
             rotateZ(45deg);
 
-          animation: diagonalOrbit 11s ease-in-out infinite reverse;
+          animation: diagonalOrbit 13s ease-in-out infinite reverse;
         }
 
         @keyframes horizontalOrbit {
           0%,
           100% {
             transform:
-              perspective(800px)
+              perspective(900px)
               rotateX(70deg)
               rotateZ(-5deg)
               scale(1);
@@ -672,10 +887,10 @@ export default function Hero() {
 
           50% {
             transform:
-              perspective(800px)
+              perspective(900px)
               rotateX(70deg)
               rotateZ(175deg)
-              scale(1.04);
+              scale(1.035);
           }
         }
 
@@ -683,18 +898,171 @@ export default function Hero() {
           0%,
           100% {
             transform:
-              perspective(800px)
-              rotateX(70deg)
+              perspective(900px)
+              rotateX(69deg)
               rotateZ(45deg)
               scale(1);
           }
 
           50% {
             transform:
-              perspective(800px)
-              rotateX(70deg)
+              perspective(900px)
+              rotateX(69deg)
               rotateZ(-135deg)
-              scale(0.96);
+              scale(0.965);
+          }
+        }
+
+        .horizontal-particle,
+        .diagonal-particle {
+          position: absolute;
+          top: 50%;
+          width: 5px;
+          height: 5px;
+          border-radius: 9999px;
+        }
+
+        .horizontal-particle {
+          left: 15%;
+          background: #ff1ac6;
+          box-shadow:
+            0 0 8px #ff1ac6,
+            0 0 20px rgba(255, 26, 198, 0.8);
+          animation: horizontalParticle 6s linear infinite;
+        }
+
+        .diagonal-particle {
+          right: 10%;
+          background: #a855f7;
+          box-shadow:
+            0 0 8px #a855f7,
+            0 0 20px rgba(168, 85, 247, 0.8);
+          animation: diagonalParticle 7s linear infinite;
+        }
+
+        @keyframes horizontalParticle {
+          0% {
+            transform: translate(0, -50%);
+            opacity: 0.1;
+          }
+
+          50% {
+            transform: translate(120px, -50%);
+            opacity: 1;
+          }
+
+          100% {
+            transform: translate(240px, -50%);
+            opacity: 0.1;
+          }
+        }
+
+        @keyframes diagonalParticle {
+          0% {
+            transform: translate(0, -50%);
+            opacity: 0.1;
+          }
+
+          50% {
+            transform: translate(-130px, -50%);
+            opacity: 1;
+          }
+
+          100% {
+            transform: translate(-260px, -50%);
+            opacity: 0.1;
+          }
+        }
+
+
+        /* =================================================
+           ENERGY RINGS
+        ================================================= */
+
+        .energy-ring {
+          border: 1px solid transparent;
+          border-top-color: rgba(255, 26, 198, 0.18);
+          border-right-color: rgba(168, 85, 247, 0.08);
+          transform: rotateX(68deg) rotateZ(25deg);
+          animation: energySpin 7s linear infinite;
+        }
+
+        .energy-ring-two {
+          border-top-color: rgba(168, 85, 247, 0.13);
+          border-left-color: rgba(255, 26, 198, 0.08);
+          animation-duration: 11s;
+          animation-direction: reverse;
+        }
+
+        @keyframes energySpin {
+          from {
+            transform:
+              perspective(900px)
+              rotateX(68deg)
+              rotateZ(25deg);
+          }
+
+          to {
+            transform:
+              perspective(900px)
+              rotateX(68deg)
+              rotateZ(385deg);
+          }
+        }
+
+
+        /* =================================================
+           ATMOSPHERIC GLOW
+        ================================================= */
+
+        .orbit-energy {
+          animation: atmospherePulse 5s ease-in-out infinite;
+        }
+
+        .orbit-energy-two {
+          animation: atmospherePulseTwo 7s ease-in-out infinite;
+        }
+
+        @keyframes atmospherePulse {
+          0%,
+          100% {
+            opacity: 0.45;
+            transform: scale(0.9);
+          }
+
+          50% {
+            opacity: 0.8;
+            transform: scale(1.1);
+          }
+        }
+
+        @keyframes atmospherePulseTwo {
+          0%,
+          100% {
+            opacity: 0.25;
+            transform: scale(1);
+          }
+
+          50% {
+            opacity: 0.55;
+            transform: scale(1.15);
+          }
+        }
+
+        .core-pulse {
+          animation: corePulse 4s ease-in-out infinite;
+        }
+
+        @keyframes corePulse {
+          0%,
+          100% {
+            transform: scale(0.9);
+            opacity: 0.2;
+          }
+
+          50% {
+            transform: scale(1.15);
+            opacity: 0.65;
           }
         }
 
@@ -706,31 +1074,108 @@ export default function Hero() {
         .hero-core {
           transform-style: preserve-3d;
           animation: coreFloat 6s ease-in-out infinite;
+          will-change: transform;
         }
 
         @keyframes coreFloat {
           0%,
           100% {
             transform:
-              perspective(1000px)
+              perspective(1100px)
               rotateX(4deg)
               rotateY(-5deg)
-              translateY(0);
+              translate3d(0, 0, 0);
           }
 
           50% {
             transform:
-              perspective(1000px)
-              rotateX(-4deg)
-              rotateY(5deg)
-              translateY(-12px);
+              perspective(1100px)
+              rotateX(-5deg)
+              rotateY(7deg)
+              translate3d(0, -12px, 18px);
+          }
+        }
+
+        .core-shell {
+          animation: shellRotate 12s linear infinite;
+        }
+
+        @keyframes shellRotate {
+          from {
+            transform:
+              rotateX(65deg)
+              rotateZ(0deg);
+          }
+
+          to {
+            transform:
+              rotateX(65deg)
+              rotateZ(360deg);
           }
         }
 
 
         /* =================================================
-           SPHERE GRID
+           3D SPHERE
         ================================================= */
+
+        .hero-sphere {
+          transform-style: preserve-3d;
+          animation: sphereRotate 9s ease-in-out infinite;
+        }
+
+        @keyframes sphereRotate {
+          0%,
+          100% {
+            transform:
+              translateZ(0)
+              rotateY(-4deg)
+              rotateX(2deg);
+          }
+
+          50% {
+            transform:
+              translateZ(14px)
+              rotateY(8deg)
+              rotateX(-3deg);
+          }
+        }
+
+        .sphere-highlight {
+          animation: highlightMove 5s ease-in-out infinite;
+        }
+
+        @keyframes highlightMove {
+          0%,
+          100% {
+            transform: translate3d(0, 0, 0);
+            opacity: 0.45;
+          }
+
+          50% {
+            transform: translate3d(15px, 10px, 15px);
+            opacity: 0.8;
+          }
+        }
+
+        .sphere-highlight-two {
+          animation: secondaryHighlight 6s ease-in-out infinite;
+        }
+
+        @keyframes secondaryHighlight {
+          0%,
+          100% {
+            transform: scale(0.8);
+            opacity: 0.2;
+          }
+
+          50% {
+            transform: scale(1.25);
+            opacity: 0.65;
+          }
+        }
+
+        /* Sphere grid */
 
         .sphere-grid {
           background-image:
@@ -750,6 +1195,105 @@ export default function Hero() {
           transform:
             rotate(25deg)
             skewY(-8deg);
+
+          animation: gridMove 8s linear infinite;
+        }
+
+        @keyframes gridMove {
+          from {
+            transform:
+              rotate(25deg)
+              skewY(-8deg)
+              translate(0, 0);
+          }
+
+          to {
+            transform:
+              rotate(25deg)
+              skewY(-8deg)
+              translate(18px, 10px);
+          }
+        }
+
+        .sphere-line {
+          transform-style: preserve-3d;
+        }
+
+        .sphere-line-one {
+          animation: sphereLineOne 5s ease-in-out infinite;
+        }
+
+        .sphere-line-two {
+          animation: sphereLineTwo 7s ease-in-out infinite reverse;
+        }
+
+        @keyframes sphereLineOne {
+          0%,
+          100% {
+            transform:
+              rotateY(0deg)
+              rotateX(8deg)
+              scaleY(0.7);
+          }
+
+          50% {
+            transform:
+              rotateY(55deg)
+              rotateX(-8deg)
+              scaleY(1.1);
+          }
+        }
+
+        @keyframes sphereLineTwo {
+          0%,
+          100% {
+            transform:
+              rotateY(0deg)
+              rotateX(-8deg)
+              scaleY(0.85);
+          }
+
+          50% {
+            transform:
+              rotateY(-50deg)
+              rotateX(8deg)
+              scaleY(1.15);
+          }
+        }
+
+
+        /* =================================================
+           CORE ICON
+        ================================================= */
+
+        .core-icon-wrap {
+          animation: iconFloat 3.5s ease-in-out infinite;
+        }
+
+        .core-icon {
+          animation: iconPulse 2.8s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+          0%,
+          100% {
+            transform: translateY(0) rotate(0deg);
+          }
+
+          50% {
+            transform: translateY(-4px) rotate(3deg);
+          }
+        }
+
+        @keyframes iconPulse {
+          0%,
+          100% {
+            filter: drop-shadow(0 0 8px rgba(255, 26, 198, 0.4));
+          }
+
+          50% {
+            filter: drop-shadow(0 0 18px rgba(255, 26, 198, 0.9));
+          }
         }
 
 
@@ -787,6 +1331,18 @@ export default function Hero() {
           background: white;
           box-shadow: 0 0 12px white;
           animation: coreDotThree 3.5s ease-in-out infinite;
+        }
+
+        .core-dot-four {
+          top: 28%;
+          left: 5%;
+          width: 4px;
+          height: 4px;
+          background: #ff1ac6;
+          box-shadow:
+            0 0 8px #ff1ac6,
+            0 0 15px rgba(255, 26, 198, 0.7);
+          animation: coreDotFour 4.5s ease-in-out infinite;
         }
 
         @keyframes coreDotOne {
@@ -828,6 +1384,19 @@ export default function Hero() {
           }
         }
 
+        @keyframes coreDotFour {
+          0%,
+          100% {
+            transform: translate(0, 0);
+            opacity: 0.25;
+          }
+
+          50% {
+            transform: translate(-6px, 10px);
+            opacity: 1;
+          }
+        }
+
 
         /* =================================================
            FLOATING CARDS
@@ -835,31 +1404,73 @@ export default function Hero() {
 
         .orbit-data-card {
           animation: dataCardFloat 5s ease-in-out infinite;
+          transform-style: preserve-3d;
         }
 
         .orbit-reward-card {
           animation: rewardCardFloat 6s ease-in-out infinite;
+          transform-style: preserve-3d;
         }
 
         @keyframes dataCardFloat {
           0%,
           100% {
-            transform: translateY(0) rotate(0deg);
+            transform:
+              translate3d(0, 0, 0)
+              rotate(0deg);
           }
 
           50% {
-            transform: translateY(-10px) rotate(1deg);
+            transform:
+              translate3d(0, -12px, 20px)
+              rotate(1deg);
           }
         }
 
         @keyframes rewardCardFloat {
           0%,
           100% {
-            transform: translateY(0) rotate(0deg);
+            transform:
+              translate3d(0, 0, 0)
+              rotate(0deg);
           }
 
           50% {
-            transform: translateY(8px) rotate(-1deg);
+            transform:
+              translate3d(0, 9px, 16px)
+              rotate(-1deg);
+          }
+        }
+
+        .network-status {
+          animation: networkPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes networkPulse {
+          0%,
+          100% {
+            opacity: 0.45;
+            transform: scale(0.8);
+          }
+
+          50% {
+            opacity: 1;
+            transform: scale(1.25);
+          }
+        }
+
+        .reward-icon {
+          animation: rewardPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes rewardPulse {
+          0%,
+          100% {
+            box-shadow: 0 0 0 rgba(255, 26, 198, 0);
+          }
+
+          50% {
+            box-shadow: 0 0 20px rgba(255, 26, 198, 0.12);
           }
         }
 
@@ -898,27 +1509,43 @@ export default function Hero() {
             animation:
               rewardCardFloatMobile 6s ease-in-out infinite;
           }
+
+          .orbit-particle {
+            transform: scale(0.8);
+          }
+
+          .hero-core {
+            transform: scale(0.92);
+          }
         }
 
         @keyframes dataCardFloatMobile {
           0%,
           100% {
-            transform: translateY(0) scale(0.78);
+            transform:
+              translate3d(0, 0, 0)
+              scale(0.78);
           }
 
           50% {
-            transform: translateY(-8px) scale(0.78);
+            transform:
+              translate3d(0, -8px, 10px)
+              scale(0.78);
           }
         }
 
         @keyframes rewardCardFloatMobile {
           0%,
           100% {
-            transform: translateY(0) scale(0.78);
+            transform:
+              translate3d(0, 0, 0)
+              scale(0.78);
           }
 
           50% {
-            transform: translateY(8px) scale(0.78);
+            transform:
+              translate3d(0, 8px, 10px)
+              scale(0.78);
           }
         }
 
@@ -949,7 +1576,24 @@ export default function Hero() {
           .core-dot,
           .hero-star,
           .hero-badge,
-          .typing-cursor {
+          .typing-cursor,
+          .orbit-particle,
+          .horizontal-particle,
+          .diagonal-particle,
+          .energy-ring,
+          .orbit-energy,
+          .orbit-energy-two,
+          .core-pulse,
+          .core-shell,
+          .hero-sphere,
+          .sphere-highlight,
+          .sphere-highlight-two,
+          .sphere-grid,
+          .sphere-line,
+          .core-icon-wrap,
+          .core-icon,
+          .network-status,
+          .reward-icon {
             animation: none;
           }
         }
