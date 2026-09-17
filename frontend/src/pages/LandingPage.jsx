@@ -25,6 +25,7 @@ import Features from "./Features";
 import Testimonials from "./Testimonials";
 import SupportedNetworks from "./SupportedNetworks";
 import CallToAction from "./CallToAction";
+import BuiltForWeb3 from "./BuiltForWeb3";
 import Footer from "../components/Layout/Footer";
 
 function LandingPage() {
@@ -336,6 +337,9 @@ function LandingPage() {
 <SupportedNetworks />
      </div>
      
+     <div>
+      <BuiltForWeb3 />
+     </div>
 
       {/* =========================================
           FINAL CTA
