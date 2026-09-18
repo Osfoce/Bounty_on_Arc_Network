@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import {
   FiArrowLeft,
@@ -31,49 +32,78 @@ export default function FAQPage() {
   ];
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-black text-white">
-      {/* BACKGROUND GLOW */}
+    <div className="min-h-screen overflow-x-hidden bg-[#f7f6f0] text-[#171714]">
+      {/* BACKGROUND */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute -top-40 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-[#FF1AC6]/10 blur-[120px]" />
-        <div className="absolute bottom-0 right-0 h-64 w-64 rounded-full bg-purple-500/5 blur-[120px]" />
+        <div
+          className="absolute inset-0 opacity-[0.22]"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(23,23,20,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(23,23,20,0.035) 1px, transparent 1px)",
+            backgroundSize: "42px 42px",
+          }}
+        />
+
+        <div className="absolute -top-32 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-[#d4af37]/[0.07] blur-[120px]" />
+
+        <div className="absolute bottom-0 right-0 h-72 w-72 rounded-full bg-[#d4af37]/[0.05] blur-[120px]" />
       </div>
 
       {/* CONTENT */}
       <main className="relative z-10 mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 sm:py-10 md:px-8 lg:px-10">
-        
         {/* HEADER */}
         <section className="relative mb-10 flex flex-col items-center text-center sm:mb-14">
-          
-          {/* BACK BUTTON - LEFT */}
+          {/* BACK BUTTON */}
           <div className="mb-10 flex w-full justify-start sm:mb-12">
             <Link
               to="/"
               className="
-                inline-flex items-center gap-2
+                group
+                inline-flex
+                items-center
+                gap-2
                 rounded-xl
-                border border-white/10
-                bg-white/[0.04]
-                px-3.5 py-2
-                text-sm font-medium
-                text-white/70
+                border border-black/10
+                bg-white/70
+                px-3.5
+                py-2
+                text-sm
+                font-medium
+                text-black/60
+                shadow-[0_4px_20px_rgba(0,0,0,0.04)]
                 backdrop-blur-md
-                transition-all duration-200
-                hover:border-[#FF1AC6]/30
-                hover:bg-[#FF1AC6]/10
-                hover:text-white
+                transition-all
+                duration-200
+                hover:-translate-y-0.5
+                hover:border-[#d4af37]/50
+                hover:bg-white
+                hover:text-black
                 active:scale-95
               "
             >
-              <FiArrowLeft className="text-base text-[#FF1AC6]" />
+              <FiArrowLeft className="text-base text-[#b28d19] transition-transform duration-200 group-hover:-translate-x-0.5" />
               <span>Back</span>
             </Link>
           </div>
 
           {/* SMALL LABEL */}
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#FF1AC6]/20 bg-[#FF1AC6]/[0.06] px-3 py-1.5">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#FF1AC6] shadow-[0_0_8px_rgba(255,26,198,0.8)]" />
+          <div
+            className="
+              mb-4
+              inline-flex
+              items-center
+              gap-2
+              rounded-full
+              border
+              border-[#d4af37]/30
+              bg-[#d4af37]/[0.07]
+              px-3
+              py-1.5
+            "
+          >
+            <span className="h-1.5 w-1.5 rounded-full bg-[#c49b2c]" />
 
-            <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#FF1AC6] sm:text-xs">
+            <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#9b7715] sm:text-xs">
               Help Center
             </span>
           </div>
@@ -84,16 +114,16 @@ export default function FAQPage() {
               max-w-4xl
               text-3xl
               font-black
-              leading-[1.1]
+              leading-[1.08]
               tracking-tight
+              text-[#171714]
               sm:text-4xl
               md:text-5xl
               lg:text-6xl
             "
           >
-            <span className="bg-gradient-to-r from-white via-white to-[#FF1AC6] bg-clip-text text-transparent">
-              Frequently Asked Questions
-            </span>
+            Frequently Asked{" "}
+            <span className="text-[#b28d19]">Questions</span>
           </h1>
 
           {/* DESCRIPTION */}
@@ -104,7 +134,7 @@ export default function FAQPage() {
               px-2
               text-sm
               leading-6
-              text-white/45
+              text-black/50
               sm:mt-5
               sm:text-base
               sm:leading-7
@@ -120,21 +150,24 @@ export default function FAQPage() {
         <div className="mx-auto mb-8 w-full max-w-2xl sm:mb-10">
           <div
             className="
-              flex items-center gap-3
+              group
+              flex
+              items-center
+              gap-3
               rounded-2xl
-              border border-white/10
-              bg-white/[0.04]
+              border
+              border-black/10
+              bg-white
               px-4
               py-3.5
-              shadow-[0_10px_40px_rgba(0,0,0,0.2)]
-              backdrop-blur-xl
-              transition-all duration-200
-              focus-within:border-[#FF1AC6]/40
-              focus-within:bg-white/[0.06]
-              focus-within:shadow-[0_0_30px_rgba(255,26,198,0.08)]
+              shadow-[0_10px_35px_rgba(0,0,0,0.05)]
+              transition-all
+              duration-200
+              focus-within:border-[#d4af37]/60
+              focus-within:shadow-[0_12px_40px_rgba(180,140,25,0.08)]
             "
           >
-            <FiSearch className="shrink-0 text-lg text-white/30" />
+            <FiSearch className="shrink-0 text-lg text-black/30 transition-colors group-focus-within:text-[#b28d19]" />
 
             <input
               type="text"
@@ -144,9 +177,9 @@ export default function FAQPage() {
                 flex-1
                 bg-transparent
                 text-sm
-                text-white
+                text-black
                 outline-none
-                placeholder:text-white/25
+                placeholder:text-black/30
                 sm:text-base
               "
             />
@@ -162,14 +195,17 @@ export default function FAQPage() {
                 group
                 overflow-hidden
                 rounded-2xl
-                border border-white/[0.08]
-                bg-white/[0.035]
-                backdrop-blur-xl
-                transition-all duration-300
-                hover:border-[#FF1AC6]/25
-                hover:bg-white/[0.05]
-                open:border-[#FF1AC6]/30
-                open:bg-[#FF1AC6]/[0.035]
+                border
+                border-black/[0.09]
+                bg-white
+                shadow-[0_6px_25px_rgba(0,0,0,0.035)]
+                transition-all
+                duration-300
+                hover:-translate-y-0.5
+                hover:border-[#d4af37]/35
+                hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)]
+                open:border-[#d4af37]/50
+                open:shadow-[0_12px_35px_rgba(180,140,25,0.07)]
               "
             >
               <summary
@@ -194,9 +230,9 @@ export default function FAQPage() {
                     text-sm
                     font-semibold
                     leading-5
-                    text-white/85
+                    text-black/80
                     transition-colors
-                    group-hover:text-white
+                    group-hover:text-black
                     sm:text-base
                     sm:leading-6
                   "
@@ -214,17 +250,18 @@ export default function FAQPage() {
                     items-center
                     justify-center
                     rounded-lg
-                    border border-white/10
-                    bg-white/[0.04]
-                    text-white/40
+                    border
+                    border-black/10
+                    bg-[#f7f6f0]
+                    text-black/40
                     transition-all
                     duration-300
-                    group-hover:border-[#FF1AC6]/30
-                    group-hover:text-[#FF1AC6]
+                    group-hover:border-[#d4af37]/40
+                    group-hover:text-[#a98216]
                     group-open:rotate-180
-                    group-open:border-[#FF1AC6]/30
-                    group-open:bg-[#FF1AC6]/10
-                    group-open:text-[#FF1AC6]
+                    group-open:border-[#d4af37]/50
+                    group-open:bg-[#d4af37]/10
+                    group-open:text-[#a98216]
                   "
                 >
                   <FiChevronDown className="text-sm" />
@@ -232,13 +269,13 @@ export default function FAQPage() {
               </summary>
 
               {/* ANSWER */}
-              <div className="border-t border-white/[0.06] px-4 pb-5 pt-4 sm:px-5">
+              <div className="border-t border-black/[0.07] px-4 pb-5 pt-4 sm:px-5">
                 <p
                   className="
                     text-left
                     text-sm
                     leading-6
-                    text-white/45
+                    text-black/50
                     sm:text-[15px]
                     sm:leading-7
                   "
@@ -259,19 +296,20 @@ export default function FAQPage() {
             max-w-3xl
             overflow-hidden
             rounded-2xl
-            border border-[#FF1AC6]/15
-            bg-gradient-to-br
-            from-[#FF1AC6]/[0.08]
-            via-white/[0.025]
-            to-purple-500/[0.04]
+            border
+            border-[#d4af37]/25
+            bg-white
             p-6
             text-center
-            backdrop-blur-xl
+            shadow-[0_12px_40px_rgba(0,0,0,0.05)]
             sm:mt-14
             sm:rounded-3xl
             sm:p-8
           "
         >
+          {/* TOP ACCENT */}
+          <div className="mx-auto mb-6 h-1 w-12 rounded-full bg-[#d4af37]" />
+
           {/* ICON */}
           <div
             className="
@@ -283,24 +321,22 @@ export default function FAQPage() {
               items-center
               justify-center
               rounded-xl
-              border border-[#FF1AC6]/20
-              bg-[#FF1AC6]/10
-              text-[#FF1AC6]
-              shadow-[0_0_25px_rgba(255,26,198,0.12)]
+              border
+              border-[#d4af37]/25
+              bg-[#d4af37]/[0.08]
+              text-[#a98216]
             "
           >
             <FiMessageCircle className="text-lg" />
           </div>
 
           {/* TITLE */}
-          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-            <span className="bg-gradient-to-r from-white to-[#FF1AC6] bg-clip-text text-transparent">
-              Still have questions?
-            </span>
+          <h2 className="text-2xl font-bold tracking-tight text-[#171714] sm:text-3xl">
+            Still have questions?
           </h2>
 
           {/* DESCRIPTION */}
-          <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-white/45 sm:text-base">
+          <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-black/45 sm:text-base">
             Our support team is ready to help you whenever you need us.
           </p>
 
@@ -313,18 +349,18 @@ export default function FAQPage() {
               items-center
               justify-center
               rounded-xl
-              bg-[#FF1AC6]
+              bg-[#171714]
               px-6
               py-3
               text-sm
               font-bold
               text-white
-              shadow-[0_8px_25px_rgba(255,26,198,0.18)]
+              shadow-[0_8px_25px_rgba(0,0,0,0.12)]
               transition-all
               duration-200
               hover:-translate-y-0.5
-              hover:bg-[#ff3bce]
-              hover:shadow-[0_12px_30px_rgba(255,26,198,0.28)]
+              hover:bg-[#292924]
+              hover:shadow-[0_12px_30px_rgba(0,0,0,0.16)]
               active:scale-[0.98]
               sm:px-7
             "
@@ -339,3 +375,4 @@ export default function FAQPage() {
     </div>
   );
 }
+

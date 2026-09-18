@@ -3,6 +3,13 @@ import { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useAccount } from "wagmi";
+import {
+  FiArrowUpRight,
+  FiCalendar,
+  FiCheckCircle,
+  FiClock,
+  FiLayers,
+} from "react-icons/fi";
 
 const BountyCard = ({ bounty }) => {
   const { address, isConnected } = useAccount();
@@ -15,31 +22,34 @@ const BountyCard = ({ bounty }) => {
 
   const statusConfig = {
     active: {
-      color: "text-emerald-400",
-      bg: "bg-emerald-400/10",
-      border: "border-emerald-400/20",
-      dot: "bg-emerald-400",
+      color: "text-emerald-700",
+      bg: "bg-emerald-50",
+      border: "border-emerald-200",
+      dot: "bg-emerald-500",
+      label: "Active",
     },
 
     upcoming: {
-      color: "text-amber-400",
-      bg: "bg-amber-400/10",
-      border: "border-amber-400/20",
-      dot: "bg-amber-400",
+      color: "text-amber-700",
+      bg: "bg-amber-50",
+      border: "border-amber-200",
+      dot: "bg-amber-500",
+      label: "Upcoming",
     },
 
-    // COMPLETED = GREEN
     completed: {
-      color: "text-emerald-400",
-      bg: "bg-emerald-400/10",
-      border: "border-emerald-400/20",
-      dot: "bg-emerald-400",
+      color: "text-slate-600",
+      bg: "bg-slate-100",
+      border: "border-slate-200",
+      dot: "bg-slate-400",
+      label: "Completed",
     },
   }[bounty.status] || {
-    color: "text-white/60",
-    bg: "bg-white/5",
-    border: "border-white/10",
-    dot: "bg-white/50",
+    color: "text-slate-500",
+    bg: "bg-slate-100",
+    border: "border-slate-200",
+    dot: "bg-slate-400",
+    label: "Unknown",
   };
 
   const tags = bounty.tags || [];
@@ -105,63 +115,57 @@ const BountyCard = ({ bounty }) => {
   return (
     <div
       className="
-        group relative flex h-full w-full min-w-0 flex-col
-        overflow-hidden rounded-2xl
-        border border-white/[0.08]
-        bg-gradient-to-b from-[#2A2A2A] to-[#202020]
-        shadow-[0_8px_30px_rgba(0,0,0,0.25)]
-        transition-all duration-300 ease-out
-        hover:-translate-y-1.5
-        hover:border-[#FF1AC6]/30
-        hover:shadow-[0_15px_45px_rgba(0,0,0,0.4)]
+        group
+        relative
+        flex
+        h-full
+        w-full
+        min-w-0
+        flex-col
+        overflow-hidden
+        rounded-2xl
+        border
+        border-slate-200
+        bg-white
+        shadow-[0_8px_30px_rgba(15,23,42,0.06)]
+        transition-all
+        duration-300
+        ease-out
+        hover:-translate-y-1
+        hover:border-slate-300
+        hover:shadow-[0_18px_45px_rgba(15,23,42,0.10)]
       "
     >
-      {/* SMALL PINK GLOWING DOT */}
+      {/* SUBTLE TOP ACCENT */}
       <div
         className="
-          pointer-events-none
           absolute
-          right-3
-          top-3
-          z-20
-          h-1.5
-          w-1.5
-          rounded-full
-          bg-[#FF1AC6]
-          shadow-[0_0_7px_2px_rgba(255,26,198,0.45)]
-        "
-      />
-
-      {/* Subtle hover glow */}
-      <div
-        className="
-          pointer-events-none
-          absolute
-          -right-24
-          -top-24
-          h-48
-          w-48
-          rounded-full
-          bg-[#FF1AC6]/10
-          blur-3xl
-          opacity-0
+          left-0
+          right-0
+          top-0
+          h-[2px]
+          bg-gradient-to-r
+          from-transparent
+          via-[#D4AF37]
+          to-transparent
+          opacity-50
           transition-opacity
-          duration-500
+          duration-300
           group-hover:opacity-100
         "
       />
 
-      {/* Bottom glow */}
+      {/* VERY SUBTLE GOLD AMBIENT LIGHT */}
       <div
         className="
           pointer-events-none
           absolute
-          -bottom-24
-          -left-24
+          -right-20
+          -top-20
           h-40
           w-40
           rounded-full
-          bg-purple-500/5
+          bg-[#D4AF37]/[0.035]
           blur-3xl
           opacity-0
           transition-opacity
@@ -171,80 +175,107 @@ const BountyCard = ({ bounty }) => {
       />
 
       <div className="relative z-10 flex h-full min-w-0 flex-col p-5 sm:p-6">
-
-        {/* TOP ROW */}
-        <div className="mb-5 flex min-w-0 items-start justify-between gap-3 sm:gap-4">
-
+        {/* HEADER */}
+        <div className="mb-5 flex min-w-0 items-start justify-between gap-4">
           {/* CATEGORY */}
-          <div className="min-w-0 flex-1">
+          <div className="flex min-w-0 items-center gap-2">
+            <div
+              className="
+                flex
+                h-8
+                w-8
+                shrink-0
+                items-center
+                justify-center
+                rounded-lg
+                border
+                border-slate-200
+                bg-slate-50
+                text-slate-500
+              "
+            >
+              <FiLayers size={14} />
+            </div>
+
             <span
               className="
-                inline-flex
-                max-w-full
-                items-center
+                min-w-0
+                max-w-[140px]
                 overflow-hidden
                 text-ellipsis
                 whitespace-nowrap
-                rounded-lg
-                border border-white/[0.08]
-                bg-white/[0.04]
-                px-3
-                py-1.5
-                text-[10px]
+                text-[11px]
                 font-semibold
                 uppercase
-                tracking-[0.12em]
-                text-white/50
-                transition-colors
-                group-hover:text-white/70
+                tracking-[0.1em]
+                text-slate-500
               "
+              title={bounty.category || "Uncategorized"}
             >
               {bounty.category || "Uncategorized"}
             </span>
           </div>
 
-          {/* REWARD */}
+          {/* STATUS */}
           <div
-            className="
-              min-w-0
+            className={`
+              flex
               shrink-0
-              rounded-xl
-              border border-[#FF1AC6]/20
-              bg-[#FF1AC6]/[0.07]
-              px-3
-              py-2
-              text-right
-              transition-all
-              duration-300
-              group-hover:border-[#FF1AC6]/30
-              group-hover:bg-[#FF1AC6]/10
-            "
+              items-center
+              gap-1.5
+              rounded-full
+              border
+              px-2.5
+              py-1
+              ${statusConfig.bg}
+              ${statusConfig.border}
+            `}
           >
-            <p className="text-[9px] font-semibold uppercase tracking-[0.15em] text-[#FF1AC6]/70">
-              Reward
-            </p>
+            <span
+              className={`
+                h-1.5
+                w-1.5
+                shrink-0
+                rounded-full
+                ${statusConfig.dot}
+                ${
+                  bounty.status === "active"
+                    ? "animate-pulse shadow-[0_0_6px_currentColor]"
+                    : ""
+                }
+              `}
+            />
 
-            <p className="mt-0.5 whitespace-nowrap text-sm font-bold text-white sm:text-base">
-              {rewardDisplay}
-            </p>
+            <span
+              className={`
+                text-[10px]
+                font-semibold
+                uppercase
+                tracking-[0.08em]
+                ${statusConfig.color}
+              `}
+            >
+              {statusConfig.label}
+            </span>
           </div>
         </div>
 
         {/* TITLE */}
         <h3
           className="
-            mb-2.5
+            mb-3
             min-w-0
             overflow-hidden
             text-ellipsis
-            text-lg
+            text-[19px]
             font-bold
-            leading-snug
-            text-white
+            leading-[1.35]
+            tracking-[-0.02em]
+            text-slate-900
             line-clamp-2
             transition-colors
             duration-200
-            group-hover:text-[#FF1AC6]
+            group-hover:text-[#9A7818]
             sm:text-xl
           "
         >
@@ -259,7 +290,7 @@ const BountyCard = ({ bounty }) => {
             overflow-hidden
             text-sm
             leading-6
-            text-white/50
+            text-slate-500
             line-clamp-3
           "
         >
@@ -267,7 +298,7 @@ const BountyCard = ({ bounty }) => {
         </p>
 
         {/* TAGS */}
-        <div className="mt-4 min-h-[32px] min-w-0">
+        <div className="mt-4 min-h-[29px] min-w-0">
           {tags.length > 0 && (
             <div className="flex min-w-0 flex-wrap gap-1.5 overflow-hidden">
               {tags.slice(0, 3).map((tag, idx) => (
@@ -279,15 +310,17 @@ const BountyCard = ({ bounty }) => {
                     text-ellipsis
                     whitespace-nowrap
                     rounded-md
-                    border border-white/[0.07]
-                    bg-white/[0.035]
+                    border
+                    border-slate-200
+                    bg-slate-50
                     px-2.5
                     py-1
                     text-[11px]
-                    text-white/45
+                    font-medium
+                    text-slate-500
                     transition-colors
-                    group-hover:border-white/10
-                    group-hover:text-white/60
+                    group-hover:border-slate-300
+                    group-hover:text-slate-600
                   "
                 >
                   #{tag}
@@ -299,11 +332,14 @@ const BountyCard = ({ bounty }) => {
                   className="
                     shrink-0
                     rounded-md
-                    bg-white/[0.025]
+                    border
+                    border-slate-200
+                    bg-white
                     px-2.5
                     py-1
                     text-[11px]
-                    text-white/30
+                    font-medium
+                    text-slate-400
                   "
                 >
                   +{tags.length - 3}
@@ -313,90 +349,77 @@ const BountyCard = ({ bounty }) => {
           )}
         </div>
 
-        {/* DIVIDER */}
-        <div className="my-5 h-px bg-white/[0.07]" />
-
-        {/* META */}
-        <div className="mb-5 flex min-w-0 items-center justify-between gap-3">
-
-          {/* DEADLINE */}
-          <div className="flex min-w-0 items-center gap-2.5">
-
-            <div
+        {/* REWARD + DEADLINE */}
+        <div
+          className="
+            my-5
+            grid
+            grid-cols-2
+            gap-3
+            rounded-xl
+            border
+            border-slate-200
+            bg-[#fafaf8]
+            p-3
+          "
+        >
+          {/* REWARD */}
+          <div className="min-w-0">
+            <p
               className="
-                flex
-                h-8
-                w-8
-                shrink-0
-                items-center
-                justify-center
-                rounded-lg
-                border border-white/[0.07]
-                bg-white/[0.04]
-                text-sm
+                mb-1
+                text-[9px]
+                font-semibold
+                uppercase
+                tracking-[0.12em]
+                text-slate-400
               "
             >
-              🗓️
-            </div>
+              Reward
+            </p>
 
-            <div className="min-w-0">
-              <p className="text-[10px] uppercase tracking-wider text-white/30">
-                Deadline
-              </p>
-
-              <p className="mt-0.5 text-xs font-medium text-white/70">
-                {deadline}
-              </p>
-            </div>
+            <p
+              className="
+                truncate
+                text-sm
+                font-bold
+                tracking-[-0.01em]
+                text-slate-900
+                sm:text-base
+              "
+              title={rewardDisplay}
+            >
+              {rewardDisplay}
+            </p>
           </div>
 
-          {/* STATUS */}
-          <div
-            className={`
-              flex
-              shrink-0
-              items-center
-              gap-2
-              rounded-full
-              border
-              px-3
-              py-1.5
-              ${statusConfig.bg}
-              ${statusConfig.border}
-            `}
-          >
-            <span
-              className={`
-                h-1.5
-                w-1.5
-                shrink-0
-                rounded-full
-                ${statusConfig.dot}
-                ${
-                  bounty.status === "active"
-                    ? "animate-pulse shadow-[0_0_8px_currentColor]"
-                    : ""
-                }
-              `}
-            />
-
-            <span
-              className={`
-                whitespace-nowrap
-                text-[10px]
-                font-bold
-                tracking-wider
-                ${statusConfig.color}
-              `}
+          {/* DEADLINE */}
+          <div className="min-w-0 border-l border-slate-200 pl-3">
+            <p
+              className="
+                mb-1
+                flex
+                items-center
+                gap-1
+                text-[9px]
+                font-semibold
+                uppercase
+                tracking-[0.12em]
+                text-slate-400
+              "
             >
-              {bounty.status?.toUpperCase()}
-            </span>
+              <FiCalendar size={10} />
+              Deadline
+            </p>
+
+            <p className="truncate text-sm font-semibold text-slate-700">
+              {deadline}
+            </p>
           </div>
         </div>
 
         {/* ACTIONS */}
         <div className="mt-auto grid grid-cols-2 gap-2.5">
-
           {/* VIEW DETAILS */}
           <Link
             to={`/task/${bounty._id}`}
@@ -406,39 +429,37 @@ const BountyCard = ({ bounty }) => {
               min-w-0
               items-center
               justify-center
-              gap-1.5
+              gap-2
               overflow-hidden
               rounded-xl
-              border border-white/[0.08]
-              bg-white/[0.04]
-              px-2
+              border
+              border-slate-200
+              bg-white
+              px-3
               py-3
               text-xs
               font-semibold
-              text-white/65
+              text-slate-600
               transition-all
               duration-200
-              hover:border-[#FF1AC6]/40
-              hover:bg-[#FF1AC6]/10
-              hover:text-[#FF1AC6]
-              sm:px-3
+              hover:border-slate-300
+              hover:bg-slate-50
+              hover:text-slate-900
               sm:text-sm
             "
           >
-            <span className="truncate">
-              View Details
-            </span>
+            <span className="truncate">View Details</span>
 
-            <span
+            <FiArrowUpRight
+              size={14}
               className="
                 shrink-0
                 transition-transform
                 duration-200
                 group-hover/details:translate-x-0.5
+                group-hover/details:-translate-y-0.5
               "
-            >
-              →
-            </span>
+            />
           </Link>
 
           {/* START TASK */}
@@ -451,28 +472,36 @@ const BountyCard = ({ bounty }) => {
                 min-w-0
                 overflow-hidden
                 rounded-xl
-                bg-gradient-to-r
-                from-[#FF1AC6]
-                to-[#FF1AC6]/80
-                px-2
+                bg-[#111111]
+                px-3
                 py-3
                 text-xs
                 font-bold
                 text-white
-                shadow-lg
-                shadow-[#FF1AC6]/10
+                shadow-sm
                 transition-all
                 duration-200
-                hover:brightness-110
-                hover:shadow-xl
-                hover:shadow-[#FF1AC6]/20
+                hover:bg-[#252525]
+                hover:shadow-md
                 active:scale-[0.98]
                 disabled:cursor-not-allowed
                 disabled:opacity-50
-                sm:px-3
                 sm:text-sm
               "
             >
+              {/* Small gold accent */}
+              <span
+                className="
+                  absolute
+                  bottom-0
+                  left-0
+                  h-[2px]
+                  w-full
+                  bg-[#D4AF37]
+                  opacity-80
+                "
+              />
+
               {isEnrolling ? (
                 <span className="flex items-center justify-center gap-2">
                   <span
@@ -488,13 +517,16 @@ const BountyCard = ({ bounty }) => {
                     "
                   />
 
-                  <span className="truncate">
-                    Enrolling
-                  </span>
+                  <span className="truncate">Enrolling</span>
                 </span>
               ) : (
-                <span className="block truncate">
-                  Start Task
+                <span className="flex items-center justify-center gap-1.5">
+                  <span className="truncate">Start Task</span>
+
+                  <FiArrowUpRight
+                    size={14}
+                    className="shrink-0 text-[#D4AF37]"
+                  />
                 </span>
               )}
             </button>
@@ -507,22 +539,32 @@ const BountyCard = ({ bounty }) => {
                   : "Bounty not started yet"
               }
               className="
+                flex
                 min-w-0
+                items-center
+                justify-center
+                gap-1.5
                 overflow-hidden
                 rounded-xl
-                border border-white/[0.06]
-                bg-white/[0.03]
-                px-2
+                border
+                border-slate-200
+                bg-slate-100
+                px-3
                 py-3
                 text-xs
                 font-semibold
-                text-white/25
+                text-slate-400
                 cursor-not-allowed
-                sm:px-3
                 sm:text-sm
               "
             >
-              <span className="block truncate">
+              {bounty.status === "completed" ? (
+                <FiCheckCircle size={14} className="shrink-0" />
+              ) : (
+                <FiClock size={14} className="shrink-0" />
+              )}
+
+              <span className="truncate">
                 {bounty.status === "completed"
                   ? "Ended"
                   : "Coming Soon"}

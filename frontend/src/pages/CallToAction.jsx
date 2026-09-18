@@ -72,39 +72,43 @@ function CallToAction() {
         `}
       </style>
 
-      <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[28px] border border-black/[0.08] bg-[#ebe9df] shadow-[0_20px_70px_rgba(0,0,0,0.08)]">
-
+      <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[28px] border border-black/[0.08] bg-white shadow-[0_20px_70px_rgba(0,0,0,0.07)]">
         {/* Subtle architectural background */}
+
         <div
-          className="pointer-events-none absolute inset-0 opacity-[0.16]"
+          className="pointer-events-none absolute inset-0 opacity-[0.12]"
           style={{
             backgroundImage:
-              "linear-gradient(rgba(76,58,28,0.18) 1px, transparent 1px), linear-gradient(90deg, rgba(76,58,28,0.18) 1px, transparent 1px)",
+              "linear-gradient(rgba(76,58,28,0.16) 1px, transparent 1px), linear-gradient(90deg, rgba(76,58,28,0.16) 1px, transparent 1px)",
             backgroundSize: "42px 42px",
           }}
         />
 
-        {/* Soft glows */}
-        <div className="pointer-events-none absolute -left-24 top-1/2 h-64 w-64 -translate-y-1/2 rounded-full bg-[#2775CA]/10 blur-[90px]" />
-        <div className="pointer-events-none absolute -right-24 top-1/3 h-64 w-64 rounded-full bg-pink-400/10 blur-[90px]" />
+        {/* Subtle gold accents */}
+
+        <div className="pointer-events-none absolute -left-24 top-1/2 h-64 w-64 -translate-y-1/2 rounded-full bg-[#D4AF37]/[0.025] blur-[90px]" />
+
+        <div className="pointer-events-none absolute -right-24 top-1/3 h-64 w-64 rounded-full bg-[#D4AF37]/[0.025] blur-[90px]" />
 
         {/* Gold architectural accent */}
+
         <div className="pointer-events-none absolute right-0 top-0 h-32 w-32 opacity-[0.08]">
           <div className="absolute right-8 top-8 h-20 w-20 border border-[#6f5424]" />
           <div className="absolute right-14 top-14 h-20 w-20 border border-[#6f5424]" />
         </div>
 
         <div className="relative z-10 px-5 py-9 text-center sm:px-8 sm:py-11 md:px-12 md:py-12">
-
           {/* Badge */}
+
           <div className="mb-5 flex justify-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#2775CA]/15 bg-white/60 px-3.5 py-1.5 backdrop-blur-xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#D4AF37]/20 bg-[#f6f5ef] px-3.5 py-1.5 backdrop-blur-xl">
               <span className="relative flex h-2 w-2">
-                <span className="cta-pulse absolute inset-0 rounded-full bg-[#2775CA]" />
-                <span className="relative h-2 w-2 rounded-full bg-[#2775CA]" />
+                <span className="cta-pulse absolute inset-0 rounded-full bg-[#D4AF37]" />
+
+                <span className="relative h-2 w-2 rounded-full bg-[#D4AF37]" />
               </span>
 
-              <span className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#2775CA]">
+              <span className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#B28B20]">
                 Built for Arc
               </span>
 
@@ -117,15 +121,17 @@ function CallToAction() {
           </div>
 
           {/* Heading */}
+
           <h2 className="mx-auto max-w-3xl text-3xl font-black leading-[1.05] tracking-[-0.04em] text-[#111111] sm:text-4xl md:text-5xl">
             Build. Contribute.
             <br />
-            <span className="bg-gradient-to-r from-[#2775CA] via-purple-500 to-[#d946ef] bg-clip-text text-transparent">
+            <span className="text-[#B28B20]">
               Get Rewarded.
             </span>
           </h2>
 
           {/* Description */}
+
           <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-black/55 md:text-[15px]">
             Discover Web3 opportunities, complete meaningful work, and earn
             USDC rewards. Or create a bounty and find contributors ready to
@@ -133,51 +139,60 @@ function CallToAction() {
           </p>
 
           {/* Compact workflow */}
-          <div className="mx-auto mt-7 flex max-w-xl flex-col items-center justify-center gap-3 sm:flex-row">
 
-            <div className="flex items-center gap-2 rounded-xl border border-black/[0.07] bg-white/65 px-3.5 py-2.5 shadow-sm backdrop-blur-xl">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#2775CA]/10">
-                <FiCode className="h-4 w-4 text-[#2775CA]" />
+          <div className="mx-auto mt-7 flex max-w-xl flex-col items-center justify-center gap-3 sm:flex-row">
+            {/* CREATE */}
+
+            <div className="flex items-center gap-2 rounded-xl border border-black/[0.07] bg-[#f6f5ef] px-3.5 py-2.5 shadow-sm backdrop-blur-xl">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#D4AF37]/[0.08]">
+                <FiCode className="h-4 w-4 text-[#B28B20]" />
               </div>
 
               <div className="text-left">
                 <p className="text-[9px] font-bold uppercase tracking-wider text-black/35">
                   Create
                 </p>
+
                 <p className="text-xs font-bold text-[#111111]">
                   Post a Bounty
                 </p>
               </div>
             </div>
 
-            <FiArrowUpRight className="hidden h-4 w-4 text-black/25 sm:block" />
+            <FiArrowUpRight className="hidden h-4 w-4 text-[#B28B20]/40 sm:block" />
 
-            <div className="flex items-center gap-2 rounded-xl border border-black/[0.07] bg-white/65 px-3.5 py-2.5 shadow-sm backdrop-blur-xl">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-purple-500/10">
-                <FiLayers className="h-4 w-4 text-purple-500" />
+            {/* COMPLETE */}
+
+            <div className="flex items-center gap-2 rounded-xl border border-black/[0.07] bg-[#f6f5ef] px-3.5 py-2.5 shadow-sm backdrop-blur-xl">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#D4AF37]/[0.08]">
+                <FiLayers className="h-4 w-4 text-[#B28B20]" />
               </div>
 
               <div className="text-left">
                 <p className="text-[9px] font-bold uppercase tracking-wider text-black/35">
                   Complete
                 </p>
+
                 <p className="text-xs font-bold text-[#111111]">
                   Do the Work
                 </p>
               </div>
             </div>
 
-            <FiArrowUpRight className="hidden h-4 w-4 text-black/25 sm:block" />
+            <FiArrowUpRight className="hidden h-4 w-4 text-[#B28B20]/40 sm:block" />
 
-            <div className="cta-float flex items-center gap-2 rounded-xl border border-[#2775CA]/15 bg-white/75 px-3.5 py-2.5 shadow-sm backdrop-blur-xl">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#2775CA]/10">
-                <FiDollarSign className="h-4 w-4 text-[#2775CA]" />
+            {/* EARN */}
+
+            <div className="cta-float flex items-center gap-2 rounded-xl border border-[#D4AF37]/20 bg-[#f6f5ef] px-3.5 py-2.5 shadow-sm backdrop-blur-xl">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#D4AF37]/[0.08]">
+                <FiDollarSign className="h-4 w-4 text-[#B28B20]" />
               </div>
 
               <div className="text-left">
                 <p className="text-[9px] font-bold uppercase tracking-wider text-black/35">
                   Earn
                 </p>
+
                 <p className="text-xs font-bold text-[#111111]">
                   Get USDC
                 </p>
@@ -186,11 +201,11 @@ function CallToAction() {
           </div>
 
           {/* Buttons */}
-          <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
 
+          <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
               to="/dashboard"
-              className="group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-[#FF1AC6] px-6 py-3 text-sm font-bold text-white shadow-[0_10px_30px_rgba(39,117,202,0.2)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#2167b4] hover:shadow-[0_15px_40px_rgba(39,117,202,0.28)] sm:w-auto"
+              className="group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-[#D4AF37] px-6 py-3 text-sm font-bold text-white shadow-[0_10px_30px_rgba(212,175,55,0.18)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#B28B20] hover:shadow-[0_15px_40px_rgba(212,175,55,0.25)] sm:w-auto"
             >
               <span className="relative z-10">
                 Explore Bounties
@@ -203,9 +218,9 @@ function CallToAction() {
 
             <Link
               to="/create"
-              className="group inline-flex w-full items-center justify-center gap-2 rounded-xl border border-black/[0.09] bg-white/60 px-6 py-3 text-sm font-semibold text-[#111111] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-[#2775CA]/25 hover:bg-white sm:w-auto"
+              className="group inline-flex w-full items-center justify-center gap-2 rounded-xl border border-black/[0.09] bg-[#f6f5ef] px-6 py-3 text-sm font-semibold text-[#111111] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-[#D4AF37]/40 hover:bg-white sm:w-auto"
             >
-              <FiPlus className="text-black/45 transition-transform duration-300 group-hover:rotate-90 group-hover:text-[#FF1AC6]" />
+              <FiPlus className="text-black/45 transition-transform duration-300 group-hover:rotate-90 group-hover:text-[#B28B20]" />
 
               <span>
                 Create a Bounty
@@ -214,10 +229,11 @@ function CallToAction() {
           </div>
 
           {/* Trust indicators */}
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2.5">
 
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2.5">
             <div className="flex items-center gap-1.5">
-              <FiShield className="h-3.5 w-3.5 text-[#2775CA]" />
+              <FiShield className="h-3.5 w-3.5 text-[#B28B20]" />
+
               <span className="text-[9px] font-semibold uppercase tracking-wider text-black/40">
                 On-chain
               </span>
@@ -226,7 +242,8 @@ function CallToAction() {
             <div className="h-3 w-px bg-black/10" />
 
             <div className="flex items-center gap-1.5">
-              <FiDollarSign className="h-3.5 w-3.5 text-[#2775CA]" />
+              <FiDollarSign className="h-3.5 w-3.5 text-[#B28B20]" />
+
               <span className="text-[9px] font-semibold uppercase tracking-wider text-black/40">
                 USDC Rewards
               </span>
@@ -235,7 +252,8 @@ function CallToAction() {
             <div className="h-3 w-px bg-black/10" />
 
             <div className="flex items-center gap-1.5">
-              <FiZap className="h-3.5 w-3.5 text-purple-500" />
+              <FiZap className="h-3.5 w-3.5 text-[#B28B20]" />
+
               <span className="text-[9px] font-semibold uppercase tracking-wider text-black/40">
                 Arc Powered
               </span>
@@ -244,7 +262,8 @@ function CallToAction() {
             <div className="h-3 w-px bg-black/10" />
 
             <div className="flex items-center gap-1.5">
-              <FiCheck className="h-3.5 w-3.5 text-green-600" />
+              <FiCheck className="h-3.5 w-3.5 text-[#B28B20]" />
+
               <span className="text-[9px] font-semibold uppercase tracking-wider text-black/40">
                 Open Opportunities
               </span>
@@ -252,10 +271,13 @@ function CallToAction() {
           </div>
 
           {/* Bottom accent */}
+
           <div className="mx-auto mt-7 flex max-w-xs items-center gap-3">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-[#2775CA]/20" />
-            <div className="h-1.5 w-1.5 rounded-full bg-[#FF1AC6]" />
-            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-purple-500/20" />
+            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-[#D4AF37]/30" />
+
+            <div className="h-1.5 w-1.5 rounded-full bg-[#D4AF37]" />
+
+            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-[#D4AF37]/30" />
           </div>
         </div>
       </div>
