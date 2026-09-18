@@ -1,23 +1,25 @@
+
 function LiveTricker() {
   const items = [
-    { label: "Welcome to Happy Bounty", type: "LIVE" },
-    { label: "Earn Rewards", type: "REWARD" },
-    { label: "Complete Tasks", type: "TASK" },
-    { label: "Instant Payouts", type: "FAST" },
+    { label: "Built for Arc", type: "ARC" },
+    { label: "Earn USDC Rewards", type: "USDC" },
+    { label: "Complete On-Chain Bounties", type: "BOUNTY" },
+    { label: "Fast USDC Payouts", type: "PAYOUT" },
     { label: "New Bounties Added Daily", type: "NEW" },
   ];
 
   return (
-    <div className="relative w-full overflow-hidden mb-2  bg-[#090909]/95 backdrop-blur-xl">
+    <div className="relative mt-1 w-full overflow-hidden border-y border-black/[0.06] bg-white">
       {/* Left fade */}
-      <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#090909] via-[#090909]/80 to-transparent z-20 pointer-events-none" />
+      <div className="pointer-events-none absolute bottom-0 left-0 top-0 z-20 w-24 bg-gradient-to-r from-white via-white/95 to-transparent" />
 
       {/* Right fade */}
-      <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#090909] via-[#090909]/80 to-transparent z-20 pointer-events-none" />
+      <div className="pointer-events-none absolute bottom-0 right-0 top-0 z-20 w-24 bg-gradient-to-l from-white via-white/95 to-transparent" />
 
-      {/* Pink glow */}
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-8 bg-[#FF1AC6]/10 blur-3xl pointer-events-none" />
+      {/* Subtle Arc / USDC glow */}
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-8 w-80 -translate-x-1/2 -translate-y-1/2 bg-[#2775CA]/[0.035] blur-3xl" />
 
+      {/* Ticker */}
       <div className="ticker-track">
         {[1, 2, 3].map((_, index) => (
           <div key={index} className="ticker-content">
@@ -26,11 +28,13 @@ function LiveTricker() {
                 {/* Status indicator */}
                 <span
                   className={`status-dot ${
-                    item.type === "LIVE"
-                      ? "live"
-                      : item.type === "NEW"
-                        ? "pink"
-                        : "purple"
+                    item.type === "ARC"
+                      ? "arc"
+                      : item.type === "USDC"
+                        ? "usdc"
+                        : item.type === "NEW"
+                          ? "pink"
+                          : "purple"
                   }`}
                 />
 
@@ -38,7 +42,17 @@ function LiveTricker() {
                 <span className="ticker-label">{item.label}</span>
 
                 {/* Category */}
-                <span className="ticker-category">{item.type}</span>
+                <span
+                  className={`ticker-category ${
+                    item.type === "USDC"
+                      ? "usdc-category"
+                      : item.type === "ARC"
+                        ? "arc-category"
+                        : ""
+                  }`}
+                >
+                  {item.type}
+                </span>
 
                 {/* Separator */}
                 <span className="ticker-separator">/</span>
@@ -74,29 +88,51 @@ function LiveTricker() {
           white-space: nowrap;
         }
 
+        /* =====================================================
+           TEXT
+        ===================================================== */
+
         .ticker-label {
-          color: #e5e5e5;
+          color: #171717;
           font-size: 13px;
-          font-weight: 500;
+          font-weight: 600;
           letter-spacing: 0.01em;
         }
 
         .ticker-category {
           font-size: 9px;
-          font-weight: 700;
+          font-weight: 800;
           letter-spacing: 0.12em;
-          color: #FF1AC6;
+          color: #7c3aed;
           padding: 3px 7px;
           border-radius: 999px;
-          border: 1px solid rgba(255, 26, 198, 0.2);
-          background: rgba(255, 26, 198, 0.06);
+          border: 1px solid rgba(124, 58, 237, 0.15);
+          background: rgba(124, 58, 237, 0.045);
+        }
+
+        /* Arc */
+        .arc-category {
+          color: #111111;
+          border-color: rgba(0, 0, 0, 0.12);
+          background: rgba(0, 0, 0, 0.035);
+        }
+
+        /* USDC */
+        .usdc-category {
+          color: #2775ca;
+          border-color: rgba(39, 117, 202, 0.18);
+          background: rgba(39, 117, 202, 0.05);
         }
 
         .ticker-separator {
           margin-left: 8px;
-          color: rgba(255, 255, 255, 0.12);
+          color: rgba(0, 0, 0, 0.12);
           font-size: 18px;
         }
+
+        /* =====================================================
+           STATUS DOTS
+        ===================================================== */
 
         .status-dot {
           width: 6px;
@@ -106,25 +142,35 @@ function LiveTricker() {
           flex-shrink: 0;
         }
 
-        .status-dot.live {
-          background: #22c55e;
+        .status-dot.arc {
+          background: #111111;
+          box-shadow: 0 0 7px rgba(0, 0, 0, 0.25);
+          animation: arcPulse 2.5s ease-in-out infinite;
+        }
+
+        .status-dot.usdc {
+          background: #2775ca;
           box-shadow:
-            0 0 6px rgba(34, 197, 94, 0.8),
-            0 0 12px rgba(34, 197, 94, 0.4);
-          animation: livePulse 2s ease-in-out infinite;
+            0 0 7px rgba(39, 117, 202, 0.55),
+            0 0 14px rgba(39, 117, 202, 0.2);
+          animation: usdcPulse 2s ease-in-out infinite;
         }
 
         .status-dot.pink {
-          background: #FF1AC6;
-          box-shadow: 0 0 8px rgba(255, 26, 198, 0.7);
+          background: #ff1ac6;
+          box-shadow: 0 0 8px rgba(255, 26, 198, 0.45);
           animation: pinkPulse 2.5s ease-in-out infinite;
         }
 
         .status-dot.purple {
           background: #8b5cf6;
-          box-shadow: 0 0 8px rgba(139, 92, 246, 0.7);
+          box-shadow: 0 0 8px rgba(139, 92, 246, 0.45);
           animation: purplePulse 2.5s ease-in-out infinite;
         }
+
+        /* =====================================================
+           TICKER ANIMATION
+        ===================================================== */
 
         @keyframes tickerScroll {
           from {
@@ -136,44 +182,80 @@ function LiveTricker() {
           }
         }
 
-        @keyframes livePulse {
-          0%, 100% {
+        /* =====================================================
+           ARC PULSE
+        ===================================================== */
+
+        @keyframes arcPulse {
+          0%,
+          100% {
+            opacity: 0.45;
+            transform: scale(0.85);
+          }
+
+          50% {
             opacity: 1;
             transform: scale(1);
           }
+        }
+
+        /* =====================================================
+           USDC PULSE
+        ===================================================== */
+
+        @keyframes usdcPulse {
+          0%,
+          100% {
+            opacity: 0.65;
+            transform: scale(0.9);
+          }
 
           50% {
-            opacity: 0.45;
-            transform: scale(0.75);
+            opacity: 1;
+            transform: scale(1.1);
           }
         }
+
+        /* =====================================================
+           PINK PULSE
+        ===================================================== */
 
         @keyframes pinkPulse {
-          0%, 100% {
+          0%,
+          100% {
             opacity: 0.7;
-            box-shadow: 0 0 5px rgba(255, 26, 198, 0.4);
+            box-shadow: 0 0 5px rgba(255, 26, 198, 0.3);
           }
 
           50% {
             opacity: 1;
             box-shadow:
-              0 0 8px rgba(255, 26, 198, 0.8),
-              0 0 14px rgba(255, 26, 198, 0.3);
+              0 0 8px rgba(255, 26, 198, 0.65),
+              0 0 14px rgba(255, 26, 198, 0.2);
           }
         }
+
+        /* =====================================================
+           PURPLE PULSE
+        ===================================================== */
 
         @keyframes purplePulse {
-          0%, 100% {
+          0%,
+          100% {
             opacity: 0.7;
           }
 
           50% {
             opacity: 1;
             box-shadow:
-              0 0 8px rgba(139, 92, 246, 0.8),
-              0 0 14px rgba(139, 92, 246, 0.3);
+              0 0 8px rgba(139, 92, 246, 0.65),
+              0 0 14px rgba(139, 92, 246, 0.2);
           }
         }
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
 
         @media (max-width: 640px) {
           .ticker-item {
@@ -193,6 +275,10 @@ function LiveTricker() {
             animation-duration: 22s;
           }
         }
+
+        /* =====================================================
+           REDUCED MOTION
+        ===================================================== */
 
         @media (prefers-reduced-motion: reduce) {
           .ticker-track {

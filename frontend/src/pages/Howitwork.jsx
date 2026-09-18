@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from "react";
 import {
   FiBriefcase,
@@ -17,7 +16,6 @@ export default function HowItWorks() {
 
   /* =====================================================
      SCROLL REVEAL
-     DESKTOP ONLY
   ===================================================== */
   useEffect(() => {
     const section = sectionRef.current;
@@ -32,7 +30,7 @@ export default function HowItWorks() {
         }
       },
       {
-        threshold: 0.2,
+        threshold: 0.15,
       }
     );
 
@@ -49,33 +47,48 @@ export default function HowItWorks() {
       }`}
     >
       {/* =====================================================
+          BACKGROUND DETAILS
+      ===================================================== */}
+
+      <div className="section-glow section-glow-blue" />
+      <div className="section-glow section-glow-gold" />
+
+      <div className="section-grid-pattern" />
+
+      {/* =====================================================
           SECTION HEADER
       ===================================================== */}
+
       <div className="how-it-works-header">
         <span className="how-it-works-label">
           <span className="label-dot" />
-          HOW IT WORKS
+          BUILT FOR ARC
         </span>
 
         <h2>
-          Work. Earn.{" "}
-          <span>Build.</span>
+          Discover.{" "}
+          <span>Contribute.</span>{" "}
+          <strong>Earn USDC.</strong>
         </h2>
 
         <p>
-          A simple way to discover Web3 opportunities, complete
-          meaningful work, and earn rewards.
+          A simple way to discover Web3 opportunities, complete meaningful
+          work, and receive rewards through an Arc-powered bounty experience.
         </p>
       </div>
 
       {/* =====================================================
           CARDS
       ===================================================== */}
+
       <div className="how-it-works-grid">
         {/* ===================================================
             CARD 1 — DISCOVER
         =================================================== */}
+
         <div className="how-it-works-card">
+          <div className="card-top-line" />
+
           <div className="card-number">01</div>
 
           <div className="visual-area">
@@ -84,41 +97,51 @@ export default function HowItWorks() {
                 <div className="wallet-top">
                   <span />
                   <span />
+                  <span />
                 </div>
 
                 <div className="wallet-screen">
-                  <FiZap className="wallet-icon" />
+                  <FiGlobe className="wallet-icon" />
 
-                  <div className="wallet-lines">
-                    <span />
-                    <span />
-                    <span />
+                  <div className="wallet-content">
+                    <span className="wallet-title" />
+
+                    <div className="wallet-lines">
+                      <span />
+                      <span />
+                      <span />
+                    </div>
                   </div>
                 </div>
               </div>
 
               <div className="discover-orbit orbit-one">
-                <span className="orbit-dot pink-dot" />
+                <span className="orbit-dot blue-dot" />
               </div>
 
               <div className="discover-orbit orbit-two">
-                <span className="orbit-dot purple-dot" />
+                <span className="orbit-dot gold-dot" />
               </div>
+
+              <div className="visual-pulse pulse-one" />
+              <div className="visual-pulse pulse-two" />
 
               <FiZap className="discover-icon" />
             </div>
           </div>
 
           <div className="card-content">
-            <div className="card-icon">
+            <div className="card-icon blue-icon">
               <FiGlobe />
             </div>
+
+            <div className="card-step">STEP 01</div>
 
             <h3>Discover Bounties</h3>
 
             <p>
-              Explore opportunities from Web3 projects and
-              find work that matches your skills.
+              Explore opportunities from Web3 projects and find bounties
+              that match your skills and interests.
             </p>
           </div>
         </div>
@@ -126,7 +149,10 @@ export default function HowItWorks() {
         {/* ===================================================
             CARD 2 — CONNECT
         =================================================== */}
+
         <div className="how-it-works-card">
+          <div className="card-top-line" />
+
           <div className="card-number">02</div>
 
           <div className="visual-area">
@@ -136,12 +162,17 @@ export default function HowItWorks() {
                   <span />
                   <span />
                   <span />
+
+                  <div className="dashboard-status">
+                    <i />
+                    ARC
+                  </div>
                 </div>
 
                 <div className="dashboard-body">
                   <div className="dashboard-sidebar">
                     <span />
-                    <span />
+                    <span className="active" />
                     <span />
                     <span />
                   </div>
@@ -171,19 +202,24 @@ export default function HowItWorks() {
 
               <div className="connection-line line-one" />
               <div className="connection-line line-two" />
+
+              <div className="connection-dot connection-dot-one" />
+              <div className="connection-dot connection-dot-two" />
             </div>
           </div>
 
           <div className="card-content">
-            <div className="card-icon">
-              <FiUser />
+            <div className="card-icon purple-icon">
+              <FiUsers />
             </div>
+
+            <div className="card-step">STEP 02</div>
 
             <h3>Connect & Contribute</h3>
 
             <p>
-              Join projects, submit your work, and collaborate
-              with teams building the next generation of Web3.
+              Join projects, connect your wallet, submit your work, and
+              collaborate with teams building on-chain.
             </p>
           </div>
         </div>
@@ -191,14 +227,17 @@ export default function HowItWorks() {
         {/* ===================================================
             CARD 3 — COMPLETE
         =================================================== */}
+
         <div className="how-it-works-card">
+          <div className="card-top-line" />
+
           <div className="card-number">03</div>
 
           <div className="visual-area">
             <div className="complete-visual">
               <div className="task-window">
                 <div className="task-header">
-                  <span>BOUNTY</span>
+                  <span>BOUNTY TASK</span>
 
                   <div className="task-status">
                     <span />
@@ -218,7 +257,7 @@ export default function HowItWorks() {
                 <div className="task-bottom">
                   <FiCheck />
 
-                  <span>Task completed</span>
+                  <span>Submission verified</span>
                 </div>
               </div>
 
@@ -228,19 +267,26 @@ export default function HowItWorks() {
               <div className="completion-check">
                 <FiCheck />
               </div>
+
+              <div className="verified-badge">
+                <FiShield />
+                VERIFIED
+              </div>
             </div>
           </div>
 
           <div className="card-content">
-            <div className="card-icon">
+            <div className="card-icon gold-icon">
               <FiCheck />
             </div>
+
+            <div className="card-step">STEP 03</div>
 
             <h3>Complete the Work</h3>
 
             <p>
-              Deliver quality work, meet the requirements, and
-              get your contribution reviewed by the project.
+              Deliver quality work, meet the bounty requirements, and have
+              your contribution reviewed by the project.
             </p>
           </div>
         </div>
@@ -248,19 +294,26 @@ export default function HowItWorks() {
         {/* ===================================================
             CARD 4 — EARN
         =================================================== */}
+
         <div className="how-it-works-card">
+          <div className="card-top-line" />
+
           <div className="card-number">04</div>
 
           <div className="visual-area">
             <div className="earn-visual">
               <div className="earning-box">
                 <div className="earning-icon">
-                  <FiZap />
+                  <span>$</span>
                 </div>
 
                 <div className="earning-info">
-                  <span>REWARD</span>
+                  <span>BOUNTY REWARD</span>
                   <strong>+450 USDC</strong>
+                </div>
+
+                <div className="earning-check">
+                  <FiCheck />
                 </div>
               </div>
 
@@ -276,16 +329,47 @@ export default function HowItWorks() {
           </div>
 
           <div className="card-content">
-            <div className="card-icon">
+            <div className="card-icon blue-icon">
               <FiLock />
             </div>
 
-            <h3>Get Rewarded</h3>
+            <div className="card-step">STEP 04</div>
+
+            <h3>Get Rewarded in USDC</h3>
 
             <p>
-              Receive your rewards and build your reputation
-              while contributing to the Web3 ecosystem.
+              Complete the bounty, receive your reward, and build your
+              reputation through meaningful Web3 contributions.
             </p>
+          </div>
+        </div>
+      </div>
+
+      {/* =====================================================
+          ARC FOOTER STRIP
+      ===================================================== */}
+
+      <div className="arc-strip">
+        <div className="arc-strip-line" />
+
+        <div className="arc-strip-content">
+          <div className="arc-strip-item">
+            <span className="arc-strip-dot blue" />
+            <span>ARC</span>
+          </div>
+
+          <div className="arc-strip-divider" />
+
+          <div className="arc-strip-item">
+            <span className="arc-strip-dot gold" />
+            <span>USDC REWARDS</span>
+          </div>
+
+          <div className="arc-strip-divider" />
+
+          <div className="arc-strip-item">
+            <span className="arc-strip-dot pink" />
+            <span>ON-CHAIN BOUNTIES</span>
           </div>
         </div>
       </div>
@@ -293,29 +377,93 @@ export default function HowItWorks() {
       {/* =====================================================
           CSS
       ===================================================== */}
+
       <style>{`
-        /* ========================================
+        /* =====================================================
            SECTION
-        ======================================== */
+        ===================================================== */
 
         .how-it-works-section {
           position: relative;
           width: 100%;
-          padding: 80px 24px;
+          padding: 95px 24px 85px;
           overflow: hidden;
-          background: #070708;
-          color: white;
+
+          background:
+            linear-gradient(
+              180deg,
+              #f7f5ef 0%,
+              #faf9f5 48%,
+              #f3f1e9 100%
+            );
+
+          color: #111111;
         }
 
-        /* ========================================
+        /* =====================================================
+           BACKGROUND
+        ===================================================== */
+
+        .section-glow {
+          position: absolute;
+          pointer-events: none;
+          border-radius: 9999px;
+          filter: blur(100px);
+        }
+
+        .section-glow-blue {
+          top: 5%;
+          left: -160px;
+          width: 430px;
+          height: 430px;
+          background: rgba(39, 117, 202, 0.055);
+        }
+
+        .section-glow-gold {
+          right: -150px;
+          bottom: -130px;
+          width: 430px;
+          height: 430px;
+          background: rgba(166, 125, 52, 0.055);
+        }
+
+        .section-grid-pattern {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          opacity: 0.35;
+
+          background-image:
+            linear-gradient(
+              rgba(20, 20, 20, 0.035) 1px,
+              transparent 1px
+            ),
+            linear-gradient(
+              90deg,
+              rgba(20, 20, 20, 0.035) 1px,
+              transparent 1px
+            );
+
+          background-size: 55px 55px;
+
+          mask-image: linear-gradient(
+            to bottom,
+            transparent,
+            black 20%,
+            black 80%,
+            transparent
+          );
+        }
+
+        /* =====================================================
            HEADER
-        ======================================== */
+        ===================================================== */
 
         .how-it-works-header {
           position: relative;
           z-index: 2;
-          max-width: 760px;
-          margin: 0 auto 50px;
+          max-width: 780px;
+          margin: 0 auto 58px;
           text-align: center;
         }
 
@@ -323,188 +471,327 @@ export default function HowItWorks() {
           display: inline-flex;
           align-items: center;
           gap: 8px;
+
           padding: 8px 14px;
-          border: 1px solid rgba(255, 255, 255, 0.08);
+
+          border: 1px solid rgba(20, 20, 20, 0.1);
           border-radius: 999px;
-          background: rgba(255, 255, 255, 0.03);
-          color: #9ca3af;
+
+          background: rgba(255, 255, 255, 0.68);
+
+          color: #6b6b6b;
+
           font-size: 10px;
-          font-weight: 600;
-          letter-spacing: 0.16em;
+          font-weight: 700;
+          letter-spacing: 0.17em;
+
+          box-shadow:
+            0 8px 25px rgba(0, 0, 0, 0.035),
+            inset 0 1px rgba(255, 255, 255, 0.8);
         }
 
         .label-dot {
           width: 6px;
           height: 6px;
           border-radius: 999px;
-          background: #ff1ac6;
-          box-shadow: 0 0 10px rgba(255, 26, 198, 0.8);
+
+          background: #2775ca;
+
+          box-shadow:
+            0 0 8px rgba(39, 117, 202, 0.5),
+            0 0 18px rgba(39, 117, 202, 0.2);
         }
 
         .how-it-works-header h2 {
-          margin: 18px 0 12px;
-          font-size: clamp(2rem, 5vw, 3.5rem);
-          line-height: 1;
-          font-weight: 700;
-          letter-spacing: -0.04em;
+          margin: 19px 0 13px;
+
+          font-size: clamp(2.1rem, 5vw, 3.7rem);
+          line-height: 0.98;
+
+          font-weight: 800;
+          letter-spacing: -0.055em;
+
+          color: #101010;
         }
 
         .how-it-works-header h2 span {
-          background: linear-gradient(
-            90deg,
-            #ff1ac6,
-            #ff62d8,
-            #a855f7
-          );
+          background:
+            linear-gradient(
+              90deg,
+              #2775ca,
+              #4b91df,
+              #6b52c8
+            );
+
           -webkit-background-clip: text;
           background-clip: text;
           color: transparent;
         }
 
-        .how-it-works-header p {
-          max-width: 580px;
-          margin: 0 auto;
-          color: #71717a;
-          font-size: 14px;
-          line-height: 1.7;
+        .how-it-works-header h2 strong {
+          color: #92702e;
+          font-weight: 800;
         }
 
-        /* ========================================
+        .how-it-works-header p {
+          max-width: 610px;
+          margin: 0 auto;
+
+          color: #6e6e6e;
+
+          font-size: 14px;
+          line-height: 1.75;
+        }
+
+        /* =====================================================
            GRID
-        ======================================== */
+        ===================================================== */
 
         .how-it-works-grid {
           position: relative;
           z-index: 2;
+
           display: grid;
           grid-template-columns: repeat(4, minmax(0, 1fr));
-          gap: 18px;
+
+          gap: 17px;
+
           max-width: 1400px;
           margin: 0 auto;
         }
 
-        /* ========================================
-           OUTER CARD
-           KEPT AS THE ORIGINAL STYLE
-        ======================================== */
+        /* =====================================================
+           CARD
+        ===================================================== */
 
         .how-it-works-card {
           position: relative;
-          min-height: 350px;
-          padding: 22px 20px;
+
+          min-height: 390px;
+          padding: 22px 20px 24px;
+
           overflow: hidden;
-          border: 1px solid rgba(255, 255, 255, 0.08);
+
+          border: 1px solid rgba(25, 25, 25, 0.11);
           border-radius: 22px;
+
           background:
             linear-gradient(
               145deg,
-              rgba(255, 255, 255, 0.045),
-              rgba(255, 255, 255, 0.015)
+              rgba(255, 255, 255, 0.94),
+              rgba(249, 248, 243, 0.78)
             );
+
+          box-shadow:
+            0 10px 35px rgba(0, 0, 0, 0.045),
+            inset 0 1px rgba(255, 255, 255, 0.95);
+
           transition:
+            transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
             border-color 0.35s ease,
-            background 0.35s ease,
-            transform 0.35s ease,
-            box-shadow 0.35s ease;
+            box-shadow 0.35s ease,
+            background 0.35s ease;
+        }
+
+        .how-it-works-card::before {
+          content: "";
+
+          position: absolute;
+          inset: 0;
+
+          pointer-events: none;
+
+          background:
+            radial-gradient(
+              circle at 50% 20%,
+              rgba(39, 117, 202, 0.045),
+              transparent 45%
+            );
+
+          opacity: 0;
+
+          transition: opacity 0.4s ease;
         }
 
         .how-it-works-card:hover {
-          border-color: rgba(255, 26, 198, 0.18);
+          transform: translateY(-8px);
+
+          border-color: rgba(39, 117, 202, 0.22);
+
+          box-shadow:
+            0 22px 55px rgba(0, 0, 0, 0.08),
+            0 0 0 1px rgba(39, 117, 202, 0.025);
+        }
+
+        .how-it-works-card:hover::before {
+          opacity: 1;
+        }
+
+        .card-top-line {
+          position: absolute;
+
+          top: 0;
+          left: 15%;
+          right: 15%;
+
+          height: 1px;
+
           background:
             linear-gradient(
-              145deg,
-              rgba(255, 255, 255, 0.06),
-              rgba(255, 255, 255, 0.02)
+              90deg,
+              transparent,
+              rgba(39, 117, 202, 0.4),
+              rgba(166, 125, 52, 0.35),
+              transparent
             );
-          transform: translateY(-4px);
-          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+
+          opacity: 0.5;
         }
 
         .card-number {
           position: absolute;
-          top: 16px;
+
+          top: 17px;
           right: 18px;
-          color: rgba(255, 255, 255, 0.2);
+
+          color: rgba(20, 20, 20, 0.28);
+
           font-size: 10px;
-          font-weight: 600;
+          font-weight: 700;
           letter-spacing: 0.12em;
         }
 
-        /* ========================================
+        /* =====================================================
            VISUAL AREA
-        ======================================== */
+        ===================================================== */
 
         .visual-area {
           position: relative;
+
           display: flex;
           align-items: center;
           justify-content: center;
+
           width: 100%;
-          height: 155px;
-          margin-bottom: 18px;
+          height: 170px;
+
+          margin-bottom: 17px;
         }
 
-        /* ========================================
+        /* =====================================================
            CARD CONTENT
-        ======================================== */
+        ===================================================== */
 
         .card-content {
           position: relative;
           z-index: 2;
         }
 
+        .card-step {
+          margin-bottom: 5px;
+
+          color: #99948a;
+
+          font-size: 8px;
+          font-weight: 700;
+          letter-spacing: 0.16em;
+        }
+
         .card-icon {
           display: flex;
           align-items: center;
           justify-content: center;
-          width: 30px;
-          height: 30px;
-          margin-bottom: 12px;
-          border: 1px solid rgba(255, 26, 198, 0.14);
+
+          width: 32px;
+          height: 32px;
+
+          margin-bottom: 11px;
+
           border-radius: 9px;
-          background: rgba(255, 26, 198, 0.07);
-          color: #ff1ac6;
+
           font-size: 14px;
+
+          transition:
+            transform 0.35s ease,
+            box-shadow 0.35s ease;
+        }
+
+        .how-it-works-card:hover .card-icon {
+          transform: translateY(-2px) scale(1.04);
+        }
+
+        .blue-icon {
+          border: 1px solid rgba(39, 117, 202, 0.16);
+          background: rgba(39, 117, 202, 0.07);
+          color: #2775ca;
+
+          box-shadow: 0 5px 20px rgba(39, 117, 202, 0.06);
+        }
+
+        .purple-icon {
+          border: 1px solid rgba(108, 82, 200, 0.14);
+          background: rgba(108, 82, 200, 0.065);
+          color: #6b52c8;
+        }
+
+        .gold-icon {
+          border: 1px solid rgba(166, 125, 52, 0.18);
+          background: rgba(166, 125, 52, 0.07);
+          color: #92702e;
         }
 
         .card-content h3 {
           margin: 0 0 8px;
-          color: white;
+
+          color: #151515;
+
           font-size: 16px;
-          font-weight: 600;
+          font-weight: 700;
+          letter-spacing: -0.015em;
         }
 
         .card-content p {
           margin: 0;
-          color: #71717a;
+
+          color: #737373;
+
           font-size: 12px;
-          line-height: 1.65;
+          line-height: 1.7;
         }
 
-        /* ========================================
+        /* =====================================================
            DISCOVER VISUAL
-        ======================================== */
+        ===================================================== */
 
         .discover-visual {
           position: relative;
-          width: 175px;
-          height: 85px;
+
+          width: 185px;
+          height: 115px;
         }
 
         .discover-wallet {
           position: absolute;
+
           left: 50%;
           top: 50%;
+
           z-index: 3;
-          width: 110px;
-          height: 68px;
+
+          width: 116px;
+          height: 72px;
+
           transform: translate(-50%, -50%);
-          border: 1px solid rgba(255, 255, 255, 0.12);
-          border-radius: 12px;
-          background: rgba(16, 16, 17, 0.92);
+
+          border: 1px solid rgba(20, 20, 20, 0.1);
+          border-radius: 13px;
+
+          background: rgba(255, 255, 255, 0.9);
+
           box-shadow:
-            0 15px 35px rgba(0, 0, 0, 0.45),
-            inset 0 0 20px rgba(255, 255, 255, 0.025);
+            0 20px 35px rgba(0, 0, 0, 0.08),
+            0 0 30px rgba(39, 117, 202, 0.045);
+
           backdrop-filter: blur(15px);
         }
 
@@ -512,178 +799,306 @@ export default function HowItWorks() {
           display: flex;
           align-items: center;
           gap: 4px;
+
           height: 18px;
           padding: 0 8px;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+          border-bottom: 1px solid rgba(20, 20, 20, 0.06);
         }
 
         .wallet-top span {
           width: 4px;
           height: 4px;
-          border-radius: 999px;
-          background: rgba(255, 255, 255, 0.25);
+
+          border-radius: 50%;
+
+          background: rgba(20, 20, 20, 0.22);
         }
 
         .wallet-screen {
           display: flex;
           align-items: center;
           gap: 9px;
-          padding: 11px;
+
+          padding: 12px;
         }
 
         .wallet-icon {
-          color: #ff1ac6;
-          font-size: 16px;
-          filter: drop-shadow(0 0 8px rgba(255, 26, 198, 0.6));
+          color: #2775ca;
+
+          font-size: 17px;
+
+          filter:
+            drop-shadow(
+              0 0 8px rgba(39, 117, 202, 0.3)
+            );
+        }
+
+        .wallet-content {
+          flex: 1;
+        }
+
+        .wallet-title {
+          display: block;
+
+          width: 55%;
+          height: 4px;
+
+          margin-bottom: 7px;
+
+          border-radius: 999px;
+
+          background: rgba(20, 20, 20, 0.15);
         }
 
         .wallet-lines {
           display: flex;
-          flex: 1;
           flex-direction: column;
           gap: 5px;
         }
 
         .wallet-lines span {
           height: 3px;
+
           border-radius: 999px;
-          background: rgba(255, 255, 255, 0.1);
+
+          background: rgba(20, 20, 20, 0.08);
         }
 
         .wallet-lines span:nth-child(1) {
-          width: 75%;
+          width: 85%;
         }
 
         .wallet-lines span:nth-child(2) {
-          width: 55%;
+          width: 65%;
         }
 
         .wallet-lines span:nth-child(3) {
-          width: 35%;
+          width: 45%;
         }
 
         .discover-orbit {
           position: absolute;
+
           left: 50%;
           top: 50%;
-          border: 1px solid rgba(255, 255, 255, 0.08);
+
+          border: 1px solid rgba(39, 117, 202, 0.11);
+
           border-radius: 50%;
+
           transform: translate(-50%, -50%);
         }
 
         .orbit-one {
-          width: 135px;
-          height: 58px;
+          width: 150px;
+          height: 65px;
+
           transform:
             translate(-50%, -50%)
             rotate(-15deg);
+
+          animation: arcOrbitOne 7s linear infinite;
         }
 
         .orbit-two {
-          width: 155px;
-          height: 68px;
-          border-color: rgba(168, 85, 247, 0.1);
+          width: 170px;
+          height: 78px;
+
+          border-color: rgba(166, 125, 52, 0.13);
+
           transform:
             translate(-50%, -50%)
             rotate(25deg);
+
+          animation: arcOrbitTwo 10s linear infinite reverse;
         }
 
         .orbit-dot {
           position: absolute;
+
           top: -4px;
           left: 50%;
+
           width: 7px;
           height: 7px;
+
           border-radius: 50%;
+
           transform: translateX(-50%);
         }
 
-        .pink-dot {
-          background: #ff1ac6;
+        .blue-dot {
+          background: #2775ca;
+
           box-shadow:
-            0 0 8px #ff1ac6,
-            0 0 18px rgba(255, 26, 198, 0.7);
+            0 0 8px rgba(39, 117, 202, 0.55),
+            0 0 18px rgba(39, 117, 202, 0.2);
         }
 
-        .purple-dot {
-          background: #a855f7;
+        .gold-dot {
+          background: #92702e;
+
           box-shadow:
-            0 0 8px #a855f7,
-            0 0 18px rgba(168, 85, 247, 0.7);
+            0 0 8px rgba(146, 112, 46, 0.5),
+            0 0 18px rgba(146, 112, 46, 0.18);
         }
 
         .discover-icon {
           position: absolute;
-          right: 7px;
-          top: 8px;
-          color: rgba(255, 26, 198, 0.6);
+
+          right: 4px;
+          top: 10px;
+
+          color: rgba(39, 117, 202, 0.55);
+
           font-size: 13px;
+
+          animation: softFloat 3.5s ease-in-out infinite;
         }
 
-        /* ========================================
+        .visual-pulse {
+          position: absolute;
+
+          left: 50%;
+          top: 50%;
+
+          border-radius: 50%;
+
+          transform: translate(-50%, -50%);
+
+          border: 1px solid rgba(39, 117, 202, 0.07);
+        }
+
+        .pulse-one {
+          width: 100px;
+          height: 100px;
+
+          animation: pulseRing 3s ease-out infinite;
+        }
+
+        .pulse-two {
+          width: 125px;
+          height: 125px;
+
+          animation: pulseRing 3s ease-out infinite 1.2s;
+        }
+
+        /* =====================================================
            CONNECT VISUAL
-        ======================================== */
+        ===================================================== */
 
         .connect-visual {
           position: relative;
-          width: 175px;
-          height: 95px;
+
+          width: 185px;
+          height: 115px;
         }
 
         .dashboard-window {
           position: absolute;
+
           left: 50%;
           top: 50%;
+
           z-index: 2;
+
           width: 155px;
           height: 88px;
+
           overflow: hidden;
+
           transform: translate(-50%, -50%);
-          border: 1px solid rgba(255, 255, 255, 0.1);
+
+          border: 1px solid rgba(20, 20, 20, 0.1);
           border-radius: 11px;
-          background: rgba(15, 15, 17, 0.95);
-          box-shadow: 0 18px 35px rgba(0, 0, 0, 0.4);
+
+          background: rgba(255, 255, 255, 0.92);
+
+          box-shadow:
+            0 18px 35px rgba(0, 0, 0, 0.08),
+            0 0 25px rgba(108, 82, 200, 0.035);
+
+          backdrop-filter: blur(15px);
+
+          animation: dashboardFloat 4.5s ease-in-out infinite;
         }
 
         .dashboard-header {
           display: flex;
           align-items: center;
           gap: 4px;
-          height: 17px;
+
+          height: 18px;
           padding: 0 7px;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+          border-bottom: 1px solid rgba(20, 20, 20, 0.06);
         }
 
-        .dashboard-header span {
+        .dashboard-header > span {
           width: 4px;
           height: 4px;
+
           border-radius: 50%;
-          background: rgba(255, 255, 255, 0.2);
+
+          background: rgba(20, 20, 20, 0.2);
+        }
+
+        .dashboard-status {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+
+          margin-left: auto;
+
+          color: #2775ca;
+
+          font-size: 5px;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+        }
+
+        .dashboard-status i {
+          width: 4px;
+          height: 4px;
+
+          border-radius: 50%;
+
+          background: #2775ca;
+
+          box-shadow: 0 0 7px rgba(39, 117, 202, 0.5);
         }
 
         .dashboard-body {
           display: flex;
-          height: calc(100% - 17px);
+
+          height: calc(100% - 18px);
         }
 
         .dashboard-sidebar {
           display: flex;
-          width: 28px;
+
+          width: 29px;
+
           flex-direction: column;
           gap: 7px;
+
           padding: 8px 7px;
-          border-right: 1px solid rgba(255, 255, 255, 0.05);
+
+          border-right: 1px solid rgba(20, 20, 20, 0.05);
         }
 
         .dashboard-sidebar span {
           width: 100%;
           height: 3px;
+
           border-radius: 999px;
-          background: rgba(255, 255, 255, 0.08);
+
+          background: rgba(20, 20, 20, 0.08);
         }
 
-        .dashboard-sidebar span:first-child {
-          background: rgba(255, 26, 198, 0.5);
+        .dashboard-sidebar .active {
+          background: rgba(39, 117, 202, 0.5);
         }
 
         .dashboard-main {
@@ -694,36 +1109,46 @@ export default function HowItWorks() {
         .dashboard-title {
           width: 48%;
           height: 5px;
+
           margin-bottom: 8px;
+
           border-radius: 999px;
-          background: rgba(255, 255, 255, 0.16);
+
+          background: rgba(20, 20, 20, 0.14);
         }
 
         .dashboard-cards {
           display: flex;
           gap: 5px;
+
           margin-bottom: 8px;
         }
 
         .dashboard-cards span {
           flex: 1;
+
           height: 22px;
-          border: 1px solid rgba(255, 255, 255, 0.05);
+
+          border: 1px solid rgba(20, 20, 20, 0.055);
           border-radius: 5px;
-          background: rgba(255, 255, 255, 0.035);
+
+          background: rgba(20, 20, 20, 0.025);
         }
 
         .dashboard-cards span:first-child {
-          border-color: rgba(255, 26, 198, 0.15);
-          background: rgba(255, 26, 198, 0.06);
+          border-color: rgba(39, 117, 202, 0.13);
+          background: rgba(39, 117, 202, 0.055);
         }
 
         .dashboard-line {
           width: 80%;
           height: 3px;
+
           margin-bottom: 5px;
+
           border-radius: 999px;
-          background: rgba(255, 255, 255, 0.08);
+
+          background: rgba(20, 20, 20, 0.07);
         }
 
         .dashboard-line.short {
@@ -732,93 +1157,162 @@ export default function HowItWorks() {
 
         .user-node {
           position: absolute;
+
           z-index: 4;
+
           display: flex;
           align-items: center;
           justify-content: center;
-          width: 25px;
-          height: 25px;
-          border: 1px solid rgba(255, 26, 198, 0.2);
+
+          width: 27px;
+          height: 27px;
+
+          border: 1px solid rgba(39, 117, 202, 0.15);
           border-radius: 50%;
-          background: rgba(20, 20, 22, 0.95);
-          color: #ff1ac6;
+
+          background: rgba(255, 255, 255, 0.95);
+
+          color: #2775ca;
+
           font-size: 11px;
-          box-shadow: 0 0 18px rgba(255, 26, 198, 0.12);
+
+          box-shadow:
+            0 8px 18px rgba(0, 0, 0, 0.08),
+            0 0 15px rgba(39, 117, 202, 0.08);
         }
 
         .user-one {
           left: -3px;
-          top: 13px;
+          top: 14px;
+
+          animation: nodeFloat 3.5s ease-in-out infinite;
         }
 
         .user-two {
           right: -3px;
-          bottom: 13px;
-          color: #a855f7;
-          border-color: rgba(168, 85, 247, 0.2);
+          bottom: 14px;
+
+          color: #6b52c8;
+
+          border-color: rgba(108, 82, 200, 0.15);
+
+          animation: nodeFloat 4s ease-in-out infinite 0.7s;
         }
 
         .connection-line {
           position: absolute;
+
           z-index: 1;
+
+          width: 38px;
           height: 1px;
-          width: 35px;
-          background: linear-gradient(
-            90deg,
-            rgba(255, 26, 198, 0),
-            rgba(255, 26, 198, 0.4)
-          );
+
+          background:
+            linear-gradient(
+              90deg,
+              rgba(39, 117, 202, 0),
+              rgba(39, 117, 202, 0.35)
+            );
         }
 
         .line-one {
           left: 3px;
-          top: 29px;
+          top: 31px;
+
           transform: rotate(20deg);
         }
 
         .line-two {
           right: 3px;
-          bottom: 29px;
+          bottom: 31px;
+
           transform: rotate(20deg);
-          background: linear-gradient(
-            90deg,
-            rgba(168, 85, 247, 0.4),
-            rgba(168, 85, 247, 0)
-          );
+
+          background:
+            linear-gradient(
+              90deg,
+              rgba(108, 82, 200, 0.35),
+              rgba(108, 82, 200, 0)
+            );
         }
 
-        /* ========================================
+        .connection-dot {
+          position: absolute;
+
+          width: 4px;
+          height: 4px;
+
+          border-radius: 50%;
+
+          background: #2775ca;
+
+          box-shadow: 0 0 8px rgba(39, 117, 202, 0.4);
+
+          animation: connectionMove 2.8s ease-in-out infinite;
+        }
+
+        .connection-dot-one {
+          left: 26px;
+          top: 38px;
+        }
+
+        .connection-dot-two {
+          right: 27px;
+          bottom: 37px;
+
+          animation-delay: 1s;
+        }
+
+        /* =====================================================
            COMPLETE VISUAL
-        ======================================== */
+        ===================================================== */
 
         .complete-visual {
           position: relative;
-          width: 175px;
-          height: 90px;
+
+          width: 185px;
+          height: 115px;
         }
 
         .task-window {
           position: absolute;
+
           left: 50%;
           top: 50%;
+
           z-index: 3;
+
           width: 155px;
-          height: 65px;
+          height: 67px;
+
           padding: 9px 11px;
+
           transform: translate(-50%, -50%);
-          border: 1px solid rgba(255, 255, 255, 0.1);
+
+          border: 1px solid rgba(20, 20, 20, 0.1);
           border-radius: 11px;
-          background: rgba(15, 15, 17, 0.94);
-          box-shadow: 0 18px 35px rgba(0, 0, 0, 0.4);
+
+          background: rgba(255, 255, 255, 0.94);
+
+          box-shadow:
+            0 18px 35px rgba(0, 0, 0, 0.08),
+            0 0 25px rgba(146, 112, 46, 0.045);
+
           backdrop-filter: blur(15px);
+
+          animation: taskFloat 5s ease-in-out infinite;
         }
 
         .task-header {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          color: #5f626a;
+
+          color: #8b8b8b;
+
           font-size: 7px;
+          font-weight: 600;
+
           letter-spacing: 0.12em;
         }
 
@@ -826,31 +1320,40 @@ export default function HowItWorks() {
           display: flex;
           align-items: center;
           gap: 4px;
-          color: #6d7280;
+
+          color: #777;
+
           font-size: 6px;
         }
 
         .task-status span {
           width: 4px;
           height: 4px;
+
           border-radius: 50%;
-          background: #ff1ac6;
-          box-shadow: 0 0 7px #ff1ac6;
+
+          background: #92702e;
+
+          box-shadow: 0 0 7px rgba(146, 112, 46, 0.45);
         }
 
         .task-title {
           display: flex;
           flex-direction: column;
           gap: 4px;
+
           margin-top: 7px;
         }
 
         .task-title span {
           display: block;
+
           width: 60%;
           height: 4px;
+
           border-radius: 999px;
-          background: rgba(255, 255, 255, 0.15);
+
+          background: rgba(20, 20, 20, 0.13);
         }
 
         .task-title span:last-child {
@@ -860,124 +1363,215 @@ export default function HowItWorks() {
         .task-progress {
           width: 100%;
           height: 3px;
+
           margin-top: 8px;
+
           overflow: hidden;
+
           border-radius: 999px;
-          background: rgba(255, 255, 255, 0.06);
+
+          background: rgba(20, 20, 20, 0.06);
         }
 
         .task-progress div {
-          width: 78%;
+          width: 82%;
           height: 100%;
+
           border-radius: inherit;
-          background: linear-gradient(
-            90deg,
-            #ff1ac6,
-            #a855f7
-          );
-          box-shadow: 0 0 10px rgba(255, 26, 198, 0.4);
+
+          background:
+            linear-gradient(
+              90deg,
+              #2775ca,
+              #4b91df,
+              #92702e
+            );
+
+          box-shadow:
+            0 0 10px rgba(39, 117, 202, 0.25);
         }
 
         .task-bottom {
           display: flex;
           align-items: center;
           gap: 5px;
+
           margin-top: 7px;
-          color: #6b7280;
+
+          color: #777;
+
           font-size: 6px;
         }
 
         .task-bottom svg {
-          color: #ff1ac6;
+          color: #92702e;
           font-size: 9px;
         }
 
         .completion-ring {
           position: absolute;
+
           left: 50%;
           top: 50%;
-          border: 1px solid rgba(255, 26, 198, 0.1);
+
+          border: 1px solid rgba(39, 117, 202, 0.08);
           border-radius: 50%;
+
           transform: translate(-50%, -50%);
         }
 
         .ring-one {
           width: 165px;
           height: 82px;
+
           transform:
             translate(-50%, -50%)
             rotate(-12deg);
+
+          animation: ringRotate 10s linear infinite;
         }
 
         .ring-two {
           width: 145px;
           height: 100px;
-          border-color: rgba(168, 85, 247, 0.08);
+
+          border-color: rgba(146, 112, 46, 0.09);
+
           transform:
             translate(-50%, -50%)
             rotate(25deg);
+
+          animation: ringRotate 13s linear infinite reverse;
         }
 
         .completion-check {
           position: absolute;
+
           right: 1px;
-          top: 3px;
+          top: 4px;
+
           display: flex;
           align-items: center;
           justify-content: center;
-          width: 24px;
-          height: 24px;
-          border: 1px solid rgba(255, 26, 198, 0.18);
+
+          width: 25px;
+          height: 25px;
+
+          border: 1px solid rgba(39, 117, 202, 0.17);
           border-radius: 50%;
-          background: rgba(255, 26, 198, 0.08);
-          color: #ff1ac6;
+
+          background: rgba(39, 117, 202, 0.07);
+
+          color: #2775ca;
+
           font-size: 11px;
-          box-shadow: 0 0 18px rgba(255, 26, 198, 0.15);
+
+          box-shadow:
+            0 8px 18px rgba(39, 117, 202, 0.08);
+
+          animation: checkPulse 2.5s ease-in-out infinite;
         }
 
-        /* ========================================
+        .verified-badge {
+          position: absolute;
+
+          left: 0;
+          bottom: 3px;
+
+          display: flex;
+          align-items: center;
+          gap: 4px;
+
+          padding: 5px 7px;
+
+          border: 1px solid rgba(146, 112, 46, 0.13);
+          border-radius: 999px;
+
+          background: rgba(255, 255, 255, 0.9);
+
+          color: #92702e;
+
+          font-size: 5px;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+
+          box-shadow: 0 7px 18px rgba(0, 0, 0, 0.055);
+
+          animation: badgeFloat 3.5s ease-in-out infinite;
+        }
+
+        .verified-badge svg {
+          font-size: 8px;
+        }
+
+        /* =====================================================
            EARN VISUAL
-        ======================================== */
+        ===================================================== */
 
         .earn-visual {
           position: relative;
-          width: 175px;
-          height: 90px;
+
+          width: 185px;
+          height: 115px;
         }
 
         .earning-box {
           position: absolute;
+
           left: 50%;
           top: 50%;
+
           z-index: 3;
+
           display: flex;
           align-items: center;
           gap: 9px;
-          width: 160px;
-          height: 65px;
+
+          width: 164px;
+          height: 67px;
+
           padding: 10px;
+
           transform: translate(-50%, -50%);
-          border: 1px solid rgba(255, 26, 198, 0.14);
+
+          border: 1px solid rgba(39, 117, 202, 0.13);
           border-radius: 12px;
-          background: rgba(16, 16, 17, 0.95);
+
+          background: rgba(255, 255, 255, 0.94);
+
           box-shadow:
-            0 18px 35px rgba(0, 0, 0, 0.45),
-            0 0 30px rgba(255, 26, 198, 0.05);
+            0 18px 35px rgba(0, 0, 0, 0.08),
+            0 0 30px rgba(39, 117, 202, 0.05);
+
           backdrop-filter: blur(15px);
+
+          animation: earningFloat 4.2s ease-in-out infinite;
         }
 
         .earning-icon {
           display: flex;
           align-items: center;
           justify-content: center;
-          width: 34px;
-          height: 34px;
+
+          width: 36px;
+          height: 36px;
+
           flex-shrink: 0;
-          border: 1px solid rgba(255, 26, 198, 0.15);
+
+          border: 1px solid rgba(39, 117, 202, 0.15);
           border-radius: 10px;
-          background: rgba(255, 26, 198, 0.08);
-          color: #ff1ac6;
-          box-shadow: 0 0 18px rgba(255, 26, 198, 0.08);
+
+          background: rgba(39, 117, 202, 0.075);
+
+          color: #2775ca;
+
+          box-shadow:
+            0 0 18px rgba(39, 117, 202, 0.07);
+        }
+
+        .earning-icon span {
+          font-size: 18px;
+          font-weight: 800;
         }
 
         .earning-info {
@@ -987,138 +1581,480 @@ export default function HowItWorks() {
         }
 
         .earning-info span {
-          color: #666a74;
+          color: #8a8a8a;
+
           font-size: 7px;
-          letter-spacing: 0.14em;
+          font-weight: 600;
+
+          letter-spacing: 0.13em;
         }
 
         .earning-info strong {
-          color: white;
+          color: #171717;
+
           font-size: 12px;
+          font-weight: 800;
+        }
+
+        .earning-check {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          width: 18px;
+          height: 18px;
+
+          margin-left: auto;
+
+          border-radius: 50%;
+
+          background: rgba(146, 112, 46, 0.09);
+
+          color: #92702e;
+
+          font-size: 9px;
         }
 
         .energy-ring {
           position: absolute;
+
           left: 50%;
           top: 50%;
-          border: 1px solid rgba(255, 26, 198, 0.1);
+
+          border: 1px solid rgba(39, 117, 202, 0.08);
           border-radius: 50%;
+
           transform: translate(-50%, -50%);
         }
 
         .energy-one {
           width: 175px;
           height: 85px;
+
           transform:
             translate(-50%, -50%)
             rotate(-12deg);
+
+          animation: ringRotate 11s linear infinite;
         }
 
         .energy-two {
           width: 145px;
           height: 65px;
-          border-color: rgba(168, 85, 247, 0.09);
+
+          border-color: rgba(146, 112, 46, 0.09);
+
           transform:
             translate(-50%, -50%)
             rotate(28deg);
+
+          animation: ringRotate 8s linear infinite reverse;
         }
 
         .energy-particle {
           position: absolute;
+
           width: 5px;
           height: 5px;
+
           border-radius: 50%;
         }
 
         .particle-one {
-          top: 3px;
+          top: 8px;
           left: 24px;
-          background: #ff1ac6;
-          box-shadow: 0 0 10px #ff1ac6;
+
+          background: #2775ca;
+
+          box-shadow:
+            0 0 10px rgba(39, 117, 202, 0.5);
+
+          animation: particleDrift 3s ease-in-out infinite;
         }
 
         .particle-two {
           right: 20px;
-          bottom: 7px;
-          background: #a855f7;
-          box-shadow: 0 0 10px #a855f7;
+          bottom: 8px;
+
+          background: #92702e;
+
+          box-shadow:
+            0 0 10px rgba(146, 112, 46, 0.45);
+
+          animation: particleDrift 3.8s ease-in-out infinite 0.7s;
         }
 
         .particle-three {
-          right: 3px;
-          top: 24px;
-          background: white;
-          box-shadow: 0 0 9px white;
+          right: 4px;
+          top: 25px;
+
+          width: 4px;
+          height: 4px;
+
+          background: #6b52c8;
+
+          box-shadow:
+            0 0 9px rgba(107, 82, 200, 0.4);
+
+          animation: particleDrift 4.2s ease-in-out infinite 1s;
         }
 
         .earn-shield {
           position: absolute;
+
           left: 1px;
-          bottom: 2px;
-          color: rgba(255, 26, 198, 0.55);
-          font-size: 13px;
+          bottom: 3px;
+
+          color: rgba(39, 117, 202, 0.45);
+
+          font-size: 14px;
+
+          animation: softFloat 3.5s ease-in-out infinite;
         }
 
-        /* ========================================
-           DESKTOP SCROLL REVEAL
-           ONLY DESKTOP
-        ======================================== */
+        /* =====================================================
+           ARC STRIP
+        ===================================================== */
 
-        @media (min-width: 1024px) {
-          .how-it-works-card {
-            opacity: 0;
-            transform: translateX(80px);
-          }
+        .arc-strip {
+          position: relative;
 
-          .how-it-works-visible .how-it-works-card {
-            animation:
-              howItWorksSlideIn
-              0.8s
-              cubic-bezier(0.22, 1, 0.36, 1)
-              forwards;
-          }
+          z-index: 2;
 
-          .how-it-works-visible .how-it-works-card:nth-child(1) {
-            animation-delay: 0.1s;
-          }
+          max-width: 800px;
 
-          .how-it-works-visible .how-it-works-card:nth-child(2) {
-            animation-delay: 0.3s;
-          }
+          margin: 55px auto 0;
 
-          .how-it-works-visible .how-it-works-card:nth-child(3) {
-            animation-delay: 0.5s;
-          }
-
-          .how-it-works-visible .how-it-works-card:nth-child(4) {
-            animation-delay: 0.7s;
-          }
+          text-align: center;
         }
 
-        @keyframes howItWorksSlideIn {
+        .arc-strip-line {
+          width: 100%;
+          height: 1px;
+
+          margin-bottom: 18px;
+
+          background:
+            linear-gradient(
+              90deg,
+              transparent,
+              rgba(20, 20, 20, 0.1),
+              transparent
+            );
+        }
+
+        .arc-strip-content {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 18px;
+
+          flex-wrap: wrap;
+        }
+
+        .arc-strip-item {
+          display: flex;
+          align-items: center;
+          gap: 7px;
+
+          color: #76736c;
+
+          font-size: 8px;
+          font-weight: 700;
+
+          letter-spacing: 0.14em;
+        }
+
+        .arc-strip-dot {
+          width: 5px;
+          height: 5px;
+
+          border-radius: 50%;
+        }
+
+        .arc-strip-dot.blue {
+          background: #2775ca;
+
+          box-shadow: 0 0 8px rgba(39, 117, 202, 0.35);
+        }
+
+        .arc-strip-dot.gold {
+          background: #92702e;
+
+          box-shadow: 0 0 8px rgba(146, 112, 46, 0.35);
+        }
+
+        .arc-strip-dot.pink {
+          background: #ff1ac6;
+
+          box-shadow: 0 0 8px rgba(255, 26, 198, 0.3);
+        }
+
+        .arc-strip-divider {
+          width: 1px;
+          height: 13px;
+
+          background: rgba(20, 20, 20, 0.1);
+        }
+
+        /* =====================================================
+           NEW ANIMATIONS
+        ===================================================== */
+
+        @keyframes cardReveal {
           0% {
             opacity: 0;
-            transform: translateX(80px);
+            transform:
+              translateY(45px)
+              scale(0.97);
           }
 
-          65% {
+          60% {
             opacity: 1;
-            transform: translateX(-6px);
+            transform:
+              translateY(-5px)
+              scale(1.005);
           }
 
           100% {
             opacity: 1;
-            transform: translateX(0);
+            transform:
+              translateY(0)
+              scale(1);
           }
         }
 
-        /* ========================================
+        @keyframes softFloat {
+          0%,
+          100% {
+            transform: translateY(0);
+          }
+
+          50% {
+            transform: translateY(-7px);
+          }
+        }
+
+        @keyframes dashboardFloat {
+          0%,
+          100% {
+            transform:
+              translate(-50%, -50%)
+              translateY(0);
+          }
+
+          50% {
+            transform:
+              translate(-50%, -50%)
+              translateY(-5px);
+          }
+        }
+
+        @keyframes taskFloat {
+          0%,
+          100% {
+            transform:
+              translate(-50%, -50%)
+              rotate(0deg);
+          }
+
+          50% {
+            transform:
+              translate(-50%, -52%)
+              rotate(-1deg);
+          }
+        }
+
+        @keyframes earningFloat {
+          0%,
+          100% {
+            transform:
+              translate(-50%, -50%)
+              translateY(0);
+          }
+
+          50% {
+            transform:
+              translate(-50%, -50%)
+              translateY(-6px);
+          }
+        }
+
+        @keyframes nodeFloat {
+          0%,
+          100% {
+            transform: translateY(0);
+          }
+
+          50% {
+            transform: translateY(-6px);
+          }
+        }
+
+        @keyframes connectionMove {
+          0%,
+          100% {
+            opacity: 0.25;
+            transform: translateX(0);
+          }
+
+          50% {
+            opacity: 1;
+            transform: translateX(8px);
+          }
+        }
+
+        @keyframes pulseRing {
+          0% {
+            opacity: 0;
+            transform:
+              translate(-50%, -50%)
+              scale(0.82);
+          }
+
+          40% {
+            opacity: 0.65;
+          }
+
+          100% {
+            opacity: 0;
+            transform:
+              translate(-50%, -50%)
+              scale(1.18);
+          }
+        }
+
+        @keyframes checkPulse {
+          0%,
+          100% {
+            transform: scale(1);
+            box-shadow:
+              0 8px 18px rgba(39, 117, 202, 0.08);
+          }
+
+          50% {
+            transform: scale(1.08);
+            box-shadow:
+              0 8px 24px rgba(39, 117, 202, 0.18);
+          }
+        }
+
+        @keyframes badgeFloat {
+          0%,
+          100% {
+            transform: translateY(0);
+          }
+
+          50% {
+            transform: translateY(-4px);
+          }
+        }
+
+        @keyframes particleDrift {
+          0%,
+          100% {
+            opacity: 0.3;
+            transform: translate(0, 0);
+          }
+
+          50% {
+            opacity: 1;
+            transform: translate(8px, -10px);
+          }
+        }
+
+        @keyframes ringRotate {
+          from {
+            transform:
+              translate(-50%, -50%)
+              rotate(0deg);
+          }
+
+          to {
+            transform:
+              translate(-50%, -50%)
+              rotate(360deg);
+          }
+        }
+
+        @keyframes arcOrbitOne {
+          from {
+            transform:
+              translate(-50%, -50%)
+              rotate(-15deg);
+          }
+
+          to {
+            transform:
+              translate(-50%, -50%)
+              rotate(345deg);
+          }
+        }
+
+        @keyframes arcOrbitTwo {
+          from {
+            transform:
+              translate(-50%, -50%)
+              rotate(25deg);
+          }
+
+          to {
+            transform:
+              translate(-50%, -50%)
+              rotate(385deg);
+          }
+        }
+
+        /* =====================================================
+           DESKTOP SCROLL REVEAL
+        ===================================================== */
+
+        @media (min-width: 1024px) {
+          .how-it-works-card {
+            opacity: 0;
+
+            transform:
+              translateY(45px)
+              scale(0.97);
+          }
+
+          .how-it-works-visible .how-it-works-card {
+            animation:
+              cardReveal
+              0.85s
+              cubic-bezier(0.22, 1, 0.36, 1)
+              forwards;
+          }
+
+          .how-it-works-visible
+            .how-it-works-card:nth-child(1) {
+            animation-delay: 0.08s;
+          }
+
+          .how-it-works-visible
+            .how-it-works-card:nth-child(2) {
+            animation-delay: 0.2s;
+          }
+
+          .how-it-works-visible
+            .how-it-works-card:nth-child(3) {
+            animation-delay: 0.32s;
+          }
+
+          .how-it-works-visible
+            .how-it-works-card:nth-child(4) {
+            animation-delay: 0.44s;
+          }
+        }
+
+        /* =====================================================
            TABLET
-        ======================================== */
+        ===================================================== */
 
         @media (max-width: 1023px) {
           .how-it-works-grid {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-columns:
+              repeat(2, minmax(0, 1fr));
           }
 
           .how-it-works-card {
@@ -1127,17 +2063,25 @@ export default function HowItWorks() {
           }
         }
 
-        /* ========================================
+        /* =====================================================
            MOBILE
-        ======================================== */
+        ===================================================== */
 
         @media (max-width: 639px) {
           .how-it-works-section {
-            padding: 60px 16px;
+            padding: 70px 16px;
           }
 
           .how-it-works-header {
-            margin-bottom: 35px;
+            margin-bottom: 38px;
+          }
+
+          .how-it-works-header h2 {
+            font-size: 2.35rem;
+          }
+
+          .how-it-works-header p {
+            font-size: 13px;
           }
 
           .how-it-works-grid {
@@ -1146,18 +2090,31 @@ export default function HowItWorks() {
           }
 
           .how-it-works-card {
-            min-height: 350px;
+            min-height: 370px;
+          }
+
+          .arc-strip {
+            margin-top: 40px;
+          }
+
+          .arc-strip-divider {
+            display: none;
           }
         }
 
-        /* ========================================
+        /* =====================================================
            REDUCED MOTION
-        ======================================== */
+        ===================================================== */
 
         @media (prefers-reduced-motion: reduce) {
           .how-it-works-card {
             opacity: 1 !important;
             transform: none !important;
+            animation: none !important;
+          }
+
+          .how-it-works-card *,
+          .how-it-works-card::before {
             animation: none !important;
           }
         }

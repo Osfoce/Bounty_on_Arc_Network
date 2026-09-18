@@ -3,27 +3,37 @@
 @tailwind utilities;
 
 :root {
-  --text: #a8a2b3;
-  --text-h: #ffffff;
+  --text: #5f5a66;
+  --text-h: #111111;
 
-  --bg: #050505;
+  /* =========================================================
+     MILKY WHITE BACKGROUND
+  ========================================================= */
+  --bg: #f3f1ec;
 
-  --border: rgba(255, 255, 255, 0.08);
-  --code-bg: #111111;
+  --border: rgba(0, 0, 0, 0.09);
+  --code-bg: #ebe9e3;
 
-  /* Happy Bounty */
+  /* =========================================================
+     HAPPY BOUNTY
+  ========================================================= */
   --accent: #ff1ac6;
   --accent-secondary: #8b5cf6;
-
   --accent-bg: rgba(255, 26, 198, 0.1);
   --accent-border: rgba(255, 26, 198, 0.35);
 
-  --social-bg: rgba(255, 255, 255, 0.05);
+  --social-bg: rgba(0, 0, 0, 0.04);
 
+  /* =========================================================
+     SHADOWS
+  ========================================================= */
   --shadow:
-    rgba(0, 0, 0, 0.35) 0 20px 40px -10px,
-    rgba(0, 0, 0, 0.2) 0 10px 20px -5px;
+    rgba(0, 0, 0, 0.09) 0 20px 40px -10px,
+    rgba(0, 0, 0, 0.05) 0 10px 20px -5px;
 
+  /* =========================================================
+     FONTS
+  ========================================================= */
   --sans: system-ui, "Segoe UI", Roboto, sans-serif;
   --heading: system-ui, "Segoe UI", Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
@@ -32,7 +42,7 @@
   letter-spacing: 0.18px;
 
   color: var(--text);
-  background: #050505;
+  background: #f3f1ec;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -44,7 +54,7 @@ html,
 body,
 #root {
   min-height: 100%;
-  background: #050505;
+  background: #f3f1ec;
 }
 
 body {
@@ -52,14 +62,15 @@ body {
   overflow-x: hidden;
 }
 
-
-
 /* =========================================================
    HAPPY BOUNTY — HOW IT WORKS PREMIUM ANIMATIONS
    Colors/layout remain unchanged
 ========================================================= */
 
-/* Floating cards */
+/* =========================================================
+   FLOATING CARDS
+========================================================= */
+
 @keyframes howItWorksFloat {
   0%,
   100% {
@@ -72,6 +83,7 @@ body {
 }
 
 /* Slightly different movement for each card */
+
 @keyframes howItWorksFloat2 {
   0%,
   100% {
@@ -94,7 +106,10 @@ body {
   }
 }
 
-/* Moving light across cards */
+/* =========================================================
+   MOVING LIGHT ACROSS CARDS
+========================================================= */
+
 @keyframes howItWorksShimmer {
   0% {
     transform: translateX(-120%) rotate(12deg);
@@ -123,7 +138,10 @@ body {
   }
 }
 
-/* Number badge breathing */
+/* =========================================================
+   NUMBER BADGE BREATHING
+========================================================= */
+
 @keyframes howItWorksPulse {
   0%,
   100% {
@@ -137,7 +155,10 @@ body {
   }
 }
 
-/* Purple orb breathing */
+/* =========================================================
+   PURPLE ORB BREATHING
+========================================================= */
+
 @keyframes howItWorksGlow {
   0%,
   100% {
@@ -151,7 +172,10 @@ body {
   }
 }
 
-/* Orbiting particle */
+/* =========================================================
+   ORBITING PARTICLE
+========================================================= */
+
 @keyframes howItWorksOrbit {
   from {
     transform: rotate(0deg) translateX(72px) rotate(0deg);
@@ -162,7 +186,10 @@ body {
   }
 }
 
-/* Small floating particle */
+/* =========================================================
+   SMALL FLOATING PARTICLE
+========================================================= */
+
 @keyframes howItWorksParticle {
   0%,
   100% {
@@ -176,7 +203,10 @@ body {
   }
 }
 
-/* Illustration floating */
+/* =========================================================
+   ILLUSTRATION FLOATING
+========================================================= */
+
 @keyframes howItWorksIllustration {
   0%,
   100% {
@@ -188,7 +218,10 @@ body {
   }
 }
 
-/* Energy bolt movement */
+/* =========================================================
+   ENERGY BOLT MOVEMENT
+========================================================= */
+
 @keyframes howItWorksEnergy {
   0%,
   100% {
@@ -202,7 +235,10 @@ body {
   }
 }
 
-/* Card border breathing */
+/* =========================================================
+   CARD BORDER BREATHING
+========================================================= */
+
 @keyframes howItWorksBorder {
   0%,
   100% {
@@ -213,7 +249,6 @@ body {
     opacity: 0.65;
   }
 }
-
 
 /* =========================================================
    CARD ANIMATION
@@ -233,7 +268,6 @@ body {
   animation-delay: -2.5s;
 }
 
-
 /* =========================================================
    SHIMMER
 ========================================================= */
@@ -245,23 +279,28 @@ body {
 
 .how-it-works-card::before {
   content: "";
+
   position: absolute;
   top: -80%;
   left: -45%;
+
   width: 35%;
   height: 260%;
+
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.55),
     transparent
   );
+
   transform: translateX(-120%) rotate(12deg);
+
   pointer-events: none;
   z-index: 20;
+
   animation: howItWorksShimmer 7s ease-in-out infinite;
 }
-
 
 /* =========================================================
    NUMBER BADGE
@@ -271,7 +310,6 @@ body {
   animation: howItWorksPulse 3s ease-in-out infinite;
 }
 
-
 /* =========================================================
    BACKGROUND GLOWS
 ========================================================= */
@@ -280,7 +318,6 @@ body {
   animation: howItWorksGlow 4s ease-in-out infinite;
 }
 
-
 /* =========================================================
    CARD 1 ILLUSTRATION
 ========================================================= */
@@ -288,7 +325,6 @@ body {
 .how-it-works-wallet {
   animation: howItWorksIllustration 4s ease-in-out infinite;
 }
-
 
 /* =========================================================
    CARD 3 ENERGY
@@ -303,26 +339,31 @@ body {
   animation-delay: -0.8s;
 }
 
-
 /* =========================================================
    ORBITING PARTICLE
 ========================================================= */
 
 .how-it-works-orbit {
   position: absolute;
+
   top: 50%;
   left: 50%;
+
   width: 6px;
   height: 6px;
+
   margin-left: -3px;
   margin-top: -3px;
+
   border-radius: 9999px;
+
   background: currentColor;
   box-shadow: 0 0 12px currentColor;
+
   animation: howItWorksOrbit 5s linear infinite;
+
   pointer-events: none;
 }
-
 
 /* =========================================================
    SMALL PARTICLES
@@ -339,7 +380,6 @@ body {
 .how-it-works-particle-delay-2 {
   animation-delay: -2s;
 }
-
 
 /* =========================================================
    HOVER — MAKE THE CARD FEEL ALIVE
@@ -362,7 +402,6 @@ body {
   animation-duration: 0.8s;
 }
 
-
 /* =========================================================
    REDUCED MOTION
 ========================================================= */
@@ -382,4 +421,3 @@ body {
     animation: none !important;
   }
 }
-
