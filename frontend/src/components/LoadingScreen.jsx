@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import Usdc from "../assets/images/Usdc.png";
 
@@ -39,9 +38,34 @@ function LoadingScreen({ onComplete }) {
     return () => cancelAnimationFrame(animationFrame);
   }, [onComplete]);
 
+  const floatingCoins = [
+    { left: "4%", top: "12%", size: 18, delay: "0s", duration: "8s", rotate: "-8deg" },
+    { left: "12%", top: "32%", size: 12, delay: "1.5s", duration: "10s", rotate: "12deg" },
+    { left: "7%", top: "68%", size: 22, delay: "3s", duration: "11s", rotate: "-15deg" },
+    { left: "18%", top: "84%", size: 14, delay: "0.5s", duration: "9s", rotate: "8deg" },
+
+    { left: "28%", top: "10%", size: 11, delay: "2s", duration: "12s", rotate: "-10deg" },
+    { left: "35%", top: "24%", size: 16, delay: "4s", duration: "9s", rotate: "15deg" },
+    { left: "25%", top: "72%", size: 13, delay: "1s", duration: "10s", rotate: "-6deg" },
+    { left: "39%", top: "88%", size: 20, delay: "3.5s", duration: "12s", rotate: "10deg" },
+
+    { left: "58%", top: "9%", size: 15, delay: "1s", duration: "11s", rotate: "-12deg" },
+    { left: "67%", top: "18%", size: 11, delay: "3s", duration: "9s", rotate: "7deg" },
+    { left: "73%", top: "38%", size: 19, delay: "0s", duration: "10s", rotate: "-14deg" },
+    { left: "62%", top: "78%", size: 13, delay: "2.5s", duration: "12s", rotate: "9deg" },
+
+    { left: "82%", top: "12%", size: 21, delay: "4s", duration: "11s", rotate: "-7deg" },
+    { left: "91%", top: "28%", size: 13, delay: "1s", duration: "9s", rotate: "13deg" },
+    { left: "86%", top: "58%", size: 17, delay: "2s", duration: "10s", rotate: "-11deg" },
+    { left: "94%", top: "82%", size: 11, delay: "0.5s", duration: "12s", rotate: "8deg" },
+
+    { left: "48%", top: "5%", size: 9, delay: "3s", duration: "8s", rotate: "5deg" },
+    { left: "52%", top: "92%", size: 16, delay: "1.5s", duration: "11s", rotate: "-9deg" },
+  ];
+
   return (
     <div
-      className={`fixed inset-0 z-[9999] flex min-h-screen items-center justify-center overflow-hidden bg-white text-black transition-opacity duration-500 ${
+      className={`fixed inset-0 z-[9999] flex min-h-screen items-center justify-center overflow-hidden bg-[#f6f5ef] text-black transition-opacity duration-500 ${
         fadeOut ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
     >
@@ -57,17 +81,90 @@ function LoadingScreen({ onComplete }) {
 
         {/* Blue accent glow */}
         <div className="absolute bottom-[12%] right-[12%] h-40 w-40 rounded-full bg-[#2775CA]/[0.04] blur-[90px]" />
+
+        {/* =================================================
+            SOFT ARCHITECTURAL BRICK
+        ================================================= */}
+        <div
+          className="absolute -inset-20 scale-110 opacity-[0.028] blur-[1.5px]"
+          style={{
+            backgroundImage: `
+              linear-gradient(
+                90deg,
+                rgba(82, 67, 38, 0.7) 1px,
+                transparent 1px
+              ),
+              linear-gradient(
+                0deg,
+                rgba(82, 67, 38, 0.7) 1px,
+                transparent 1px
+              )
+            `,
+            backgroundSize: "150px 76px",
+            backgroundPosition: "0 0, 75px 38px",
+          }}
+        />
+
+        {/* Soft brick depth */}
+        <div
+          className="absolute -inset-20 scale-110 opacity-[0.018] blur-[7px]"
+          style={{
+            backgroundImage: `
+              radial-gradient(
+                ellipse at center,
+                rgba(93, 72, 35, 0.7) 0%,
+                rgba(93, 72, 35, 0.25) 35%,
+                transparent 70%
+              )
+            `,
+            backgroundSize: "170px 90px",
+            backgroundPosition: "20px 10px",
+          }}
+        />
+
+        {/* Central fade over the brick */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(246,245,239,0.88)_0%,rgba(246,245,239,0.45)_42%,rgba(246,245,239,0.12)_100%)]" />
+
+        {/* =================================================
+            FLOATING USDC COINS
+        ================================================= */}
+        {floatingCoins.map((coin, index) => (
+          <div
+            key={index}
+            className="absolute opacity-[0.13]"
+            style={{
+              left: coin.left,
+              top: coin.top,
+              animation: `backgroundCoinFloat ${coin.duration} ease-in-out ${coin.delay} infinite`,
+            }}
+          >
+            <img
+              src={Usdc}
+              alt=""
+              aria-hidden="true"
+              draggable="false"
+              className="select-none object-contain"
+              style={{
+                width: `${coin.size}px`,
+                height: `${coin.size}px`,
+                transform: `rotate(${coin.rotate})`,
+                filter:
+                  "drop-shadow(0 5px 10px rgba(39,117,202,0.12))",
+              }}
+            />
+          </div>
+        ))}
       </div>
 
       {/* =====================================================
           SUBTLE GRID
       ===================================================== */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.035]"
+        className="pointer-events-none absolute inset-0 opacity-[0.018]"
         style={{
           backgroundImage:
             "linear-gradient(rgba(0,0,0,0.25) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.25) 1px, transparent 1px)",
-          backgroundSize: "50px 50px",
+          backgroundSize: "70px 70px",
         }}
       />
 
@@ -124,7 +221,7 @@ function LoadingScreen({ onComplete }) {
         {/* =================================================
             ARC BADGE
         ================================================= */}
-        <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-black/[0.08] bg-black/[0.025] px-3 py-1.5">
+        <div className="mt-5 inline-flex items-center gap-2 rounded-full bg-black/[0.025] px-3 py-1.5">
           <span className="relative flex h-1.5 w-1.5">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#2775CA] opacity-40" />
 
@@ -150,7 +247,6 @@ function LoadingScreen({ onComplete }) {
             </span>
           </div>
 
-          {/* Track */}
           <div className="h-[3px] w-full overflow-hidden rounded-full bg-black/[0.07]">
             <div
               className="h-full rounded-full bg-gradient-to-r from-[#2775CA] via-[#2775CA] to-fuchsia-500 transition-[width] duration-100"
@@ -240,6 +336,25 @@ function LoadingScreen({ onComplete }) {
 
           50% {
             transform: translateY(-8px) rotateZ(2deg);
+          }
+        }
+
+        @keyframes backgroundCoinFloat {
+          0%,
+          100% {
+            transform: translate3d(0, 0, 0) rotate(0deg);
+          }
+
+          25% {
+            transform: translate3d(5px, -10px, 0) rotate(4deg);
+          }
+
+          50% {
+            transform: translate3d(-4px, -18px, 0) rotate(-5deg);
+          }
+
+          75% {
+            transform: translate3d(7px, -8px, 0) rotate(3deg);
           }
         }
 
