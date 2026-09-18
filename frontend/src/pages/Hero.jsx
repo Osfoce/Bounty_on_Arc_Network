@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { FiArrowUpRight } from "react-icons/fi";
-import Usdc from "../assets/images/Usdc.png";
+import Usdc from "../assets/images/usdc.png";
 
 const heroMessages = [
   "Earn USDC.",

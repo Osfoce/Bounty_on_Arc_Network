@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react";
-import Usdc from "../assets/images/Usdc.png";
+import Usdc from "../assets/images/usdc.png";
 
 function LoadingScreen({ onComplete }) {
   const [progress, setProgress] = useState(0);
