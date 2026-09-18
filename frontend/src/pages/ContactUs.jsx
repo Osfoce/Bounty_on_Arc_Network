@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import {
@@ -32,14 +33,23 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-black text-white">
-      {/* BACKGROUND GLOW */}
+    <div className="min-h-screen overflow-x-hidden bg-[#f7f6f0] text-[#171714]">
+      {/* BACKGROUND */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute -top-40 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-[#FF1AC6]/10 blur-[130px]" />
+        <div
+          className="absolute inset-0 opacity-[0.18]"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(23,23,20,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(23,23,20,0.035) 1px, transparent 1px)",
+            backgroundSize: "42px 42px",
+          }}
+        />
 
-        <div className="absolute right-[-100px] top-1/2 h-72 w-72 rounded-full bg-purple-500/[0.06] blur-[130px]" />
+        <div className="absolute -top-40 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-[#d4af37]/[0.07] blur-[130px]" />
 
-        <div className="absolute bottom-[-100px] left-[-80px] h-64 w-64 rounded-full bg-[#FF1AC6]/[0.05] blur-[120px]" />
+        <div className="absolute right-[-100px] top-1/2 h-72 w-72 rounded-full bg-[#d4af37]/[0.045] blur-[130px]" />
+
+        <div className="absolute bottom-[-100px] left-[-80px] h-64 w-64 rounded-full bg-[#d4af37]/[0.04] blur-[120px]" />
       </div>
 
       {/* CONTENT */}
@@ -49,28 +59,31 @@ export default function ContactPage() {
           <Link
             to="/"
             className="
+              group
               inline-flex
               items-center
               gap-2
               rounded-xl
               border
-              border-white/10
-              bg-white/[0.04]
+              border-black/10
+              bg-white/75
               px-3.5
               py-2
               text-sm
               font-medium
-              text-white/70
+              text-black/60
+              shadow-[0_4px_20px_rgba(0,0,0,0.04)]
               backdrop-blur-xl
               transition-all
               duration-200
-              hover:border-[#FF1AC6]/30
-              hover:bg-[#FF1AC6]/10
-              hover:text-white
+              hover:-translate-y-0.5
+              hover:border-[#d4af37]/50
+              hover:bg-white
+              hover:text-black
               active:scale-[0.98]
             "
           >
-            <FiArrowLeft className="text-base text-[#FF1AC6]" />
+            <FiArrowLeft className="text-base text-[#a98216] transition-transform duration-200 group-hover:-translate-x-0.5" />
             <span>Back</span>
           </Link>
         </div>
@@ -86,15 +99,15 @@ export default function ContactPage() {
               gap-2
               rounded-full
               border
-              border-[#FF1AC6]/20
-              bg-[#FF1AC6]/[0.06]
+              border-[#d4af37]/30
+              bg-[#d4af37]/[0.07]
               px-3
               py-1.5
             "
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-[#FF1AC6] shadow-[0_0_8px_rgba(255,26,198,0.8)]" />
+            <span className="h-1.5 w-1.5 rounded-full bg-[#c49b2c]" />
 
-            <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#FF1AC6] sm:text-xs">
+            <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#967414] sm:text-xs">
               Get In Touch
             </span>
           </div>
@@ -106,13 +119,12 @@ export default function ContactPage() {
               font-black
               leading-[1.1]
               tracking-tight
+              text-[#171714]
               sm:text-4xl
               md:text-5xl
             "
           >
-            <span className="bg-gradient-to-r from-white via-white to-[#FF1AC6] bg-clip-text text-transparent">
-              Contact Us
-            </span>
+            Contact <span className="text-[#a98216]">Us</span>
           </h1>
 
           {/* DESCRIPTION */}
@@ -122,7 +134,7 @@ export default function ContactPage() {
               max-w-2xl
               text-sm
               leading-6
-              text-white/45
+              text-black/50
               sm:text-base
               sm:leading-7
               md:text-lg
@@ -142,19 +154,16 @@ export default function ContactPage() {
               overflow-hidden
               rounded-3xl
               border
-              border-white/[0.08]
-              bg-gradient-to-br
-              from-white/[0.06]
-              to-white/[0.025]
+              border-black/[0.09]
+              bg-white
               p-5
-              shadow-[0_20px_60px_rgba(0,0,0,0.25)]
-              backdrop-blur-xl
+              shadow-[0_20px_60px_rgba(0,0,0,0.06)]
               sm:p-7
               md:p-8
             "
           >
-            {/* CARD GLOW */}
-            <div className="pointer-events-none absolute -right-24 -top-24 h-48 w-48 rounded-full bg-[#FF1AC6]/10 blur-3xl" />
+            {/* SUBTLE ACCENT */}
+            <div className="pointer-events-none absolute -right-24 -top-24 h-48 w-48 rounded-full bg-[#d4af37]/[0.07] blur-3xl" />
 
             <div className="relative z-10">
               {/* FORM HEADER */}
@@ -169,21 +178,20 @@ export default function ContactPage() {
                     justify-center
                     rounded-xl
                     border
-                    border-[#FF1AC6]/20
-                    bg-[#FF1AC6]/10
-                    text-[#FF1AC6]
-                    shadow-[0_0_25px_rgba(255,26,198,0.08)]
+                    border-[#d4af37]/25
+                    bg-[#d4af37]/[0.08]
+                    text-[#a98216]
                   "
                 >
                   <FiMessageCircle className="text-lg" />
                 </div>
 
                 <div>
-                  <h2 className="text-xl font-bold text-white sm:text-2xl">
+                  <h2 className="text-xl font-bold text-[#171714] sm:text-2xl">
                     Send us a message
                   </h2>
 
-                  <p className="mt-1 text-sm leading-5 text-white/40">
+                  <p className="mt-1 text-sm leading-5 text-black/40">
                     Fill out the form and we'll get back to you.
                   </p>
                 </div>
@@ -195,13 +203,13 @@ export default function ContactPage() {
                 <div>
                   <label
                     htmlFor="name"
-                    className="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/50"
+                    className="mb-2 block text-xs font-bold uppercase tracking-wider text-black/50"
                   >
                     Name
                   </label>
 
                   <div className="relative">
-                    <FiUsers className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-white/25" />
+                    <FiUsers className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-black/25" />
 
                     <input
                       id="name"
@@ -214,21 +222,21 @@ export default function ContactPage() {
                         w-full
                         rounded-xl
                         border
-                        border-white/10
-                        bg-black/40
+                        border-black/10
+                        bg-[#f7f6f0]
                         py-3.5
                         pl-11
                         pr-4
                         text-sm
-                        text-white
+                        text-black
                         outline-none
-                        placeholder:text-white/20
+                        placeholder:text-black/25
                         transition-all
                         duration-200
-                        focus:border-[#FF1AC6]/50
-                        focus:bg-white/[0.04]
+                        focus:border-[#d4af37]/60
+                        focus:bg-white
                         focus:ring-2
-                        focus:ring-[#FF1AC6]/10
+                        focus:ring-[#d4af37]/10
                       "
                       required
                     />
@@ -239,13 +247,13 @@ export default function ContactPage() {
                 <div>
                   <label
                     htmlFor="email"
-                    className="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/50"
+                    className="mb-2 block text-xs font-bold uppercase tracking-wider text-black/50"
                   >
                     Email
                   </label>
 
                   <div className="relative">
-                    <FiMail className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-white/25" />
+                    <FiMail className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-black/25" />
 
                     <input
                       id="email"
@@ -258,21 +266,21 @@ export default function ContactPage() {
                         w-full
                         rounded-xl
                         border
-                        border-white/10
-                        bg-black/40
+                        border-black/10
+                        bg-[#f7f6f0]
                         py-3.5
                         pl-11
                         pr-4
                         text-sm
-                        text-white
+                        text-black
                         outline-none
-                        placeholder:text-white/20
+                        placeholder:text-black/25
                         transition-all
                         duration-200
-                        focus:border-[#FF1AC6]/50
-                        focus:bg-white/[0.04]
+                        focus:border-[#d4af37]/60
+                        focus:bg-white
                         focus:ring-2
-                        focus:ring-[#FF1AC6]/10
+                        focus:ring-[#d4af37]/10
                       "
                       required
                     />
@@ -283,13 +291,13 @@ export default function ContactPage() {
                 <div>
                   <label
                     htmlFor="message"
-                    className="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/50"
+                    className="mb-2 block text-xs font-bold uppercase tracking-wider text-black/50"
                   >
                     Message
                   </label>
 
                   <div className="relative">
-                    <FiMessageCircle className="pointer-events-none absolute left-4 top-4 text-white/25" />
+                    <FiMessageCircle className="pointer-events-none absolute left-4 top-4 text-black/25" />
 
                     <textarea
                       id="message"
@@ -304,22 +312,22 @@ export default function ContactPage() {
                         resize-y
                         rounded-xl
                         border
-                        border-white/10
-                        bg-black/40
+                        border-black/10
+                        bg-[#f7f6f0]
                         py-3.5
                         pl-11
                         pr-4
                         text-sm
                         leading-6
-                        text-white
+                        text-black
                         outline-none
-                        placeholder:text-white/20
+                        placeholder:text-black/25
                         transition-all
                         duration-200
-                        focus:border-[#FF1AC6]/50
-                        focus:bg-white/[0.04]
+                        focus:border-[#d4af37]/60
+                        focus:bg-white
                         focus:ring-2
-                        focus:ring-[#FF1AC6]/10
+                        focus:ring-[#d4af37]/10
                       "
                       required
                     />
@@ -337,26 +345,24 @@ export default function ContactPage() {
                     justify-center
                     gap-2
                     rounded-xl
-                    bg-gradient-to-r
-                    from-[#FF1AC6]
-                    to-[#FF1AC6]/80
+                    bg-[#171714]
                     px-5
                     py-3.5
                     text-sm
                     font-bold
                     text-white
-                    shadow-[0_8px_25px_rgba(255,26,198,0.15)]
+                    shadow-[0_8px_25px_rgba(0,0,0,0.12)]
                     transition-all
                     duration-200
                     hover:-translate-y-0.5
-                    hover:brightness-110
-                    hover:shadow-[0_12px_35px_rgba(255,26,198,0.25)]
+                    hover:bg-[#292924]
+                    hover:shadow-[0_12px_35px_rgba(0,0,0,0.16)]
                     active:scale-[0.98]
                   "
                 >
                   <span>Send Message</span>
 
-                  <FiSend className="text-base transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  <FiSend className="text-base text-[#d4af37] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </button>
               </form>
             </div>
@@ -372,15 +378,15 @@ export default function ContactPage() {
                 overflow-hidden
                 rounded-2xl
                 border
-                border-white/[0.08]
-                bg-white/[0.035]
+                border-black/[0.08]
+                bg-white
                 p-5
-                backdrop-blur-xl
+                shadow-[0_8px_30px_rgba(0,0,0,0.04)]
                 transition-all
                 duration-300
                 hover:-translate-y-0.5
-                hover:border-[#FF1AC6]/25
-                hover:bg-white/[0.05]
+                hover:border-[#d4af37]/35
+                hover:shadow-[0_12px_35px_rgba(0,0,0,0.06)]
                 sm:p-6
               "
             >
@@ -394,22 +400,24 @@ export default function ContactPage() {
                     items-center
                     justify-center
                     rounded-xl
-                    bg-[#FF1AC6]/10
-                    text-[#FF1AC6]
+                    border
+                    border-[#d4af37]/20
+                    bg-[#d4af37]/[0.07]
+                    text-[#a98216]
                     transition-colors
                     duration-300
-                    group-hover:bg-[#FF1AC6]/15
+                    group-hover:bg-[#d4af37]/10
                   "
                 >
                   <FiMessageCircle />
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-bold text-white">
+                  <h3 className="text-lg font-bold text-[#171714]">
                     Support
                   </h3>
 
-                  <p className="mt-1.5 text-sm leading-6 text-white/45">
+                  <p className="mt-1.5 text-sm leading-6 text-black/45">
                     We respond within 24–48 hours for user inquiries,
                     technical questions, and general support.
                   </p>
@@ -425,15 +433,15 @@ export default function ContactPage() {
                 overflow-hidden
                 rounded-2xl
                 border
-                border-white/[0.08]
-                bg-white/[0.035]
+                border-black/[0.08]
+                bg-white
                 p-5
-                backdrop-blur-xl
+                shadow-[0_8px_30px_rgba(0,0,0,0.04)]
                 transition-all
                 duration-300
                 hover:-translate-y-0.5
-                hover:border-[#FF1AC6]/25
-                hover:bg-white/[0.05]
+                hover:border-[#d4af37]/35
+                hover:shadow-[0_12px_35px_rgba(0,0,0,0.06)]
                 sm:p-6
               "
             >
@@ -447,22 +455,24 @@ export default function ContactPage() {
                     items-center
                     justify-center
                     rounded-xl
-                    bg-purple-500/10
-                    text-purple-400
+                    border
+                    border-[#d4af37]/20
+                    bg-[#d4af37]/[0.07]
+                    text-[#a98216]
                     transition-colors
                     duration-300
-                    group-hover:bg-purple-500/15
+                    group-hover:bg-[#d4af37]/10
                   "
                 >
                   <FiUsers />
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-bold text-white">
+                  <h3 className="text-lg font-bold text-[#171714]">
                     Partnerships
                   </h3>
 
-                  <p className="mt-1.5 text-sm leading-6 text-white/45">
+                  <p className="mt-1.5 text-sm leading-6 text-black/45">
                     Looking to collaborate? We're open to Web3 projects,
                     creators, influencers, and startups.
                   </p>
@@ -478,14 +488,14 @@ export default function ContactPage() {
                 overflow-hidden
                 rounded-2xl
                 border
-                border-white/[0.08]
-                bg-white/[0.035]
+                border-black/[0.08]
+                bg-white
                 p-5
-                backdrop-blur-xl
+                shadow-[0_8px_30px_rgba(0,0,0,0.04)]
                 transition-all
                 duration-300
-                hover:border-[#FF1AC6]/25
-                hover:bg-white/[0.05]
+                hover:border-[#d4af37]/35
+                hover:shadow-[0_12px_35px_rgba(0,0,0,0.06)]
                 sm:p-6
               "
             >
@@ -499,19 +509,21 @@ export default function ContactPage() {
                     items-center
                     justify-center
                     rounded-xl
-                    bg-[#FF1AC6]/10
-                    text-[#FF1AC6]
+                    border
+                    border-[#d4af37]/20
+                    bg-[#d4af37]/[0.07]
+                    text-[#a98216]
                   "
                 >
                   <FiHash />
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-bold text-white">
+                  <h3 className="text-lg font-bold text-[#171714]">
                     Connect with us
                   </h3>
 
-                  <p className="mt-0.5 text-xs text-white/35">
+                  <p className="mt-0.5 text-xs text-black/35">
                     Follow Happy Bounty
                   </p>
                 </div>
@@ -527,17 +539,17 @@ export default function ContactPage() {
                     gap-3
                     rounded-xl
                     border
-                    border-white/[0.06]
-                    bg-black/20
+                    border-black/[0.07]
+                    bg-[#f7f6f0]
                     px-3.5
                     py-3
                     text-sm
-                    text-white/50
+                    text-black/50
                     transition-all
                     duration-200
-                    hover:border-white/10
-                    hover:bg-white/[0.05]
-                    hover:text-white
+                    hover:border-[#d4af37]/35
+                    hover:bg-white
+                    hover:text-black
                   "
                 >
                   <FiTwitter className="shrink-0 text-base" />
@@ -553,17 +565,17 @@ export default function ContactPage() {
                     gap-3
                     rounded-xl
                     border
-                    border-white/[0.06]
-                    bg-black/20
+                    border-black/[0.07]
+                    bg-[#f7f6f0]
                     px-3.5
                     py-3
                     text-sm
-                    text-white/50
+                    text-black/50
                     transition-all
                     duration-200
-                    hover:border-white/10
-                    hover:bg-white/[0.05]
-                    hover:text-white
+                    hover:border-[#d4af37]/35
+                    hover:bg-white
+                    hover:text-black
                   "
                 >
                   <FiMessageCircle className="shrink-0 text-base" />
@@ -579,17 +591,17 @@ export default function ContactPage() {
                     gap-3
                     rounded-xl
                     border
-                    border-white/[0.06]
-                    bg-black/20
+                    border-black/[0.07]
+                    bg-[#f7f6f0]
                     px-3.5
                     py-3
                     text-sm
-                    text-white/50
+                    text-black/50
                     transition-all
                     duration-200
-                    hover:border-white/10
-                    hover:bg-white/[0.05]
-                    hover:text-white
+                    hover:border-[#d4af37]/35
+                    hover:bg-white
+                    hover:text-black
                   "
                 >
                   <FiSend className="shrink-0 text-base" />
@@ -606,15 +618,15 @@ export default function ContactPage() {
                 gap-3
                 rounded-2xl
                 border
-                border-[#FF1AC6]/10
-                bg-[#FF1AC6]/[0.04]
+                border-[#d4af37]/20
+                bg-[#d4af37]/[0.05]
                 px-5
                 py-4
               "
             >
-              <FiMail className="shrink-0 text-[#FF1AC6]" />
+              <FiMail className="shrink-0 text-[#a98216]" />
 
-              <p className="text-xs leading-5 text-white/40">
+              <p className="text-xs leading-5 text-black/45">
                 For urgent account or platform issues, please include as
                 much relevant information as possible.
               </p>
@@ -628,3 +640,4 @@ export default function ContactPage() {
     </div>
   );
 }
+

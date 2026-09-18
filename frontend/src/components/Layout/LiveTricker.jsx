@@ -9,52 +9,72 @@ function LiveTricker() {
   ];
 
   return (
-    <div className="relative mt-1 w-full overflow-hidden border-y border-black/[0.06] bg-white">
-      {/* Left fade */}
-      <div className="pointer-events-none absolute bottom-0 left-0 top-0 z-20 w-24 bg-gradient-to-r from-white via-white/95 to-transparent" />
+    <div className="relative mt-1 w-full overflow-hidden border-y border-black/[0.07] bg-white">
+      {/* =====================================================
+          SUBTLE BACKGROUND DOTS
+      ====================================================== */}
 
-      {/* Right fade */}
-      <div className="pointer-events-none absolute bottom-0 right-0 top-0 z-20 w-24 bg-gradient-to-l from-white via-white/95 to-transparent" />
+      <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-50">
+        <span className="ticker-bg-dot dot-1" />
+        <span className="ticker-bg-dot dot-2" />
+        <span className="ticker-bg-dot dot-3" />
+        <span className="ticker-bg-dot dot-4" />
+        <span className="ticker-bg-dot dot-5" />
+        <span className="ticker-bg-dot dot-6" />
+        <span className="ticker-bg-dot dot-7" />
+        <span className="ticker-bg-dot dot-8" />
+        <span className="ticker-bg-dot dot-9" />
+        <span className="ticker-bg-dot dot-10" />
 
-      {/* Subtle Arc / USDC glow */}
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-8 w-80 -translate-x-1/2 -translate-y-1/2 bg-[#2775CA]/[0.035] blur-3xl" />
+        {/* Very subtle center warmth */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.025),transparent_65%)]" />
+      </div>
 
-      {/* Ticker */}
-      <div className="ticker-track">
+      {/* =====================================================
+          LEFT FADE
+      ====================================================== */}
+
+      <div className="pointer-events-none absolute bottom-0 left-0 top-0 z-30 w-24 bg-gradient-to-r from-white via-white/95 to-transparent" />
+
+      {/* =====================================================
+          RIGHT FADE
+      ====================================================== */}
+
+      <div className="pointer-events-none absolute bottom-0 right-0 top-0 z-30 w-24 bg-gradient-to-l from-white via-white/95 to-transparent" />
+
+      {/* =====================================================
+          SUBTLE CENTER ACCENT
+      ====================================================== */}
+
+      <div className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-8 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#D4AF37]/[0.025] blur-3xl" />
+
+      {/* =====================================================
+          TICKER
+      ====================================================== */}
+
+      <div className="ticker-track relative z-10">
         {[1, 2, 3].map((_, index) => (
           <div key={index} className="ticker-content">
             {items.map((item, i) => (
               <div key={i} className="ticker-item">
-                {/* Status indicator */}
-                <span
-                  className={`status-dot ${
-                    item.type === "ARC"
-                      ? "arc"
-                      : item.type === "USDC"
-                        ? "usdc"
-                        : item.type === "NEW"
-                          ? "pink"
-                          : "purple"
-                  }`}
-                />
+                {/* STATUS DOT */}
 
-                {/* Label */}
-                <span className="ticker-label">{item.label}</span>
+                <span className="status-dot" />
 
-                {/* Category */}
-                <span
-                  className={`ticker-category ${
-                    item.type === "USDC"
-                      ? "usdc-category"
-                      : item.type === "ARC"
-                        ? "arc-category"
-                        : ""
-                  }`}
-                >
+                {/* MAIN LABEL */}
+
+                <span className="ticker-label">
+                  {item.label}
+                </span>
+
+                {/* CATEGORY */}
+
+                <span className="ticker-category">
                   {item.type}
                 </span>
 
-                {/* Separator */}
+                {/* SEPARATOR */}
+
                 <span className="ticker-separator">/</span>
               </div>
             ))}
@@ -63,6 +83,10 @@ function LiveTricker() {
       </div>
 
       <style>{`
+        /* =====================================================
+           TICKER TRACK
+        ====================================================== */
+
         .ticker-track {
           display: flex;
           width: max-content;
@@ -89,88 +113,144 @@ function LiveTricker() {
         }
 
         /* =====================================================
-           TEXT
-        ===================================================== */
+           MAIN TEXT
+        ====================================================== */
 
         .ticker-label {
-          color: #171717;
+          color: #111111;
           font-size: 13px;
-          font-weight: 600;
-          letter-spacing: 0.01em;
+          font-weight: 800;
+          letter-spacing: 0.015em;
         }
+
+        /* =====================================================
+           CATEGORY
+        ====================================================== */
 
         .ticker-category {
-          font-size: 9px;
-          font-weight: 800;
-          letter-spacing: 0.12em;
-          color: #7c3aed;
           padding: 3px 7px;
-          border-radius: 999px;
-          border: 1px solid rgba(124, 58, 237, 0.15);
-          background: rgba(124, 58, 237, 0.045);
+          border-radius: 9999px;
+
+          color: #8a6b16;
+          background: rgba(212, 175, 55, 0.055);
+          border: 1px solid rgba(212, 175, 55, 0.2);
+
+          font-size: 9px;
+          font-weight: 900;
+          letter-spacing: 0.12em;
         }
 
-        /* Arc */
-        .arc-category {
-          color: #111111;
-          border-color: rgba(0, 0, 0, 0.12);
-          background: rgba(0, 0, 0, 0.035);
-        }
-
-        /* USDC */
-        .usdc-category {
-          color: #2775ca;
-          border-color: rgba(39, 117, 202, 0.18);
-          background: rgba(39, 117, 202, 0.05);
-        }
+        /* =====================================================
+           SEPARATOR
+        ====================================================== */
 
         .ticker-separator {
           margin-left: 8px;
-          color: rgba(0, 0, 0, 0.12);
+          color: rgba(212, 175, 55, 0.3);
           font-size: 18px;
+          font-weight: 500;
         }
 
         /* =====================================================
-           STATUS DOTS
-        ===================================================== */
+           STATUS DOT
+        ====================================================== */
 
         .status-dot {
+          display: inline-block;
           width: 6px;
           height: 6px;
-          border-radius: 50%;
-          display: inline-block;
           flex-shrink: 0;
-        }
+          border-radius: 50%;
+          background: #D4AF37;
 
-        .status-dot.arc {
-          background: #111111;
-          box-shadow: 0 0 7px rgba(0, 0, 0, 0.25);
-          animation: arcPulse 2.5s ease-in-out infinite;
-        }
-
-        .status-dot.usdc {
-          background: #2775ca;
           box-shadow:
-            0 0 7px rgba(39, 117, 202, 0.55),
-            0 0 14px rgba(39, 117, 202, 0.2);
-          animation: usdcPulse 2s ease-in-out infinite;
-        }
+            0 0 7px rgba(212, 175, 55, 0.45),
+            0 0 14px rgba(212, 175, 55, 0.12);
 
-        .status-dot.pink {
-          background: #ff1ac6;
-          box-shadow: 0 0 8px rgba(255, 26, 198, 0.45);
-          animation: pinkPulse 2.5s ease-in-out infinite;
-        }
-
-        .status-dot.purple {
-          background: #8b5cf6;
-          box-shadow: 0 0 8px rgba(139, 92, 246, 0.45);
-          animation: purplePulse 2.5s ease-in-out infinite;
+          animation: goldPulse 2.5s ease-in-out infinite;
         }
 
         /* =====================================================
-           TICKER ANIMATION
-        ===================================================== */
+           BACKGROUND DOTS
+        ====================================================== */
+
+        .ticker-bg-dot {
+          position: absolute;
+          width: 3px;
+          height: 3px;
+          border-radius: 50%;
+          background: #D4AF37;
+
+          box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+
+          opacity: 0.18;
+        }
+
+        .dot-1 {
+          left: 7%;
+          top: 25%;
+          animation: bgDotFloat 5s ease-in-out infinite;
+        }
+
+        .dot-2 {
+          left: 18%;
+          top: 70%;
+          animation: bgDotFloat 6s ease-in-out infinite 0.5s;
+        }
+
+        .dot-3 {
+          left: 31%;
+          top: 35%;
+          animation: bgDotFloat 4.5s ease-in-out infinite 1s;
+        }
+
+        .dot-4 {
+          left: 44%;
+          top: 72%;
+          animation: bgDotFloat 5.5s ease-in-out infinite 1.5s;
+        }
+
+        .dot-5 {
+          left: 57%;
+          top: 28%;
+          animation: bgDotFloat 6s ease-in-out infinite 0.8s;
+        }
+
+        .dot-6 {
+          left: 67%;
+          top: 68%;
+          animation: bgDotFloat 4.8s ease-in-out infinite 1.2s;
+        }
+
+        .dot-7 {
+          left: 76%;
+          top: 30%;
+          animation: bgDotFloat 5.8s ease-in-out infinite 0.3s;
+        }
+
+        .dot-8 {
+          left: 84%;
+          top: 73%;
+          animation: bgDotFloat 4.5s ease-in-out infinite 1.8s;
+        }
+
+        .dot-9 {
+          left: 92%;
+          top: 40%;
+          animation: bgDotFloat 5.2s ease-in-out infinite 0.6s;
+        }
+
+        .dot-10 {
+          left: 53%;
+          top: 52%;
+          width: 2px;
+          height: 2px;
+          animation: bgDotFloat 4s ease-in-out infinite 1.4s;
+        }
+
+        /* =====================================================
+           TICKER MOVEMENT
+        ====================================================== */
 
         @keyframes tickerScroll {
           from {
@@ -183,79 +263,42 @@ function LiveTricker() {
         }
 
         /* =====================================================
-           ARC PULSE
-        ===================================================== */
+           GOLD PULSE
+        ====================================================== */
 
-        @keyframes arcPulse {
+        @keyframes goldPulse {
           0%,
           100% {
             opacity: 0.45;
-            transform: scale(0.85);
+            transform: scale(0.8);
           }
 
           50% {
             opacity: 1;
-            transform: scale(1);
+            transform: scale(1.15);
           }
         }
 
         /* =====================================================
-           USDC PULSE
-        ===================================================== */
+           BACKGROUND DOT MOTION
+        ====================================================== */
 
-        @keyframes usdcPulse {
+        @keyframes bgDotFloat {
           0%,
           100% {
-            opacity: 0.65;
-            transform: scale(0.9);
+            opacity: 0.1;
+            transform: translate3d(0, 0, 0) scale(0.8);
           }
 
           50% {
-            opacity: 1;
-            transform: scale(1.1);
-          }
-        }
-
-        /* =====================================================
-           PINK PULSE
-        ===================================================== */
-
-        @keyframes pinkPulse {
-          0%,
-          100% {
-            opacity: 0.7;
-            box-shadow: 0 0 5px rgba(255, 26, 198, 0.3);
-          }
-
-          50% {
-            opacity: 1;
-            box-shadow:
-              0 0 8px rgba(255, 26, 198, 0.65),
-              0 0 14px rgba(255, 26, 198, 0.2);
-          }
-        }
-
-        /* =====================================================
-           PURPLE PULSE
-        ===================================================== */
-
-        @keyframes purplePulse {
-          0%,
-          100% {
-            opacity: 0.7;
-          }
-
-          50% {
-            opacity: 1;
-            box-shadow:
-              0 0 8px rgba(139, 92, 246, 0.65),
-              0 0 14px rgba(139, 92, 246, 0.2);
+            opacity: 0.45;
+            transform: translate3d(0, -5px, 0) scale(1.25);
           }
         }
 
         /* =====================================================
            MOBILE
-        ===================================================== */
+        ====================================================== */
 
         @media (max-width: 640px) {
           .ticker-item {
@@ -265,6 +308,7 @@ function LiveTricker() {
 
           .ticker-label {
             font-size: 12px;
+            font-weight: 800;
           }
 
           .ticker-category {
@@ -274,18 +318,23 @@ function LiveTricker() {
           .ticker-track {
             animation-duration: 22s;
           }
+
+          .ticker-separator {
+            font-size: 16px;
+          }
         }
 
         /* =====================================================
            REDUCED MOTION
-        ===================================================== */
+        ====================================================== */
 
         @media (prefers-reduced-motion: reduce) {
           .ticker-track {
             animation: none;
           }
 
-          .status-dot {
+          .status-dot,
+          .ticker-bg-dot {
             animation: none;
           }
         }

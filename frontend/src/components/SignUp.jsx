@@ -9,7 +9,20 @@ function SignUp() {
     <>
       <button
         onClick={() => setShowAuthModal(true)}
-        className="bg-gradient-to-r from-[#FF1AC6] to-[#FF1AC6]/80 px-5 py-2 rounded-lg text-white font-semibold text-sm hover:shadow-lg hover:shadow-[#FF1AC6]/25 transition-all duration-200"
+        className="
+          rounded-lg
+          border border-[#D4AF37]
+          bg-[#D4AF37]
+          px-5 py-2
+          text-sm font-semibold
+          text-white
+          shadow-[0_4px_16px_rgba(212,175,55,0.18)]
+          transition-all duration-200
+          hover:bg-[#C9A227]
+          hover:border-[#C9A227]
+          hover:shadow-[0_6px_22px_rgba(212,175,55,0.28)]
+          active:scale-[0.98]
+        "
       >
         Sign Up
       </button>

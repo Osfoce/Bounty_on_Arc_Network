@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import {
   FiArrowLeft,
@@ -14,44 +15,57 @@ import {
 
 export default function WhitepaperPage() {
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#080808] text-white">
+    <div className="min-h-screen overflow-x-hidden bg-[#f7f6f0] text-[#171714]">
       {/* BACKGROUND */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute -top-40 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-[#FF1AC6]/10 blur-[130px]" />
-        <div className="absolute top-1/2 -left-40 h-72 w-72 rounded-full bg-purple-500/[0.04] blur-[120px]" />
-        <div className="absolute -bottom-40 right-0 h-80 w-80 rounded-full bg-[#FF1AC6]/[0.05] blur-[130px]" />
+        <div
+          className="absolute inset-0 opacity-[0.18]"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(23,23,20,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(23,23,20,0.035) 1px, transparent 1px)",
+            backgroundSize: "42px 42px",
+          }}
+        />
+
+        <div className="absolute -top-40 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-[#d4af37]/[0.07] blur-[130px]" />
+
+        <div className="absolute top-1/2 -left-40 h-72 w-72 rounded-full bg-[#d4af37]/[0.035] blur-[120px]" />
+
+        <div className="absolute -bottom-40 right-0 h-80 w-80 rounded-full bg-[#d4af37]/[0.05] blur-[130px]" />
       </div>
 
       {/* MAIN CONTENT */}
       <main className="relative z-10 mx-auto w-full max-w-5xl px-4 py-6 sm:px-6 sm:py-10 md:px-8 lg:px-10">
-
         {/* BACK BUTTON */}
         <div className="mb-10 flex w-full justify-start sm:mb-14">
           <Link
             to="/"
             className="
+              group
               inline-flex
               items-center
               gap-2
               rounded-xl
               border
-              border-white/10
-              bg-white/[0.04]
+              border-black/10
+              bg-white/75
               px-3.5
               py-2
               text-sm
               font-medium
-              text-white/70
+              text-black/60
+              shadow-[0_4px_20px_rgba(0,0,0,0.04)]
               backdrop-blur-md
               transition-all
               duration-200
-              hover:border-[#FF1AC6]/30
-              hover:bg-[#FF1AC6]/10
-              hover:text-white
+              hover:-translate-y-0.5
+              hover:border-[#d4af37]/50
+              hover:bg-white
+              hover:text-black
               active:scale-95
             "
           >
-            <FiArrowLeft className="text-base text-[#FF1AC6]" />
+            <FiArrowLeft className="text-base text-[#a98216] transition-transform duration-200 group-hover:-translate-x-0.5" />
             <span>Back</span>
           </Link>
         </div>
@@ -67,15 +81,15 @@ export default function WhitepaperPage() {
               gap-2
               rounded-full
               border
-              border-[#FF1AC6]/20
-              bg-[#FF1AC6]/[0.06]
+              border-[#d4af37]/30
+              bg-[#d4af37]/[0.07]
               px-3
               py-1.5
             "
           >
-            <FiBookOpen className="text-xs text-[#FF1AC6]" />
+            <FiBookOpen className="text-xs text-[#a98216]" />
 
-            <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#FF1AC6] sm:text-xs">
+            <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#967414] sm:text-xs">
               Official Documentation
             </span>
           </div>
@@ -89,20 +103,15 @@ export default function WhitepaperPage() {
               font-black
               leading-[1.05]
               tracking-tight
+              text-[#171714]
               sm:text-5xl
               md:text-6xl
               lg:text-7xl
             "
           >
-            <span className="bg-gradient-to-r from-white via-white to-[#FF1AC6] bg-clip-text text-transparent">
-              Happy Bounty
-            </span>
-
+            Happy Bounty
             <br />
-
-            <span className="text-white/90">
-              Whitepaper
-            </span>
+            <span className="text-[#a98216]">Whitepaper</span>
           </h1>
 
           {/* DESCRIPTION */}
@@ -113,7 +122,7 @@ export default function WhitepaperPage() {
               max-w-2xl
               text-sm
               leading-6
-              text-white/45
+              text-black/50
               sm:text-base
               sm:leading-7
               md:text-lg
@@ -126,15 +135,15 @@ export default function WhitepaperPage() {
 
           {/* META */}
           <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
-            <span className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[10px] font-medium text-white/40 sm:text-xs">
+            <span className="rounded-full border border-black/10 bg-white px-3 py-1.5 text-[10px] font-medium text-black/45 shadow-sm sm:text-xs">
               Web3 Earning Economy
             </span>
 
-            <span className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[10px] font-medium text-white/40 sm:text-xs">
+            <span className="rounded-full border border-black/10 bg-white px-3 py-1.5 text-[10px] font-medium text-black/45 shadow-sm sm:text-xs">
               Decentralized
             </span>
 
-            <span className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[10px] font-medium text-white/40 sm:text-xs">
+            <span className="rounded-full border border-black/10 bg-white px-3 py-1.5 text-[10px] font-medium text-black/45 shadow-sm sm:text-xs">
               Community Driven
             </span>
           </div>
@@ -147,13 +156,10 @@ export default function WhitepaperPage() {
             overflow-hidden
             rounded-2xl
             border
-            border-[#FF1AC6]/15
-            bg-gradient-to-br
-            from-[#FF1AC6]/[0.07]
-            via-white/[0.025]
-            to-purple-500/[0.03]
+            border-[#d4af37]/25
+            bg-white
             p-5
-            backdrop-blur-xl
+            shadow-[0_10px_35px_rgba(0,0,0,0.045)]
             sm:rounded-3xl
             sm:p-7
           "
@@ -169,20 +175,20 @@ export default function WhitepaperPage() {
                 justify-center
                 rounded-xl
                 border
-                border-[#FF1AC6]/20
-                bg-[#FF1AC6]/10
-                text-[#FF1AC6]
+                border-[#d4af37]/25
+                bg-[#d4af37]/[0.08]
+                text-[#a98216]
               "
             >
               <FiBookOpen />
             </div>
 
             <div>
-              <h2 className="text-lg font-bold text-white sm:text-xl">
+              <h2 className="text-lg font-bold text-[#171714] sm:text-xl">
                 About this document
               </h2>
 
-              <p className="mt-2 text-sm leading-6 text-white/45 sm:text-[15px] sm:leading-7">
+              <p className="mt-2 text-sm leading-6 text-black/50 sm:text-[15px] sm:leading-7">
                 This document explains the principles behind Happy Bounty,
                 including how users participate, how rewards are distributed,
                 how the ecosystem operates, and the direction of future
@@ -194,7 +200,6 @@ export default function WhitepaperPage() {
 
         {/* SECTIONS */}
         <div className="space-y-5 sm:space-y-6">
-
           {/* 1. INTRODUCTION */}
           <WhitepaperSection
             number="01"
@@ -299,13 +304,14 @@ export default function WhitepaperPage() {
                     gap-3
                     rounded-xl
                     border
-                    border-white/[0.06]
-                    bg-white/[0.025]
+                    border-black/[0.07]
+                    bg-[#f7f6f0]
                     px-4
                     py-3
-                    transition-colors
-                    hover:border-[#FF1AC6]/20
-                    hover:bg-[#FF1AC6]/[0.03]
+                    transition-all
+                    duration-200
+                    hover:border-[#d4af37]/35
+                    hover:bg-white
                   "
                 >
                   <span
@@ -318,16 +324,16 @@ export default function WhitepaperPage() {
                       items-center
                       justify-center
                       rounded-full
-                      bg-[#FF1AC6]/10
+                      bg-[#d4af37]/10
                       text-[9px]
                       font-bold
-                      text-[#FF1AC6]
+                      text-[#a98216]
                     "
                   >
                     {index + 1}
                   </span>
 
-                  <span className="text-sm leading-6 text-white/55">
+                  <span className="text-sm leading-6 text-black/55">
                     {phase}
                   </span>
                 </div>
@@ -353,9 +359,10 @@ export default function WhitepaperPage() {
             className="
               rounded-2xl
               border
-              border-amber-500/15
-              bg-amber-500/[0.03]
+              border-amber-600/20
+              bg-[#fffaf0]
               p-5
+              shadow-[0_8px_30px_rgba(0,0,0,0.035)]
               sm:rounded-3xl
               sm:p-7
             "
@@ -371,9 +378,9 @@ export default function WhitepaperPage() {
                   justify-center
                   rounded-xl
                   border
-                  border-amber-500/20
-                  bg-amber-500/10
-                  text-amber-400
+                  border-amber-600/20
+                  bg-amber-500/[0.08]
+                  text-amber-700
                 "
               >
                 <FiAlertTriangle />
@@ -381,16 +388,16 @@ export default function WhitepaperPage() {
 
               <div>
                 <div className="mb-2 flex items-center gap-3">
-                  <span className="text-[10px] font-bold tracking-[0.15em] text-amber-400/60">
+                  <span className="text-[10px] font-bold tracking-[0.15em] text-amber-700/55">
                     09
                   </span>
 
-                  <h2 className="text-lg font-bold text-white sm:text-xl">
+                  <h2 className="text-lg font-bold text-[#171714] sm:text-xl">
                     Risk Disclaimer
                   </h2>
                 </div>
 
-                <p className="text-sm leading-6 text-white/45 sm:text-[15px] sm:leading-7">
+                <p className="text-sm leading-6 text-black/50 sm:text-[15px] sm:leading-7">
                   Participation in decentralized systems involves risks
                   including token volatility, smart contract bugs, and market
                   fluctuations. Users are encouraged to participate responsibly.
@@ -421,21 +428,18 @@ export default function WhitepaperPage() {
             overflow-hidden
             rounded-2xl
             border
-            border-[#FF1AC6]/20
-            bg-gradient-to-br
-            from-[#FF1AC6]/10
-            via-white/[0.025]
-            to-purple-500/[0.05]
+            border-[#d4af37]/25
+            bg-[#171714]
             p-7
             text-center
-            backdrop-blur-xl
+            shadow-[0_15px_45px_rgba(0,0,0,0.10)]
             sm:mt-16
             sm:rounded-3xl
             sm:p-10
           "
         >
-          {/* GLOW */}
-          <div className="pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-[#FF1AC6]/10 blur-3xl" />
+          {/* SUBTLE GOLD ACCENT */}
+          <div className="pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-[#d4af37]/10 blur-3xl" />
 
           <div className="relative z-10">
             <div
@@ -449,21 +453,19 @@ export default function WhitepaperPage() {
                 justify-center
                 rounded-xl
                 border
-                border-[#FF1AC6]/20
-                bg-[#FF1AC6]/10
-                text-[#FF1AC6]
+                border-[#d4af37]/25
+                bg-[#d4af37]/10
+                text-[#d4af37]
               "
             >
               <FiArrowRight className="text-lg" />
             </div>
 
-            <h3 className="text-2xl font-bold tracking-tight sm:text-3xl">
-              <span className="bg-gradient-to-r from-white to-[#FF1AC6] bg-clip-text text-transparent">
-                Ready to start earning?
-              </span>
+            <h3 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
+              Ready to start earning?
             </h3>
 
-            <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-white/45 sm:text-base">
+            <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-white/55 sm:text-base">
               Explore available bounties and begin your Web3 journey today.
             </p>
 
@@ -475,18 +477,18 @@ export default function WhitepaperPage() {
                 items-center
                 gap-2
                 rounded-xl
-                bg-[#FF1AC6]
+                bg-[#d4af37]
                 px-6
                 py-3
                 text-sm
                 font-bold
-                text-white
-                shadow-[0_8px_25px_rgba(255,26,198,0.18)]
+                text-[#171714]
+                shadow-[0_8px_25px_rgba(212,175,55,0.18)]
                 transition-all
                 duration-200
                 hover:-translate-y-0.5
-                hover:bg-[#ff3bce]
-                hover:shadow-[0_12px_30px_rgba(255,26,198,0.28)]
+                hover:bg-[#e0bd4d]
+                hover:shadow-[0_12px_30px_rgba(212,175,55,0.25)]
                 active:scale-[0.98]
               "
             >
@@ -515,14 +517,15 @@ function WhitepaperSection({ number, icon, title, children }) {
         overflow-hidden
         rounded-2xl
         border
-        border-white/[0.08]
-        bg-white/[0.025]
+        border-black/[0.08]
+        bg-white
         p-5
-        backdrop-blur-xl
+        shadow-[0_6px_25px_rgba(0,0,0,0.035)]
         transition-all
         duration-300
-        hover:border-[#FF1AC6]/20
-        hover:bg-white/[0.035]
+        hover:-translate-y-0.5
+        hover:border-[#d4af37]/30
+        hover:shadow-[0_10px_30px_rgba(0,0,0,0.055)]
         sm:rounded-3xl
         sm:p-7
       "
@@ -539,13 +542,13 @@ function WhitepaperSection({ number, icon, title, children }) {
             justify-center
             rounded-xl
             border
-            border-[#FF1AC6]/15
-            bg-[#FF1AC6]/[0.07]
-            text-[#FF1AC6]
+            border-[#d4af37]/20
+            bg-[#d4af37]/[0.07]
+            text-[#a98216]
             transition-all
             duration-300
-            group-hover:border-[#FF1AC6]/30
-            group-hover:bg-[#FF1AC6]/10
+            group-hover:border-[#d4af37]/40
+            group-hover:bg-[#d4af37]/10
           "
         >
           {icon}
@@ -554,17 +557,17 @@ function WhitepaperSection({ number, icon, title, children }) {
         <div className="min-w-0 flex-1">
           {/* TITLE */}
           <div className="mb-3 flex items-center gap-3">
-            <span className="text-[10px] font-bold tracking-[0.15em] text-[#FF1AC6]/50">
+            <span className="text-[10px] font-bold tracking-[0.15em] text-[#a98216]/55">
               {number}
             </span>
 
-            <h2 className="text-lg font-bold text-white sm:text-xl">
+            <h2 className="text-lg font-bold text-[#171714] sm:text-xl">
               {title}
             </h2>
           </div>
 
           {/* CONTENT */}
-          <div className="text-sm leading-6 text-white/45 sm:text-[15px] sm:leading-7">
+          <div className="text-sm leading-6 text-black/50 sm:text-[15px] sm:leading-7">
             {children}
           </div>
         </div>
@@ -572,3 +575,4 @@ function WhitepaperSection({ number, icon, title, children }) {
     </section>
   );
 }
+

@@ -392,9 +392,9 @@ export default function HowItWorks() {
           background:
             linear-gradient(
               180deg,
-              #f7f5ef 0%,
-              #faf9f5 48%,
-              #f3f1e9 100%
+              #faf9f5 0%,
+              #ffffff 48%,
+              #f7f3e7 100%
             );
 
           color: #111111;
@@ -416,7 +416,7 @@ export default function HowItWorks() {
           left: -160px;
           width: 430px;
           height: 430px;
-          background: rgba(39, 117, 202, 0.055);
+          background: rgba(212, 175, 55, 0.055);
         }
 
         .section-glow-gold {
@@ -424,7 +424,7 @@ export default function HowItWorks() {
           bottom: -130px;
           width: 430px;
           height: 430px;
-          background: rgba(166, 125, 52, 0.055);
+          background: rgba(212, 175, 55, 0.065);
         }
 
         .section-grid-pattern {
@@ -477,7 +477,7 @@ export default function HowItWorks() {
           border: 1px solid rgba(20, 20, 20, 0.1);
           border-radius: 999px;
 
-          background: rgba(255, 255, 255, 0.68);
+          background: rgba(255, 255, 255, 0.78);
 
           color: #6b6b6b;
 
@@ -495,11 +495,11 @@ export default function HowItWorks() {
           height: 6px;
           border-radius: 999px;
 
-          background: #2775ca;
+          background: #d4af37;
 
           box-shadow:
-            0 0 8px rgba(39, 117, 202, 0.5),
-            0 0 18px rgba(39, 117, 202, 0.2);
+            0 0 8px rgba(212, 175, 55, 0.55),
+            0 0 18px rgba(212, 175, 55, 0.22);
         }
 
         .how-it-works-header h2 {
@@ -518,9 +518,9 @@ export default function HowItWorks() {
           background:
             linear-gradient(
               90deg,
-              #2775ca,
-              #4b91df,
-              #6b52c8
+              #a98218,
+              #d4af37,
+              #e3c765
             );
 
           -webkit-background-clip: text;
@@ -529,7 +529,7 @@ export default function HowItWorks() {
         }
 
         .how-it-works-header h2 strong {
-          color: #92702e;
+          color: #a98218;
           font-weight: 800;
         }
 
@@ -578,8 +578,8 @@ export default function HowItWorks() {
           background:
             linear-gradient(
               145deg,
-              rgba(255, 255, 255, 0.94),
-              rgba(249, 248, 243, 0.78)
+              rgba(255, 255, 255, 0.96),
+              rgba(249, 248, 243, 0.8)
             );
 
           box-shadow:
@@ -604,7 +604,7 @@ export default function HowItWorks() {
           background:
             radial-gradient(
               circle at 50% 20%,
-              rgba(39, 117, 202, 0.045),
+              rgba(212, 175, 55, 0.065),
               transparent 45%
             );
 
@@ -616,11 +616,12 @@ export default function HowItWorks() {
         .how-it-works-card:hover {
           transform: translateY(-8px);
 
-          border-color: rgba(39, 117, 202, 0.22);
+          border-color: rgba(212, 175, 55, 0.3);
 
           box-shadow:
             0 22px 55px rgba(0, 0, 0, 0.08),
-            0 0 0 1px rgba(39, 117, 202, 0.025);
+            0 0 0 1px rgba(212, 175, 55, 0.045),
+            0 10px 35px rgba(212, 175, 55, 0.055);
         }
 
         .how-it-works-card:hover::before {
@@ -640,12 +641,13 @@ export default function HowItWorks() {
             linear-gradient(
               90deg,
               transparent,
-              rgba(39, 117, 202, 0.4),
-              rgba(166, 125, 52, 0.35),
+              rgba(212, 175, 55, 0.2),
+              rgba(212, 175, 55, 0.75),
+              rgba(212, 175, 55, 0.2),
               transparent
             );
 
-          opacity: 0.5;
+          opacity: 0.7;
         }
 
         .card-number {
@@ -720,24 +722,15 @@ export default function HowItWorks() {
           transform: translateY(-2px) scale(1.04);
         }
 
-        .blue-icon {
-          border: 1px solid rgba(39, 117, 202, 0.16);
-          background: rgba(39, 117, 202, 0.07);
-          color: #2775ca;
-
-          box-shadow: 0 5px 20px rgba(39, 117, 202, 0.06);
-        }
-
-        .purple-icon {
-          border: 1px solid rgba(108, 82, 200, 0.14);
-          background: rgba(108, 82, 200, 0.065);
-          color: #6b52c8;
-        }
-
+        .blue-icon,
+        .purple-icon,
         .gold-icon {
-          border: 1px solid rgba(166, 125, 52, 0.18);
-          background: rgba(166, 125, 52, 0.07);
-          color: #92702e;
+          border: 1px solid rgba(212, 175, 55, 0.22);
+          background: rgba(212, 175, 55, 0.075);
+          color: #b08a1e;
+
+          box-shadow:
+            0 5px 20px rgba(212, 175, 55, 0.06);
         }
 
         .card-content h3 {
@@ -786,11 +779,11 @@ export default function HowItWorks() {
           border: 1px solid rgba(20, 20, 20, 0.1);
           border-radius: 13px;
 
-          background: rgba(255, 255, 255, 0.9);
+          background: rgba(255, 255, 255, 0.94);
 
           box-shadow:
             0 20px 35px rgba(0, 0, 0, 0.08),
-            0 0 30px rgba(39, 117, 202, 0.045);
+            0 0 30px rgba(212, 175, 55, 0.06);
 
           backdrop-filter: blur(15px);
         }
@@ -824,13 +817,13 @@ export default function HowItWorks() {
         }
 
         .wallet-icon {
-          color: #2775ca;
+          color: #c09a27;
 
           font-size: 17px;
 
           filter:
             drop-shadow(
-              0 0 8px rgba(39, 117, 202, 0.3)
+              0 0 8px rgba(212, 175, 55, 0.35)
             );
         }
 
@@ -883,7 +876,7 @@ export default function HowItWorks() {
           left: 50%;
           top: 50%;
 
-          border: 1px solid rgba(39, 117, 202, 0.11);
+          border: 1px solid rgba(212, 175, 55, 0.15);
 
           border-radius: 50%;
 
@@ -905,7 +898,7 @@ export default function HowItWorks() {
           width: 170px;
           height: 78px;
 
-          border-color: rgba(166, 125, 52, 0.13);
+          border-color: rgba(212, 175, 55, 0.18);
 
           transform:
             translate(-50%, -50%)
@@ -928,20 +921,13 @@ export default function HowItWorks() {
           transform: translateX(-50%);
         }
 
-        .blue-dot {
-          background: #2775ca;
-
-          box-shadow:
-            0 0 8px rgba(39, 117, 202, 0.55),
-            0 0 18px rgba(39, 117, 202, 0.2);
-        }
-
+        .blue-dot,
         .gold-dot {
-          background: #92702e;
+          background: #d4af37;
 
           box-shadow:
-            0 0 8px rgba(146, 112, 46, 0.5),
-            0 0 18px rgba(146, 112, 46, 0.18);
+            0 0 8px rgba(212, 175, 55, 0.6),
+            0 0 18px rgba(212, 175, 55, 0.25);
         }
 
         .discover-icon {
@@ -950,7 +936,7 @@ export default function HowItWorks() {
           right: 4px;
           top: 10px;
 
-          color: rgba(39, 117, 202, 0.55);
+          color: rgba(184, 145, 31, 0.7);
 
           font-size: 13px;
 
@@ -967,7 +953,7 @@ export default function HowItWorks() {
 
           transform: translate(-50%, -50%);
 
-          border: 1px solid rgba(39, 117, 202, 0.07);
+          border: 1px solid rgba(212, 175, 55, 0.1);
         }
 
         .pulse-one {
@@ -1013,11 +999,11 @@ export default function HowItWorks() {
           border: 1px solid rgba(20, 20, 20, 0.1);
           border-radius: 11px;
 
-          background: rgba(255, 255, 255, 0.92);
+          background: rgba(255, 255, 255, 0.94);
 
           box-shadow:
             0 18px 35px rgba(0, 0, 0, 0.08),
-            0 0 25px rgba(108, 82, 200, 0.035);
+            0 0 25px rgba(212, 175, 55, 0.055);
 
           backdrop-filter: blur(15px);
 
@@ -1051,7 +1037,7 @@ export default function HowItWorks() {
 
           margin-left: auto;
 
-          color: #2775ca;
+          color: #b08a1e;
 
           font-size: 5px;
           font-weight: 700;
@@ -1064,9 +1050,9 @@ export default function HowItWorks() {
 
           border-radius: 50%;
 
-          background: #2775ca;
+          background: #d4af37;
 
-          box-shadow: 0 0 7px rgba(39, 117, 202, 0.5);
+          box-shadow: 0 0 7px rgba(212, 175, 55, 0.55);
         }
 
         .dashboard-body {
@@ -1098,7 +1084,7 @@ export default function HowItWorks() {
         }
 
         .dashboard-sidebar .active {
-          background: rgba(39, 117, 202, 0.5);
+          background: rgba(212, 175, 55, 0.7);
         }
 
         .dashboard-main {
@@ -1136,8 +1122,8 @@ export default function HowItWorks() {
         }
 
         .dashboard-cards span:first-child {
-          border-color: rgba(39, 117, 202, 0.13);
-          background: rgba(39, 117, 202, 0.055);
+          border-color: rgba(212, 175, 55, 0.18);
+          background: rgba(212, 175, 55, 0.07);
         }
 
         .dashboard-line {
@@ -1167,18 +1153,18 @@ export default function HowItWorks() {
           width: 27px;
           height: 27px;
 
-          border: 1px solid rgba(39, 117, 202, 0.15);
+          border: 1px solid rgba(212, 175, 55, 0.22);
           border-radius: 50%;
 
-          background: rgba(255, 255, 255, 0.95);
+          background: rgba(255, 255, 255, 0.97);
 
-          color: #2775ca;
+          color: #b08a1e;
 
           font-size: 11px;
 
           box-shadow:
             0 8px 18px rgba(0, 0, 0, 0.08),
-            0 0 15px rgba(39, 117, 202, 0.08);
+            0 0 15px rgba(212, 175, 55, 0.1);
         }
 
         .user-one {
@@ -1192,9 +1178,9 @@ export default function HowItWorks() {
           right: -3px;
           bottom: 14px;
 
-          color: #6b52c8;
+          color: #b08a1e;
 
-          border-color: rgba(108, 82, 200, 0.15);
+          border-color: rgba(212, 175, 55, 0.22);
 
           animation: nodeFloat 4s ease-in-out infinite 0.7s;
         }
@@ -1210,8 +1196,8 @@ export default function HowItWorks() {
           background:
             linear-gradient(
               90deg,
-              rgba(39, 117, 202, 0),
-              rgba(39, 117, 202, 0.35)
+              rgba(212, 175, 55, 0),
+              rgba(212, 175, 55, 0.5)
             );
         }
 
@@ -1231,8 +1217,8 @@ export default function HowItWorks() {
           background:
             linear-gradient(
               90deg,
-              rgba(108, 82, 200, 0.35),
-              rgba(108, 82, 200, 0)
+              rgba(212, 175, 55, 0.5),
+              rgba(212, 175, 55, 0)
             );
         }
 
@@ -1244,9 +1230,9 @@ export default function HowItWorks() {
 
           border-radius: 50%;
 
-          background: #2775ca;
+          background: #d4af37;
 
-          box-shadow: 0 0 8px rgba(39, 117, 202, 0.4);
+          box-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
 
           animation: connectionMove 2.8s ease-in-out infinite;
         }
@@ -1296,7 +1282,7 @@ export default function HowItWorks() {
 
           box-shadow:
             0 18px 35px rgba(0, 0, 0, 0.08),
-            0 0 25px rgba(146, 112, 46, 0.045);
+            0 0 25px rgba(212, 175, 55, 0.06);
 
           backdrop-filter: blur(15px);
 
@@ -1332,9 +1318,9 @@ export default function HowItWorks() {
 
           border-radius: 50%;
 
-          background: #92702e;
+          background: #d4af37;
 
-          box-shadow: 0 0 7px rgba(146, 112, 46, 0.45);
+          box-shadow: 0 0 7px rgba(212, 175, 55, 0.55);
         }
 
         .task-title {
@@ -1382,13 +1368,13 @@ export default function HowItWorks() {
           background:
             linear-gradient(
               90deg,
-              #2775ca,
-              #4b91df,
-              #92702e
+              #b08a1e,
+              #d4af37,
+              #e3c765
             );
 
           box-shadow:
-            0 0 10px rgba(39, 117, 202, 0.25);
+            0 0 10px rgba(212, 175, 55, 0.3);
         }
 
         .task-bottom {
@@ -1404,7 +1390,7 @@ export default function HowItWorks() {
         }
 
         .task-bottom svg {
-          color: #92702e;
+          color: #b08a1e;
           font-size: 9px;
         }
 
@@ -1414,7 +1400,7 @@ export default function HowItWorks() {
           left: 50%;
           top: 50%;
 
-          border: 1px solid rgba(39, 117, 202, 0.08);
+          border: 1px solid rgba(212, 175, 55, 0.1);
           border-radius: 50%;
 
           transform: translate(-50%, -50%);
@@ -1435,7 +1421,7 @@ export default function HowItWorks() {
           width: 145px;
           height: 100px;
 
-          border-color: rgba(146, 112, 46, 0.09);
+          border-color: rgba(212, 175, 55, 0.13);
 
           transform:
             translate(-50%, -50%)
@@ -1457,17 +1443,17 @@ export default function HowItWorks() {
           width: 25px;
           height: 25px;
 
-          border: 1px solid rgba(39, 117, 202, 0.17);
+          border: 1px solid rgba(212, 175, 55, 0.25);
           border-radius: 50%;
 
-          background: rgba(39, 117, 202, 0.07);
+          background: rgba(212, 175, 55, 0.08);
 
-          color: #2775ca;
+          color: #b08a1e;
 
           font-size: 11px;
 
           box-shadow:
-            0 8px 18px rgba(39, 117, 202, 0.08);
+            0 8px 18px rgba(212, 175, 55, 0.09);
 
           animation: checkPulse 2.5s ease-in-out infinite;
         }
@@ -1484,12 +1470,12 @@ export default function HowItWorks() {
 
           padding: 5px 7px;
 
-          border: 1px solid rgba(146, 112, 46, 0.13);
+          border: 1px solid rgba(212, 175, 55, 0.2);
           border-radius: 999px;
 
-          background: rgba(255, 255, 255, 0.9);
+          background: rgba(255, 255, 255, 0.94);
 
-          color: #92702e;
+          color: #a17c16;
 
           font-size: 5px;
           font-weight: 700;
@@ -1534,14 +1520,14 @@ export default function HowItWorks() {
 
           transform: translate(-50%, -50%);
 
-          border: 1px solid rgba(39, 117, 202, 0.13);
+          border: 1px solid rgba(212, 175, 55, 0.2);
           border-radius: 12px;
 
           background: rgba(255, 255, 255, 0.94);
 
           box-shadow:
             0 18px 35px rgba(0, 0, 0, 0.08),
-            0 0 30px rgba(39, 117, 202, 0.05);
+            0 0 30px rgba(212, 175, 55, 0.065);
 
           backdrop-filter: blur(15px);
 
@@ -1558,15 +1544,15 @@ export default function HowItWorks() {
 
           flex-shrink: 0;
 
-          border: 1px solid rgba(39, 117, 202, 0.15);
+          border: 1px solid rgba(212, 175, 55, 0.24);
           border-radius: 10px;
 
-          background: rgba(39, 117, 202, 0.075);
+          background: rgba(212, 175, 55, 0.085);
 
-          color: #2775ca;
+          color: #b08a1e;
 
           box-shadow:
-            0 0 18px rgba(39, 117, 202, 0.07);
+            0 0 18px rgba(212, 175, 55, 0.08);
         }
 
         .earning-icon span {
@@ -1608,9 +1594,9 @@ export default function HowItWorks() {
 
           border-radius: 50%;
 
-          background: rgba(146, 112, 46, 0.09);
+          background: rgba(212, 175, 55, 0.11);
 
-          color: #92702e;
+          color: #b08a1e;
 
           font-size: 9px;
         }
@@ -1621,7 +1607,7 @@ export default function HowItWorks() {
           left: 50%;
           top: 50%;
 
-          border: 1px solid rgba(39, 117, 202, 0.08);
+          border: 1px solid rgba(212, 175, 55, 0.1);
           border-radius: 50%;
 
           transform: translate(-50%, -50%);
@@ -1642,7 +1628,7 @@ export default function HowItWorks() {
           width: 145px;
           height: 65px;
 
-          border-color: rgba(146, 112, 46, 0.09);
+          border-color: rgba(212, 175, 55, 0.13);
 
           transform:
             translate(-50%, -50%)
@@ -1664,10 +1650,10 @@ export default function HowItWorks() {
           top: 8px;
           left: 24px;
 
-          background: #2775ca;
+          background: #d4af37;
 
           box-shadow:
-            0 0 10px rgba(39, 117, 202, 0.5);
+            0 0 10px rgba(212, 175, 55, 0.55);
 
           animation: particleDrift 3s ease-in-out infinite;
         }
@@ -1676,10 +1662,10 @@ export default function HowItWorks() {
           right: 20px;
           bottom: 8px;
 
-          background: #92702e;
+          background: #b08a1e;
 
           box-shadow:
-            0 0 10px rgba(146, 112, 46, 0.45);
+            0 0 10px rgba(176, 138, 30, 0.5);
 
           animation: particleDrift 3.8s ease-in-out infinite 0.7s;
         }
@@ -1691,10 +1677,10 @@ export default function HowItWorks() {
           width: 4px;
           height: 4px;
 
-          background: #6b52c8;
+          background: #e0c25a;
 
           box-shadow:
-            0 0 9px rgba(107, 82, 200, 0.4);
+            0 0 9px rgba(212, 175, 55, 0.45);
 
           animation: particleDrift 4.2s ease-in-out infinite 1s;
         }
@@ -1705,7 +1691,7 @@ export default function HowItWorks() {
           left: 1px;
           bottom: 3px;
 
-          color: rgba(39, 117, 202, 0.45);
+          color: rgba(176, 138, 30, 0.65);
 
           font-size: 14px;
 
@@ -1738,7 +1724,7 @@ export default function HowItWorks() {
             linear-gradient(
               90deg,
               transparent,
-              rgba(20, 20, 20, 0.1),
+              rgba(212, 175, 55, 0.35),
               transparent
             );
         }
@@ -1772,22 +1758,13 @@ export default function HowItWorks() {
           border-radius: 50%;
         }
 
-        .arc-strip-dot.blue {
-          background: #2775ca;
-
-          box-shadow: 0 0 8px rgba(39, 117, 202, 0.35);
-        }
-
-        .arc-strip-dot.gold {
-          background: #92702e;
-
-          box-shadow: 0 0 8px rgba(146, 112, 46, 0.35);
-        }
-
+        .arc-strip-dot.blue,
+        .arc-strip-dot.gold,
         .arc-strip-dot.pink {
-          background: #ff1ac6;
+          background: #d4af37;
 
-          box-shadow: 0 0 8px rgba(255, 26, 198, 0.3);
+          box-shadow:
+            0 0 8px rgba(212, 175, 55, 0.42);
         }
 
         .arc-strip-divider {
@@ -1929,13 +1906,13 @@ export default function HowItWorks() {
           100% {
             transform: scale(1);
             box-shadow:
-              0 8px 18px rgba(39, 117, 202, 0.08);
+              0 8px 18px rgba(212, 175, 55, 0.08);
           }
 
           50% {
             transform: scale(1.08);
             box-shadow:
-              0 8px 24px rgba(39, 117, 202, 0.18);
+              0 8px 24px rgba(212, 175, 55, 0.2);
           }
         }
 
@@ -2113,7 +2090,7 @@ export default function HowItWorks() {
             animation: none !important;
           }
 
-          .how-it-works-card *,
+          .how-it-works-card * ,
           .how-it-works-card::before {
             animation: none !important;
           }

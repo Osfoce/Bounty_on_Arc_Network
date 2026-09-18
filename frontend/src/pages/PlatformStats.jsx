@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from "react";
 import {
   FiArrowUpRight,
@@ -16,7 +15,7 @@ const platformHighlights = [
     label: "Built for Arc",
     description:
       "A bounty experience designed around Arc's fast, USDC-native on-chain environment.",
-    accent: "blue",
+    accent: "gold",
   },
   {
     icon: FiDollarSign,
@@ -24,7 +23,7 @@ const platformHighlights = [
     label: "Reward Currency",
     description:
       "Creators can fund bounties and contributors can earn rewards using USDC.",
-    accent: "blue",
+    accent: "gold",
   },
   {
     icon: FiCode,
@@ -32,7 +31,7 @@ const platformHighlights = [
     label: "Bounty Workflow",
     description:
       "Connect wallets, fund opportunities, complete work, and move toward verifiable settlement.",
-    accent: "pink",
+    accent: "gold",
   },
   {
     icon: FiZap,
@@ -76,29 +75,26 @@ const PlatformStats = () => {
 
   return (
     <>
-      <section
-        ref={sectionRef}
-        className="platform-stats-section"
-      >
+      <section ref={sectionRef} className="platform-stats-section">
         {/* =====================================================
             SUBTLE ARC / USDC BACKGROUND
         ===================================================== */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          {/* USDC BLUE GLOW */}
+          {/* GOLD GLOW */}
           <div
             className="absolute left-[-180px] top-[8%] h-[420px] w-[420px] rounded-full blur-[150px]"
             style={{
               background:
-                "radial-gradient(circle, rgba(39,117,202,0.10), transparent 70%)",
+                "radial-gradient(circle, rgba(212,175,55,0.10), transparent 70%)",
             }}
           />
 
-          {/* PINK GLOW */}
+          {/* SOFT GOLD GLOW */}
           <div
             className="absolute bottom-[-180px] right-[-130px] h-[430px] w-[430px] rounded-full blur-[150px]"
             style={{
               background:
-                "radial-gradient(circle, rgba(255,26,198,0.065), transparent 70%)",
+                "radial-gradient(circle, rgba(212,175,55,0.065), transparent 70%)",
             }}
           />
 
@@ -107,7 +103,7 @@ const PlatformStats = () => {
             className="absolute left-1/2 top-[42%] h-[320px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[150px]"
             style={{
               background:
-                "radial-gradient(circle, rgba(39,117,202,0.045), transparent 70%)",
+                "radial-gradient(circle, rgba(212,175,55,0.045), transparent 70%)",
             }}
           />
 
@@ -124,12 +120,10 @@ const PlatformStats = () => {
           =================================================== */}
           <div className="mx-auto max-w-3xl text-center">
             {/* ARC BADGE */}
-            <div
-              className="arc-section-badge mx-auto mb-5 flex w-fit items-center gap-2 rounded-full border px-3.5 py-2"
-            >
+            <div className="arc-section-badge mx-auto mb-5 flex w-fit items-center gap-2 rounded-full border px-3.5 py-2">
               <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#2775CA] opacity-40" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-[#2775CA]" />
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#D4AF37] opacity-40" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-[#D4AF37]" />
               </span>
 
               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#1f2937]">
@@ -138,7 +132,7 @@ const PlatformStats = () => {
 
               <span className="h-3 w-px bg-black/10" />
 
-              <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#2775CA]">
+              <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#B28B20]">
                 USDC Native
               </span>
             </div>
@@ -168,23 +162,11 @@ const PlatformStats = () => {
                 const Icon = item.icon;
 
                 const accentStyles = {
-                  blue: {
-                    border: "rgba(39,117,202,0.18)",
-                    background: "rgba(39,117,202,0.07)",
-                    color: "#2775CA",
-                    glow: "rgba(39,117,202,0.16)",
-                  },
-                  pink: {
-                    border: "rgba(255,26,198,0.18)",
-                    background: "rgba(255,26,198,0.07)",
-                    color: "#FF1AC6",
-                    glow: "rgba(255,26,198,0.14)",
-                  },
                   gold: {
-                    border: "rgba(117,91,38,0.20)",
-                    background: "rgba(117,91,38,0.07)",
-                    color: "#765B26",
-                    glow: "rgba(117,91,38,0.13)",
+                    border: "rgba(212,175,55,0.22)",
+                    background: "rgba(212,175,55,0.075)",
+                    color: "#B28B20",
+                    glow: "rgba(212,175,55,0.16)",
                   },
                 };
 
@@ -200,7 +182,7 @@ const PlatformStats = () => {
                       style={{
                         borderColor: accent.border,
                         background:
-                          "linear-gradient(145deg, rgba(255,255,255,0.94), rgba(247,246,240,0.88))",
+                          "linear-gradient(145deg, rgba(255,255,255,0.96), rgba(248,246,238,0.90))",
                         boxShadow:
                           "0 18px 50px rgba(35,31,22,0.07)",
                       }}
@@ -258,7 +240,7 @@ const PlatformStats = () => {
                           style={{
                             color:
                               item.value === "USDC"
-                                ? "#2775CA"
+                                ? "#B28B20"
                                 : "#111111",
                           }}
                         >
@@ -305,19 +287,19 @@ const PlatformStats = () => {
           =================================================== */}
           <div className="mx-auto mt-6 max-w-6xl">
             <div className="arc-bottom-panel relative overflow-hidden rounded-[24px] border p-5 sm:p-6">
-              {/* BLUE LIGHT */}
-              <div className="pointer-events-none absolute left-[18%] top-0 h-[160px] w-[300px] rounded-full bg-[#2775CA]/[0.07] blur-[90px]" />
+              {/* GOLD LIGHT */}
+              <div className="pointer-events-none absolute left-[18%] top-0 h-[160px] w-[300px] rounded-full bg-[#D4AF37]/[0.07] blur-[90px]" />
 
-              {/* PINK LIGHT */}
-              <div className="pointer-events-none absolute bottom-[-80px] right-[10%] h-[180px] w-[280px] rounded-full bg-[#FF1AC6]/[0.05] blur-[90px]" />
+              {/* SOFT GOLD LIGHT */}
+              <div className="pointer-events-none absolute bottom-[-80px] right-[10%] h-[180px] w-[280px] rounded-full bg-[#D4AF37]/[0.05] blur-[90px]" />
 
               <div className="relative flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
                 {/* LEFT */}
                 <div className="flex items-start gap-4">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#2775CA]/20 bg-[#2775CA]/[0.07]">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#D4AF37]/20 bg-[#D4AF37]/[0.07]">
                     <FiCheckCircle
                       size={18}
-                      className="text-[#2775CA]"
+                      className="text-[#B28B20]"
                     />
                   </div>
 
@@ -327,7 +309,7 @@ const PlatformStats = () => {
                         One workflow. Built around USDC.
                       </p>
 
-                      <span className="rounded-full border border-[#2775CA]/15 bg-[#2775CA]/[0.06] px-2 py-1 text-[8px] font-bold uppercase tracking-[0.14em] text-[#2775CA]">
+                      <span className="rounded-full border border-[#D4AF37]/15 bg-[#D4AF37]/[0.06] px-2 py-1 text-[8px] font-bold uppercase tracking-[0.14em] text-[#B28B20]">
                         ARC
                       </span>
                     </div>
@@ -342,10 +324,10 @@ const PlatformStats = () => {
                 </div>
 
                 {/* RIGHT */}
-                <div className="flex shrink-0 items-center gap-2 self-start rounded-full border border-[#2775CA]/15 bg-white/70 px-3.5 py-2.5 shadow-sm sm:self-auto">
+                <div className="flex shrink-0 items-center gap-2 self-start rounded-full border border-[#D4AF37]/15 bg-white/70 px-3.5 py-2.5 shadow-sm sm:self-auto">
                   <span className="relative flex h-1.5 w-1.5">
-                    <span className="absolute h-full w-full animate-ping rounded-full bg-[#2775CA]/40" />
-                    <span className="relative h-1.5 w-1.5 rounded-full bg-[#2775CA]" />
+                    <span className="absolute h-full w-full animate-ping rounded-full bg-[#D4AF37]/40" />
+                    <span className="relative h-1.5 w-1.5 rounded-full bg-[#D4AF37]" />
                   </span>
 
                   <span className="text-[9px] font-bold uppercase tracking-[0.14em] text-[#68655e]">
@@ -354,7 +336,7 @@ const PlatformStats = () => {
 
                   <FiArrowUpRight
                     size={11}
-                    className="text-[#2775CA]"
+                    className="text-[#B28B20]"
                   />
                 </div>
               </div>
@@ -375,10 +357,15 @@ const PlatformStats = () => {
           background:
             radial-gradient(
               circle at 50% 0%,
-              rgba(39, 117, 202, 0.055),
+              rgba(212, 175, 55, 0.055),
               transparent 34%
             ),
-            #f6f5ef;
+            linear-gradient(
+              180deg,
+              #faf9f5 0%,
+              #ffffff 50%,
+              #f7f3e7 100%
+            );
           color: #111111;
         }
 
@@ -423,25 +410,25 @@ const PlatformStats = () => {
         ======================================== */
 
         .arc-section-badge {
-          border-color: rgba(39, 117, 202, 0.16);
-          background: rgba(255, 255, 255, 0.72);
+          border-color: rgba(212, 175, 55, 0.20);
+          background: rgba(255, 255, 255, 0.78);
           box-shadow:
-            0 8px 30px rgba(39, 117, 202, 0.05),
-            inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            0 8px 30px rgba(212, 175, 55, 0.05),
+            inset 0 1px 0 rgba(255, 255, 255, 0.9);
           backdrop-filter: blur(14px);
         }
 
         /* ========================================
-           GRADIENT TITLE
+           GOLD GRADIENT TITLE
         ======================================== */
 
         .arc-gradient-text {
           background: linear-gradient(
             100deg,
-            #2775ca 0%,
-            #2775ca 38%,
-            #8b5cf6 68%,
-            #ff1ac6 100%
+            #9a7414 0%,
+            #b28b20 35%,
+            #d4af37 68%,
+            #e2c45b 100%
           );
           -webkit-background-clip: text;
           background-clip: text;
@@ -546,7 +533,7 @@ const PlatformStats = () => {
           background:
             radial-gradient(
               circle at 50% 0%,
-              rgba(39, 117, 202, 0.07),
+              rgba(212, 175, 55, 0.075),
               transparent 45%
             );
           transition: opacity 500ms ease;
@@ -556,7 +543,7 @@ const PlatformStats = () => {
           transform: translateY(-7px);
           box-shadow:
             0 24px 60px rgba(35, 31, 22, 0.11),
-            0 0 0 1px rgba(39, 117, 202, 0.035);
+            0 0 0 1px rgba(212, 175, 55, 0.08);
         }
 
         .highlight-card:hover
@@ -573,7 +560,7 @@ const PlatformStats = () => {
           background: linear-gradient(
             100deg,
             transparent,
-            rgba(255, 255, 255, 0.7),
+            rgba(255, 255, 255, 0.75),
             transparent
           );
           transform: skewX(-18deg);
@@ -604,8 +591,8 @@ const PlatformStats = () => {
           background:
             linear-gradient(
               135deg,
-              rgba(255, 255, 255, 0.96),
-              rgba(247, 246, 239, 0.9)
+              rgba(255, 255, 255, 0.97),
+              rgba(247, 246, 239, 0.92)
             );
           border-color: rgba(20, 20, 20, 0.08);
           box-shadow:
@@ -669,4 +656,3 @@ const PlatformStats = () => {
 };
 
 export default PlatformStats;
-

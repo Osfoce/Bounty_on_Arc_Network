@@ -3,6 +3,21 @@ import { useAccount, useChainId, useSwitchChain } from "wagmi";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
+import {
+  FiArrowLeft,
+  FiArrowRight,
+  FiCalendar,
+  FiCheck,
+  FiDollarSign,
+  FiGlobe,
+  FiInfo,
+  FiLink,
+  FiShield,
+  FiTag,
+  FiUsers,
+  FiX,
+  FiZap,
+} from "react-icons/fi";
 import NavBar from "../components/Layout/NavBar";
 import Footer from "../components/Layout/Footer";
 import { supportedChains } from "../rainbowChains";
@@ -18,34 +33,25 @@ function Create() {
     description: "",
     category: "",
     network: "",
-    tags: "", // string for input (will convert later)
-
+    tags: "",
     startDate: "",
     deadline: "",
-
     originLink: "",
-
     reward: 0,
-    token: "INJ", // pick your default
-
-    // payout logic (needed for contract/backend)
+    token: "INJ",
     winnersAllowed: 1,
     payoutType: "",
     percentages: [],
-
-    // UI-specific logic
     rewardType: "self-fund",
-
-    creator: "", // will be filled from wallet
+    creator: "",
   });
 
-  // Multi-winner state
   const [multipleWinner, setMultipleWinner] = useState(false);
-  const [selectedPayoutType, setSelectedPayoutType] = useState("MULTI_EQUAL"); // default to equal split
+  const [selectedPayoutType, setSelectedPayoutType] =
+    useState("MULTI_EQUAL");
   const [winnerCount, setWinnerCount] = useState(2);
   const [percentageArray, setPercentageArray] = useState([]);
 
-  // Modal states
   const [showEqualModal, setShowEqualModal] = useState(false);
   const [showPercentModal, setShowPercentModal] = useState(false);
   const [showInfoMenu, setShowInfoMenu] = useState(false);
@@ -54,38 +60,28 @@ function Create() {
   const navigate = useNavigate();
   const { address, isConnected } = useAccount();
   const currentChainId = useChainId();
+
   const {
     createBounty,
     isPending: isContractPending,
     isConfirming,
   } = useBounty();
 
-  // Helper to update bounty data
   const updateBountyData = (field, value) => {
     setBountyData((prev) => ({ ...prev, [field]: value }));
   };
 
-  // Set creator when wallet connects
   useEffect(() => {
     if (isConnected && address) {
       updateBountyData("creator", address);
     }
   }, [address, isConnected]);
 
-  // Network selection handler (also updates form)
   const handleChainChange = (e) => {
     const chainId = Number(e.target.value);
     updateBountyData("network", chainId);
     switchChain({ chainId });
   };
-
-  // const nextStep = () => {
-  //   if (currentStep < totalSteps) {
-  //     if (validateStep(currentStep)) {
-  //       setCurrentStep((prev) => prev + 1);
-  //     }
-  //   }
-  // };
 
   const nextStep = () => {
     if (currentStep < totalSteps && validateStep(currentStep)) {
@@ -109,6 +105,7 @@ function Create() {
           return false;
         }
         break;
+
       case 2:
         if (!bountyData.title || bountyData.title.length < 5) {
           toast.error("Title must be at least 5 characters");
@@ -123,6 +120,7 @@ function Create() {
           return false;
         }
         break;
+
       case 3:
         if (bountyData.reward <= 0) {
           toast.error("Please enter a valid reward amount");
@@ -130,19 +128,23 @@ function Create() {
         }
         break;
     }
+
     return true;
   };
 
   const handleEqualSplitConfirm = () => {
     const count = winnerCount;
+
     if (count < 2 || count > 5) {
       toast.error("Number of winners must be between 2 and 5");
       return;
     }
+
     setWinnerCount(count);
     setSelectedPayoutType("MULTI_EQUAL");
     setPercentageArray([]);
     setShowEqualModal(false);
+
     toast.success(`${count} winners selected for equal split`);
   };
 
@@ -151,14 +153,18 @@ function Create() {
       toast.error("Please select a preset or enter percentages");
       return;
     }
+
     const total = percentageArray.reduce((sum, p) => sum + p, 0);
+
     if (total !== 100) {
       toast.error("Percentages must sum to 100");
       return;
     }
+
     setSelectedPayoutType("MULTI_PERCENTAGE");
     setWinnerCount(percentageArray.length);
     setShowPercentModal(false);
+
     toast.success(
       `${percentageArray.length} winners selected with percentage split`,
     );
@@ -168,14 +174,14 @@ function Create() {
     setPercentageArray(preset);
   };
 
-  // Calculate fees (5%)
   const fee = bountyData.reward * 0.05;
   const totalAmount = bountyData.reward + fee;
 
-  // Format date for display
   const formatDate = (dateString) => {
     if (!dateString) return "Not set";
+
     const date = new Date(dateString);
+
     return date.toLocaleDateString("en-US", {
       year: "numeric",
       month: "short",
@@ -183,19 +189,16 @@ function Create() {
     });
   };
 
-  // --- Contract submission logic ---
   const handleFinalSubmit = async () => {
-    // 1. Validate final step
     if (!validateStep(3)) return;
 
-    // 2. Check wallet connection
     if (!isConnected || !address) {
       toast.error("Please connect your wallet");
       return;
     }
 
-    // 3. Network verification
     const selectedChainId = bountyData.network;
+
     console.log("Selected chain ID:", selectedChainId);
 
     if (!selectedChainId) {
@@ -203,22 +206,25 @@ function Create() {
       return;
     }
 
-    // 4. Check if contract is deployed on the selected network
     const contractAddress = CONTRACT_ADDRESSES[selectedChainId]?.bounty;
+
     if (!contractAddress || contractAddress === "Loading...") {
       toast.error(
-        `Contract not deployed on ${supportedChains.find((c) => c.id === selectedChainId)?.name}. Only Injective testnet is supported currently.`,
+        `Contract not deployed on ${
+          supportedChains.find((c) => c.id === selectedChainId)?.name
+        }. Only Injective testnet is supported currently.`,
       );
       return;
     }
 
-    // 5. If user is on a different chain, prompt to switch
     if (currentChainId !== selectedChainId) {
       toast.loading(
-        `Switching to ${supportedChains.find((c) => c.id === selectedChainId)?.name}...`,
+        `Switching to ${
+          supportedChains.find((c) => c.id === selectedChainId)?.name
+        }...`,
       );
+
       try {
-        //await remove
         switchChain({ chainId: selectedChainId });
         toast.success("Network switched!");
       } catch (err) {
@@ -227,31 +233,32 @@ function Create() {
       }
     }
 
-    // 6. Prepare bounty data for contract (transform form data)
     const finalWinnersAllowed = multipleWinner ? winnerCount : 1;
-    const finalPayoutType = multipleWinner ? selectedPayoutType : "SINGLE";
+    const finalPayoutType = multipleWinner
+      ? selectedPayoutType
+      : "SINGLE";
+
     console.log(
       `Final payout type: ${finalPayoutType}, winners allowed: ${finalWinnersAllowed}`,
     );
+
     const finalPercentages =
       multipleWinner && selectedPayoutType === "MULTI_PERCENTAGE"
         ? percentageArray
         : [];
 
-    // Create a copy for backend (convert tags string to array if needed)
     const backendData = {
       ...bountyData,
       tags: bountyData.tags ? [bountyData.tags] : [],
       winnersAllowed: finalWinnersAllowed,
       payoutType: finalPayoutType,
       percentages: finalPercentages,
-      status: "upcoming", // will be calculated by backend
+      status: "upcoming",
     };
 
-    // 7. Call smart contract
     try {
       const { eventData, hash } = await createBounty({
-        reward: bountyData.reward, // send total (reward + fee) to contract
+        reward: bountyData.reward,
         token: bountyData.token,
         winnersAllowed: finalWinnersAllowed,
         payoutType: finalPayoutType,
@@ -261,15 +268,18 @@ function Create() {
       const blockchainId = eventData?.bountyId
         ? Number(eventData.bountyId)
         : null;
+
       console.log(
         `Token type ${bountyData.token} reward ${bountyData.reward} total amount ${totalAmount} in wei`,
       );
-      console.log("Full eventData:", eventData);
-      if (!blockchainId) throw new Error("No bountyId from contract event");
 
-      // 8. Save to backend with blockchain info
+      console.log("Full eventData:", eventData);
+
+      if (!blockchainId) {
+        throw new Error("No bountyId from contract event");
+      }
+
       const saveResponse = await axios.post(
-        // REACT_APP_API_URL ||
         `${"https://fresh-bounty.onrender.com"}/api/task`,
         {
           ...backendData,
@@ -292,91 +302,163 @@ function Create() {
     }
   };
 
-  // Determine button loading state
   const isProcessing = isContractPending || isConfirming;
 
+  const inputClass =
+    "w-full bg-white border border-[#ddd9ce] rounded-xl px-4 py-3 text-[#171714] placeholder:text-[#99958a] outline-none transition focus:border-[#c49b2c] focus:ring-2 focus:ring-[#d4af37]/10";
+
+  const selectClass =
+    "w-full bg-white border border-[#ddd9ce] rounded-xl px-4 py-3 text-[#171714] outline-none transition focus:border-[#c49b2c] focus:ring-2 focus:ring-[#d4af37]/10";
+
+  const cardClass =
+    "relative overflow-hidden rounded-3xl border border-[#dedbd1] bg-white shadow-[0_18px_60px_rgba(34,31,24,0.07)]";
+
   return (
-    <div className="bg-black text-white min-h-screen flex flex-col">
+    <div
+      className="min-h-screen flex flex-col text-[#171714]"
+      style={{
+        backgroundColor: "#f7f6f0",
+        backgroundImage: `
+          linear-gradient(rgba(112,105,88,0.035) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(112,105,88,0.035) 1px, transparent 1px),
+          linear-gradient(90deg, transparent 49%, rgba(112,105,88,0.025) 50%, transparent 51%)
+        `,
+        backgroundSize: "56px 28px, 56px 28px, 56px 28px",
+      }}
+    >
       <NavBar />
 
-      <main className="flex-grow pt-20 pb-12">
+      <main className="flex-grow pt-28 pb-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Page Header */}
-          <div className="mb-8 text-center md:text-left">
-            <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-white to-[#FF1AC6] bg-clip-text text-transparent">
-              Create New Bounty
-            </h1>
-            <p className="text-white/50 mt-1 text-sm">
-              Fill in the details to launch your bounty
-            </p>
-          </div>
+          {/* Header */}
+          <div className="max-w-4xl mx-auto mb-10">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-[#171714] text-[#d4af37]">
+                <FiZap size={17} />
+              </div>
 
-          {/* Step Indicator */}
-          <div className="mb-12 max-w-3xl mx-auto">
-            <div className="relative flex justify-between">
-              <div className="absolute top-5 left-0 w-full h-1 bg-white/10 rounded-full" />
-              <div
-                className="absolute top-5 left-0 h-1 bg-gradient-to-r from-[#FF1AC6] to-[#FF1AC6]/50 rounded-full transition-all duration-300"
-                style={{
-                  width: `${((currentStep - 1) / (totalSteps - 1)) * 100}%`,
-                }}
-              />
+              <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#8b8679]">
+                Bounty Studio
+              </span>
+            </div>
 
-              {[1, 2, 3, 4].map((step) => (
-                <div
-                  key={step}
-                  className="relative flex flex-col items-center z-10"
-                >
-                  <div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm transition-all duration-200 ${
-                      step <= currentStep
-                        ? "bg-gradient-to-r from-[#FF1AC6] to-[#FF1AC6]/80 text-white shadow-lg shadow-[#FF1AC6]/25"
-                        : "bg-white/10 border border-white/20 text-white/50"
-                    }`}
-                  >
-                    {step}
-                  </div>
-                  <div className="mt-2 text-center">
-                    <p className="text-[10px] uppercase tracking-wider text-white/40">
-                      Step {step}
-                    </p>
-                    <p className="text-xs font-medium text-white/80">
-                      {step === 1 && "Network"}
-                      {step === 2 && "Details"}
-                      {step === 3 && "Reward"}
-                      {step === 4 && "Review"}
-                    </p>
-                  </div>
-                </div>
-              ))}
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+              <div>
+                <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-[#171714]">
+                  Create New Bounty
+                </h1>
+
+                <p className="text-[#777267] mt-2 text-sm md:text-base">
+                  Define the work, set the reward, and launch your on-chain
+                  bounty.
+                </p>
+              </div>
+
+              <div className="hidden md:flex items-center gap-2 px-4 py-2.5 rounded-full border border-[#dedbd1] bg-white/80 text-xs text-[#716c61]">
+                <FiShield className="text-[#b28b20]" />
+                Self-funded & on-chain
+              </div>
             </div>
           </div>
 
-          {/* Step Cards */}
+          {/* Step Indicator */}
+          <div className="max-w-4xl mx-auto mb-10">
+            <div className="relative">
+              <div className="absolute top-[19px] left-6 right-6 h-px bg-[#ddd9ce]" />
+
+              <div
+                className="absolute top-[19px] left-6 h-px bg-[#c49b2c] transition-all duration-500"
+                style={{
+                  width: `calc(${((currentStep - 1) / (totalSteps - 1)) * 100}% - ${
+                    ((currentStep - 1) / (totalSteps - 1)) * 48
+                  }px)`,
+                }}
+              />
+
+              <div className="relative flex justify-between">
+                {[1, 2, 3, 4].map((step) => (
+                  <div
+                    key={step}
+                    className="relative z-10 flex flex-col items-center"
+                  >
+                    <div
+                      className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold border transition-all duration-300 ${
+                        step < currentStep
+                          ? "bg-[#171714] border-[#171714] text-[#d4af37]"
+                          : step === currentStep
+                            ? "bg-[#d4af37] border-[#d4af37] text-[#171714] shadow-[0_5px_20px_rgba(212,175,55,0.25)]"
+                            : "bg-[#f7f6f0] border-[#d8d4c8] text-[#989286]"
+                      }`}
+                    >
+                      {step < currentStep ? <FiCheck size={17} /> : step}
+                    </div>
+
+                    <div className="mt-2.5 text-center">
+                      <p
+                        className={`text-[10px] uppercase tracking-[0.16em] ${
+                          step <= currentStep
+                            ? "text-[#766f61]"
+                            : "text-[#aaa59a]"
+                        }`}
+                      >
+                        Step {step}
+                      </p>
+
+                      <p
+                        className={`text-xs mt-0.5 font-semibold ${
+                          step <= currentStep
+                            ? "text-[#171714]"
+                            : "text-[#9d988e]"
+                        }`}
+                      >
+                        {step === 1 && "Network"}
+                        {step === 2 && "Details"}
+                        {step === 3 && "Reward"}
+                        {step === 4 && "Review"}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Main Card */}
           <div className="max-w-4xl mx-auto">
-            {/* Step 1: Choose Network */}
+            {/* Step 1 */}
             {currentStep === 1 && (
-              <div className="group relative bg-gradient-to-br from-[#2D2D2D] to-[#252525] rounded-2xl border border-white/10 hover:border-[#FF1AC6]/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#FF1AC6]/10 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#FF1AC6]/0 via-[#FF1AC6]/0 to-[#FF1AC6]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative p-6 md:p-8">
-                  <div className="flex items-center gap-2 mb-6">
-                    <div className="w-1 h-6 bg-[#FF1AC6] rounded-full" />
-                    <h2 className="text-xl font-semibold text-white">
-                      Choose Network
-                    </h2>
+              <div className={cardClass}>
+                <div className="absolute top-0 left-0 right-0 h-1 bg-[#d4af37]" />
+
+                <div className="p-6 md:p-9">
+                  <div className="flex items-start gap-4 mb-8">
+                    <div className="w-11 h-11 rounded-2xl bg-[#f5f1e4] border border-[#e5ddc8] flex items-center justify-center text-[#b28b20]">
+                      <FiGlobe size={19} />
+                    </div>
+
+                    <div>
+                      <h2 className="text-xl font-bold">
+                        Choose Network
+                      </h2>
+                      <p className="text-sm text-[#817b70] mt-1">
+                        Select where your bounty will be created.
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="space-y-5">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div>
-                      <label className="block text-sm font-medium text-white/60 mb-2">
+                      <label className="block text-xs font-semibold uppercase tracking-wider text-[#6f6a60] mb-2.5">
                         Blockchain Network
                       </label>
+
                       <select
                         onChange={handleChainChange}
                         value={bountyData.network}
-                        className="w-full bg-[#2D2D2D] border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-[#FF1AC6]/50 focus:ring-1 focus:ring-[#FF1AC6]/50 transition"
+                        className={selectClass}
                       >
                         <option value="">Select Network</option>
+
                         {supportedChains.map((chain) => (
                           <option key={chain.id} value={chain.id}>
                             {chain.name}
@@ -386,83 +468,109 @@ function Create() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-white/60 mb-2">
+                      <label className="block text-xs font-semibold uppercase tracking-wider text-[#6f6a60] mb-2.5">
                         Category
                       </label>
+
                       <select
                         value={bountyData.category}
                         onChange={(e) =>
                           updateBountyData("category", e.target.value)
                         }
-                        className="w-full bg-[#2D2D2D] border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-[#FF1AC6]/50 focus:ring-1 focus:ring-[#FF1AC6]/50 transition"
+                        className={selectClass}
                       >
                         <option value="">Select Category</option>
                         <option value="Development">Development</option>
                         <option value="Design">Design</option>
                         <option value="Marketing">Marketing</option>
-                        <option value="AI & Machine Learning">AI & Machine Learning</option>
+                        <option value="AI & Machine Learning">
+                          AI & Machine Learning
+                        </option>
                         <option value="Others">Others</option>
                       </select>
                     </div>
+                  </div>
+
+                  <div className="mt-7 rounded-2xl bg-[#f7f5ed] border border-[#e7e1d2] p-4 flex items-start gap-3">
+                    <FiShield className="text-[#b28b20] mt-0.5 shrink-0" />
+
+                    <p className="text-xs leading-relaxed text-[#777267]">
+                      Your selected network determines where the bounty
+                      contract transaction will be executed.
+                    </p>
                   </div>
                 </div>
               </div>
             )}
 
-            {/* Step 2: Task Details */}
+            {/* Step 2 */}
             {currentStep === 2 && (
-              <div className="group relative bg-gradient-to-br from-[#2D2D2D] to-[#252525] rounded-2xl border border-white/10 hover:border-[#FF1AC6]/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#FF1AC6]/10 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#FF1AC6]/0 via-[#FF1AC6]/0 to-[#FF1AC6]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative p-6 md:p-8">
-                  <div className="flex items-center gap-2 mb-6">
-                    <div className="w-1 h-6 bg-[#FF1AC6] rounded-full" />
-                    <h2 className="text-xl font-semibold text-white">
-                      Task Details
-                    </h2>
+              <div className={cardClass}>
+                <div className="absolute top-0 left-0 right-0 h-1 bg-[#d4af37]" />
+
+                <div className="p-6 md:p-9">
+                  <div className="flex items-start gap-4 mb-8">
+                    <div className="w-11 h-11 rounded-2xl bg-[#f5f1e4] border border-[#e5ddc8] flex items-center justify-center text-[#b28b20]">
+                      <FiTag size={19} />
+                    </div>
+
+                    <div>
+                      <h2 className="text-xl font-bold">Task Details</h2>
+                      <p className="text-sm text-[#817b70] mt-1">
+                        Give contributors everything they need to understand
+                        the work.
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="space-y-5">
+                  <div className="space-y-6">
                     <div>
-                      <label className="block text-sm font-medium text-white/60 mb-2">
-                        Title <span className="text-red-400">*</span>
+                      <label className="block text-xs font-semibold uppercase tracking-wider text-[#6f6a60] mb-2.5">
+                        Title <span className="text-[#b28b20]">*</span>
                       </label>
+
                       <input
                         value={bountyData.title}
                         onChange={(e) =>
                           updateBountyData("title", e.target.value)
                         }
-                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white placeholder:text-white/30 focus:outline-none focus:border-[#FF1AC6]/50 focus:ring-1 focus:ring-[#FF1AC6]/50 transition"
+                        className={inputClass}
                         placeholder="e.g., Build a DeFi dashboard"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-white/60 mb-2">
-                        Description <span className="text-red-400">*</span>
+                      <label className="block text-xs font-semibold uppercase tracking-wider text-[#6f6a60] mb-2.5">
+                        Description{" "}
+                        <span className="text-[#b28b20]">*</span>
                       </label>
+
                       <textarea
                         value={bountyData.description}
                         onChange={(e) =>
                           updateBountyData("description", e.target.value)
                         }
-                        className="w-full h-40 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white placeholder:text-white/30 resize-none focus:outline-none focus:border-[#FF1AC6]/50 focus:ring-1 focus:ring-[#FF1AC6]/50 transition"
-                        placeholder="Describe the task, requirements, and expectations..."
+                        className={`${inputClass} h-40 resize-none`}
+                        placeholder="Describe the task, requirements, deliverables, and expectations..."
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-white/60 mb-2">
-                        Tags <span className="text-red-400">*</span>
+                      <label className="block text-xs font-semibold uppercase tracking-wider text-[#6f6a60] mb-2.5">
+                        Tags <span className="text-[#b28b20]">*</span>
                       </label>
+
                       <select
                         value={bountyData.tags}
                         onChange={(e) =>
                           updateBountyData("tags", e.target.value)
                         }
-                        className="w-full bg-[#2D2D2D] border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-[#FF1AC6]/50 transition"
+                        className={selectClass}
                       >
                         <option value="">Select a tag</option>
-                        <option value="smart-contract">Smart Contract</option>
+                        <option value="smart-contract">
+                          Smart Contract
+                        </option>
                         <option value="frontend">Frontend</option>
                         <option value="backend">Backend</option>
                         <option value="AI/ML">AI/ML</option>
@@ -473,292 +581,377 @@ function Create() {
                       </select>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       <div>
-                        <label className="block text-sm font-medium text-white/60 mb-2">
-                          Start Date <span className="text-red-400">*</span>
+                        <label className="block text-xs font-semibold uppercase tracking-wider text-[#6f6a60] mb-2.5">
+                          Start Date{" "}
+                          <span className="text-[#b28b20]">*</span>
                         </label>
-                        <input
-                          type="date"
-                          value={bountyData.startDate}
-                          onChange={(e) =>
-                            updateBountyData("startDate", e.target.value)
-                          }
-                          className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-[#FF1AC6]/50 transition"
-                        />
+
+                        <div className="relative">
+                          <FiCalendar className="absolute left-4 top-1/2 -translate-y-1/2 text-[#938d81] pointer-events-none" />
+
+                          <input
+                            type="date"
+                            value={bountyData.startDate}
+                            onChange={(e) =>
+                              updateBountyData(
+                                "startDate",
+                                e.target.value,
+                              )
+                            }
+                            className={`${inputClass} pl-11`}
+                          />
+                        </div>
                       </div>
+
                       <div>
-                        <label className="block text-sm font-medium text-white/60 mb-2">
-                          End Date <span className="text-red-400">*</span>
+                        <label className="block text-xs font-semibold uppercase tracking-wider text-[#6f6a60] mb-2.5">
+                          End Date{" "}
+                          <span className="text-[#b28b20]">*</span>
                         </label>
-                        <input
-                          type="date"
-                          value={bountyData.deadline}
-                          onChange={(e) =>
-                            updateBountyData("deadline", e.target.value)
-                          }
-                          className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-[#FF1AC6]/50 transition"
-                        />
+
+                        <div className="relative">
+                          <FiCalendar className="absolute left-4 top-1/2 -translate-y-1/2 text-[#938d81] pointer-events-none" />
+
+                          <input
+                            type="date"
+                            value={bountyData.deadline}
+                            onChange={(e) =>
+                              updateBountyData(
+                                "deadline",
+                                e.target.value,
+                              )
+                            }
+                            className={`${inputClass} pl-11`}
+                          />
+                        </div>
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-white/60 mb-2">
+                      <label className="block text-xs font-semibold uppercase tracking-wider text-[#6f6a60] mb-2.5">
                         Origin Link
                       </label>
-                      <input
-                        value={bountyData.originLink}
-                        onChange={(e) =>
-                          updateBountyData("originLink", e.target.value)
-                        }
-                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white placeholder:text-white/30 focus:outline-none focus:border-[#FF1AC6]/50 transition"
-                        placeholder="https://github.com/... or https://figma.com/..."
-                      />
+
+                      <div className="relative">
+                        <FiLink className="absolute left-4 top-1/2 -translate-y-1/2 text-[#938d81]" />
+
+                        <input
+                          value={bountyData.originLink}
+                          onChange={(e) =>
+                            updateBountyData(
+                              "originLink",
+                              e.target.value,
+                            )
+                          }
+                          className={`${inputClass} pl-11`}
+                          placeholder="https://github.com/... or https://figma.com/..."
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             )}
 
-            {/* Step 3: Reward Info with Modals */}
+            {/* Step 3 */}
             {currentStep === 3 && (
-              <div className="group relative bg-gradient-to-br from-[#2D2D2D] to-[#252525] rounded-2xl border border-white/10 hover:border-[#FF1AC6]/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#FF1AC6]/10 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#FF1AC6]/0 via-[#FF1AC6]/0 to-[#FF1AC6]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative p-6 md:p-8">
-                  <div className="flex items-center gap-2 mb-6">
-                    <div className="w-1 h-6 bg-[#FF1AC6] rounded-full" />
-                    <h2 className="text-xl font-semibold text-white">
-                      Reward Information
-                    </h2>
+              <div className={cardClass}>
+                <div className="absolute top-0 left-0 right-0 h-1 bg-[#d4af37]" />
+
+                <div className="p-6 md:p-9">
+                  <div className="flex items-start gap-4 mb-8">
+                    <div className="w-11 h-11 rounded-2xl bg-[#f5f1e4] border border-[#e5ddc8] flex items-center justify-center text-[#b28b20]">
+                      <FiDollarSign size={19} />
+                    </div>
+
+                    <div>
+                      <h2 className="text-xl font-bold">
+                        Reward Information
+                      </h2>
+                      <p className="text-sm text-[#817b70] mt-1">
+                        Configure how contributors will receive the bounty.
+                      </p>
+                    </div>
                   </div>
 
                   <div className="space-y-6">
-                    {/* Info cards */}
-                    <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                      <p className="text-xs text-white/80 leading-relaxed">
-                        <span className="font-semibold text-[#FF1AC6]">
-                          Self-fund:
-                        </span>{" "}
-                        You use your own money to create the task. You will be
-                        responsible for providing the reward money to the
-                        winner(s).
-                      </p>
+                    {/* Self Fund */}
+                    <div className="rounded-2xl bg-[#f7f5ed] border border-[#e7e1d2] p-5">
+                      <div className="flex items-start gap-3">
+                        <FiShield className="text-[#b28b20] mt-0.5 shrink-0" />
+
+                        <div>
+                          <p className="text-sm font-semibold text-[#25231e]">
+                            Self-fund
+                          </p>
+
+                          <p className="text-xs text-[#777267] mt-1.5 leading-relaxed">
+                            You use your own money to create the task. You
+                            will be responsible for providing the reward money
+                            to the winner(s).
+                          </p>
+                        </div>
+                      </div>
                     </div>
 
-                    {/* Multiple winner toggle */}
-                    <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/10">
-                      <div>
-                        <h3 className="text-white font-medium">
-                          Multiple winners
-                        </h3>
-                        <p className="text-xs text-white/50">
-                          Allow multiple participants to share the reward
-                        </p>
+                    {/* Multiple Winners */}
+                    <div className="rounded-2xl border border-[#e1ddd2] bg-[#fcfbf7] p-5">
+                      <div className="flex items-center justify-between gap-5">
+                        <div className="flex items-start gap-3">
+                          <div className="w-9 h-9 rounded-xl bg-[#f3efe2] flex items-center justify-center text-[#b28b20]">
+                            <FiUsers size={16} />
+                          </div>
+
+                          <div>
+                            <h3 className="font-semibold text-sm">
+                              Multiple winners
+                            </h3>
+
+                            <p className="text-xs text-[#858075] mt-1">
+                              Allow multiple participants to share the reward
+                            </p>
+                          </div>
+                        </div>
+
+                        <label className="relative inline-flex items-center cursor-pointer shrink-0">
+                          <input
+                            type="checkbox"
+                            className="sr-only peer"
+                            checked={multipleWinner}
+                            onChange={() =>
+                              setMultipleWinner(!multipleWinner)
+                            }
+                          />
+
+                          <div className="w-12 h-6 rounded-full bg-[#d8d4ca] peer-checked:bg-[#d4af37] transition-all" />
+
+                          <div className="absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow-sm peer-checked:translate-x-6 transition-all" />
+                        </label>
                       </div>
-                      <label className="relative inline-flex items-center cursor-pointer">
-                        <input
-                          type="checkbox"
-                          className="sr-only peer"
-                          checked={multipleWinner}
-                          onChange={() => setMultipleWinner(!multipleWinner)}
-                        />
-                        <div className="w-12 h-6 bg-white/20 rounded-full peer-checked:bg-[#FF1AC6]/80 transition-all"></div>
-                        <div className="absolute left-1 top-1 w-4 h-4 bg-white rounded-full peer-checked:translate-x-6 transition-all"></div>
-                      </label>
                     </div>
 
                     {multipleWinner && (
-                      <div className="flex flex-wrap gap-3 items-center">
-                        <button
-                          onClick={() => setShowEqualModal(true)}
-                          className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white text-sm hover:bg-[#FF1AC6]/20 hover:border-[#FF1AC6]/50 transition"
-                        >
-                          Equal Split
-                        </button>
-                        <button
-                          onClick={() => setShowPercentModal(true)}
-                          className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white text-sm hover:bg-[#FF1AC6]/20 hover:border-[#FF1AC6]/50 transition"
-                        >
-                          % Split
-                        </button>
-
-                        {/* Info button with tooltip */}
-                        <div className="relative">
+                      <div className="rounded-2xl border border-[#e1ddd2] bg-[#fcfbf7] p-5">
+                        <div className="flex flex-wrap gap-3 items-center">
                           <button
-                            onClick={() => setShowInfoMenu(!showInfoMenu)}
-                            className="text-white/50 hover:text-white/80 transition"
+                            onClick={() => setShowEqualModal(true)}
+                            className="px-4 py-2.5 rounded-xl bg-[#171714] text-white text-sm font-medium hover:bg-[#292922] transition"
                           >
-                            <svg
-                              className="w-5 h-5"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                              />
-                            </svg>
+                            Equal Split
                           </button>
-                          {showInfoMenu && (
-                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 bg-white rounded-lg shadow-xl p-3 z-50">
-                              <p className="text-xs text-black">
-                                Equal split: Reward split equally among winners.
-                              </p>
-                              <p className="text-xs text-black mt-2">
-                                % split: Custom percentages for each winner.
-                              </p>
-                              <p className="text-xs text-black font-semibold mt-2">
-                                Supported configs:
-                              </p>
-                              <p className="text-xs text-black">
-                                [40,30,20,5,5], [40,30,20,10], [50,30,20],
-                                [50,50]
-                              </p>
-                            </div>
-                          )}
-                        </div>
 
-                        {/* Show selected payout info */}
-                        {selectedPayoutType === "MULTI_EQUAL" &&
-                          winnerCount > 1 && (
-                            <span className="text-xs text-[#FF1AC6] bg-[#FF1AC6]/10 px-2 py-1 rounded-full">
-                              {winnerCount} winners - Equal split
-                            </span>
-                          )}
-                        {selectedPayoutType === "MULTI_PERCENTAGE" &&
-                          percentageArray.length > 0 && (
-                            <span className="text-xs text-[#FF1AC6] bg-[#FF1AC6]/10 px-2 py-1 rounded-full">
-                              {percentageArray.length} winners -{" "}
-                              {percentageArray.join("% / ")}%
-                            </span>
-                          )}
+                          <button
+                            onClick={() => setShowPercentModal(true)}
+                            className="px-4 py-2.5 rounded-xl border border-[#d8d3c6] bg-white text-[#292720] text-sm font-medium hover:border-[#c49b2c] transition"
+                          >
+                            % Split
+                          </button>
+
+                          <div className="relative">
+                            <button
+                              onClick={() =>
+                                setShowInfoMenu(!showInfoMenu)
+                              }
+                              className="w-10 h-10 rounded-xl border border-[#ddd8cb] bg-white flex items-center justify-center text-[#777267] hover:text-[#b28b20] hover:border-[#c49b2c] transition"
+                            >
+                              <FiInfo size={17} />
+                            </button>
+
+                            {showInfoMenu && (
+                              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-72 bg-[#171714] text-white rounded-2xl shadow-2xl p-4 z-50">
+                                <p className="text-xs leading-relaxed">
+                                  <span className="font-semibold text-[#d4af37]">
+                                    Equal split:
+                                  </span>{" "}
+                                  Reward split equally among winners.
+                                </p>
+
+                                <p className="text-xs leading-relaxed mt-3">
+                                  <span className="font-semibold text-[#d4af37]">
+                                    % split:
+                                  </span>{" "}
+                                  Custom percentages for each winner.
+                                </p>
+
+                                <p className="text-xs font-semibold text-[#d4af37] mt-3">
+                                  Supported configs
+                                </p>
+
+                                <p className="text-xs text-white/70 mt-1">
+                                  [40,30,20,5,5], [40,30,20,10], [50,30,20],
+                                  [50,50]
+                                </p>
+                              </div>
+                            )}
+                          </div>
+
+                          {selectedPayoutType === "MULTI_EQUAL" &&
+                            winnerCount > 1 && (
+                              <span className="text-xs font-semibold text-[#8f6c12] bg-[#f4ecd5] border border-[#e5d9b8] px-3 py-1.5 rounded-full">
+                                {winnerCount} winners · Equal split
+                              </span>
+                            )}
+
+                          {selectedPayoutType === "MULTI_PERCENTAGE" &&
+                            percentageArray.length > 0 && (
+                              <span className="text-xs font-semibold text-[#8f6c12] bg-[#f4ecd5] border border-[#e5d9b8] px-3 py-1.5 rounded-full">
+                                {percentageArray.length} winners ·{" "}
+                                {percentageArray.join("% / ")}%
+                              </span>
+                            )}
+                        </div>
                       </div>
                     )}
 
-                    {/* Reward type */}
+                    {/* Reward Type */}
                     <div>
-                      <label className="block text-sm font-medium text-white/60 mb-2">
-                        Reward Type <span className="text-red-400">*</span>
+                      <label className="block text-xs font-semibold uppercase tracking-wider text-[#6f6a60] mb-3">
+                        Reward Type{" "}
+                        <span className="text-[#b28b20]">*</span>
                       </label>
-                      <div className="flex gap-3">
+
+                      <div className="flex flex-wrap gap-3">
                         <button
                           onClick={() =>
-                            updateBountyData("rewardType", "self-fund")
+                            updateBountyData(
+                              "rewardType",
+                              "self-fund",
+                            )
                           }
-                          className={`px-5 py-2 rounded-xl text-sm font-medium transition ${
+                          className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition ${
                             bountyData.rewardType === "self-fund"
-                              ? "bg-gradient-to-r from-[#FF1AC6] to-[#FF1AC6]/80 text-white shadow-lg shadow-[#FF1AC6]/25"
-                              : "bg-white/5 border border-white/10 text-white/70 hover:bg-white/10"
+                              ? "bg-[#171714] text-[#d4af37] border border-[#171714]"
+                              : "bg-white border border-[#d8d3c6] text-[#625e55] hover:border-[#c49b2c]"
                           }`}
                         >
                           Self-Fund
                         </button>
+
                         <button
                           disabled
-                          className="px-5 py-2 rounded-xl bg-white/5 border border-white/10 text-white/50 text-sm cursor-not-allowed"
+                          className="px-5 py-2.5 rounded-xl bg-[#f2f0ea] border border-[#dedad0] text-[#aaa59b] text-sm cursor-not-allowed"
                         >
                           Seek Funding{" "}
-                          <span className="text-red-400 text-xs">soon</span>
+                          <span className="text-[#b28b20] text-xs">
+                            soon
+                          </span>
                         </button>
                       </div>
                     </div>
 
-                    {/* Set Reward Amount */}
-                    <div className="flex flex-col md:flex-row md:justify-between gap-4">
-                      <div>
-                        <h4 className="text-white text-sm">Set reward</h4>
-                        <p className="text-xs text-white/50">
-                          Amount distributed to the winner(s)
-                        </p>
-                      </div>
-                      <div className="flex flex-col gap-1 w-full md:w-64">
-                        <div className="flex items-center justify-between border border-white/10 rounded-xl bg-white/5 w-full h-10 px-4">
-                          <input
-                            type="number"
-                            min="0"
-                            step="0.01"
-                            value={bountyData.reward}
-                            onChange={(e) =>
-                              updateBountyData(
-                                "reward",
-                                parseFloat(e.target.value) || 0,
-                              )
-                            }
-                            placeholder="0.00"
-                            className="bg-transparent outline-none text-white text-sm w-full"
-                          />
-                          <p className="text-white/50 text-sm">
-                            {bountyData.token}
+                    {/* Reward */}
+                    <div className="border-t border-[#e7e3da] pt-6">
+                      <div className="flex flex-col md:flex-row md:justify-between gap-4">
+                        <div>
+                          <h4 className="font-semibold text-sm">
+                            Set reward
+                          </h4>
+
+                          <p className="text-xs text-[#858075] mt-1">
+                            Amount distributed to the winner(s)
                           </p>
+                        </div>
+
+                        <div className="w-full md:w-64">
+                          <div className="flex items-center justify-between border border-[#dcd8cd] rounded-xl bg-white h-12 px-4 focus-within:border-[#c49b2c]">
+                            <input
+                              type="number"
+                              min="0"
+                              step="0.01"
+                              value={bountyData.reward}
+                              onChange={(e) =>
+                                updateBountyData(
+                                  "reward",
+                                  parseFloat(e.target.value) || 0,
+                                )
+                              }
+                              placeholder="0.00"
+                              className="bg-transparent outline-none text-[#171714] text-sm w-full"
+                            />
+
+                            <p className="text-[#8b8579] text-sm font-semibold">
+                              {bountyData.token}
+                            </p>
+                          </div>
                         </div>
                       </div>
                     </div>
 
-                    {/* Service Fees */}
-                    <div className="flex flex-col md:flex-row md:justify-between gap-4">
-                      <div>
-                        <h4 className="text-white text-sm">
-                          Service fees (5%)
-                        </h4>
-                        <a
-                          href="#"
-                          className="text-xs text-blue-400 hover:underline"
-                        >
-                          Learn more
-                        </a>
-                      </div>
-                      <div className="flex flex-col gap-1 w-full md:w-64">
-                        <div className="flex items-center justify-between border border-white/10 rounded-xl bg-white/5 w-full h-10 px-4">
-                          <input
-                            type="text"
-                            value={fee.toFixed(4)}
-                            disabled
-                            className="bg-transparent outline-none text-white/70 text-sm w-full"
-                          />
-                          <p className="text-white/50 text-sm">
-                            {bountyData.token}
-                          </p>
+                    {/* Fee */}
+                    <div>
+                      <div className="flex flex-col md:flex-row md:justify-between gap-4">
+                        <div>
+                          <h4 className="font-semibold text-sm">
+                            Service fees (5%)
+                          </h4>
+
+                          <a
+                            href="#"
+                            className="text-xs text-[#9a7619] hover:underline mt-1 inline-block"
+                          >
+                            Learn more
+                          </a>
+                        </div>
+
+                        <div className="w-full md:w-64">
+                          <div className="flex items-center justify-between border border-[#e0dcd2] rounded-xl bg-[#f5f3ed] h-12 px-4">
+                            <input
+                              type="text"
+                              value={fee.toFixed(4)}
+                              disabled
+                              className="bg-transparent outline-none text-[#777267] text-sm w-full"
+                            />
+
+                            <p className="text-[#999286] text-sm font-semibold">
+                              {bountyData.token}
+                            </p>
+                          </div>
                         </div>
                       </div>
                     </div>
 
-                    {/* Total Amount */}
-                    <div className="flex flex-col md:flex-row md:justify-between gap-4">
-                      <div>
-                        <h4 className="text-white text-sm">Total Amount</h4>
-                        <p className="text-xs text-white/50">
-                          Reward + service fees
-                        </p>
-                      </div>
-                      <div className="flex flex-col gap-1 w-full md:w-64">
-                        <div className="flex items-center justify-between border border-white/10 rounded-xl bg-white/5 w-full h-10 px-4">
+                    {/* Total */}
+                    <div className="rounded-2xl border border-[#d9cfb4] bg-[#fbf7e9] p-5">
+                      <div className="flex flex-col md:flex-row md:justify-between gap-4 md:items-center">
+                        <div>
+                          <h4 className="font-bold text-sm">
+                            Total Amount
+                          </h4>
+
+                          <p className="text-xs text-[#7c7567] mt-1">
+                            Reward + service fees
+                          </p>
+                        </div>
+
+                        <div className="flex items-center justify-between border border-[#d8c895] rounded-xl bg-white h-12 px-4 w-full md:w-64">
                           <input
                             type="text"
                             value={totalAmount.toFixed(4)}
                             disabled
-                            className="bg-transparent outline-none text-white text-sm w-full font-semibold"
+                            className="bg-transparent outline-none text-[#171714] text-sm w-full font-bold"
                           />
-                          <p className="text-white/50 text-sm">
+
+                          <p className="text-[#9a7619] text-sm font-bold">
                             {bountyData.token}
                           </p>
                         </div>
                       </div>
                     </div>
 
-                    {/* Token selection */}
+                    {/* Token */}
                     <div>
-                      <label className="block text-sm font-medium text-white/60 mb-2">
+                      <label className="block text-xs font-semibold uppercase tracking-wider text-[#6f6a60] mb-2.5">
                         Select Token
                       </label>
+
                       <select
                         value={bountyData.token}
                         onChange={(e) =>
                           updateBountyData("token", e.target.value)
                         }
-                        className="w-full sm:w-64 bg-[#2D2D2D] border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-[#FF1AC6]/50 transition"
+                        className={`${selectClass} sm:w-64`}
                       >
                         <option value="INJ">INJ (Injective)</option>
                         <option value="USDC">USDC</option>
@@ -771,68 +964,108 @@ function Create() {
               </div>
             )}
 
-            {/* Step 4: Review - Dynamic with all entered data */}
+            {/* Step 4 */}
             {currentStep === 4 && (
-              <div className="group relative bg-gradient-to-br from-[#2D2D2D] to-[#252525] rounded-2xl border border-white/10 hover:border-[#FF1AC6]/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#FF1AC6]/10 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#FF1AC6]/0 via-[#FF1AC6]/0 to-[#FF1AC6]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative p-6 md:p-8">
-                  <div className="flex items-center gap-2 mb-6">
-                    <div className="w-1 h-6 bg-[#FF1AC6] rounded-full" />
-                    <h2 className="text-xl font-semibold text-white">
-                      Review & Submit
-                    </h2>
+              <div className={cardClass}>
+                <div className="absolute top-0 left-0 right-0 h-1 bg-[#d4af37]" />
+
+                <div className="p-6 md:p-9">
+                  <div className="flex items-start gap-4 mb-8">
+                    <div className="w-11 h-11 rounded-2xl bg-[#f5f1e4] border border-[#e5ddc8] flex items-center justify-center text-[#b28b20]">
+                      <FiCheck size={19} />
+                    </div>
+
+                    <div>
+                      <h2 className="text-xl font-bold">
+                        Review & Submit
+                      </h2>
+
+                      <p className="text-sm text-[#817b70] mt-1">
+                        Confirm your bounty details before submitting.
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="space-y-0">
-                    {/* Category */}
-                    <div className="flex justify-between items-center py-3 border-b border-white/10">
-                      <span className="text-white/60 text-sm">Category</span>
-                      <span className="text-white text-sm font-medium">
-                        {bountyData.category || "Not selected"}
-                      </span>
-                    </div>
+                  <div className="rounded-2xl border border-[#e1ddd2] overflow-hidden">
+                    {[
+                      [
+                        "Category",
+                        bountyData.category || "Not selected",
+                      ],
+                      [
+                        "Title",
+                        bountyData.title || "Not entered",
+                      ],
+                      [
+                        "Tags",
+                        bountyData.tags || "Not selected",
+                      ],
+                      [
+                        "Timeline",
+                        `${formatDate(bountyData.startDate)} → ${formatDate(
+                          bountyData.deadline,
+                        )}`,
+                      ],
+                      [
+                        "Reward",
+                        `${bountyData.reward} ${bountyData.token}`,
+                      ],
+                      [
+                        "Service Fee",
+                        `${fee.toFixed(4)} ${bountyData.token}`,
+                      ],
+                    ].map(([label, value], index) => (
+                      <div
+                        key={label}
+                        className={`flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 px-5 py-4 ${
+                          index !== 5
+                            ? "border-b border-[#e7e3da]"
+                            : ""
+                        }`}
+                      >
+                        <span className="text-xs font-semibold uppercase tracking-wider text-[#898378]">
+                          {label}
+                        </span>
 
-                    {/* Title */}
-                    <div className="flex justify-between items-center py-3 border-b border-white/10">
-                      <span className="text-white/60 text-sm">Title</span>
-                      <span className="text-white text-sm font-medium">
-                        {bountyData.title || "Not entered"}
-                      </span>
-                    </div>
+                        <span className="text-sm font-medium text-[#25231e] sm:text-right">
+                          {value}
+                        </span>
+                      </div>
+                    ))}
 
                     {/* Description */}
-                    <div className="flex justify-between items-start py-3 border-b border-white/10">
-                      <span className="text-white/60 text-sm">Description</span>
-                      <span className="text-white text-sm text-right max-w-[60%]">
+                    <div className="flex flex-col sm:flex-row sm:justify-between gap-2 px-5 py-4 border-b border-[#e7e3da]">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-[#898378]">
+                        Description
+                      </span>
+
+                      <span className="text-sm text-[#4f4b43] sm:text-right max-w-full sm:max-w-[60%]">
                         {bountyData.description
                           ? bountyData.description.length > 100
-                            ? bountyData.description.substring(0, 100) + "..."
+                            ? bountyData.description.substring(0, 100) +
+                              "..."
                             : bountyData.description
                           : "Not entered"}
                       </span>
                     </div>
 
-                    {/* Tags */}
-                    <div className="flex justify-between items-center py-3 border-b border-white/10">
-                      <span className="text-white/60 text-sm">Tags</span>
-                      <span className="text-white text-sm font-medium">
-                        {bountyData.tags || "Not selected"}
-                      </span>
-                    </div>
-
                     {/* Origin Link */}
-                    <div className="flex justify-between items-center py-3 border-b border-white/10">
-                      <span className="text-white/60 text-sm">Origin Link</span>
-                      <span className="text-white text-sm truncate max-w-[60%]">
+                    <div className="flex flex-col sm:flex-row sm:justify-between gap-2 px-5 py-4 border-b border-[#e7e3da]">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-[#898378]">
+                        Origin Link
+                      </span>
+
+                      <span className="text-sm truncate max-w-full sm:max-w-[60%] sm:text-right">
                         {bountyData.originLink ? (
                           <a
                             href={bountyData.originLink}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-blue-400 hover:underline"
+                            className="text-[#9a7619] hover:underline"
                           >
                             {bountyData.originLink.length > 40
-                              ? bountyData.originLink.substring(0, 40) + "..."
+                              ? bountyData.originLink.substring(0, 40) +
+                                "..."
                               : bountyData.originLink}
                           </a>
                         ) : (
@@ -841,69 +1074,52 @@ function Create() {
                       </span>
                     </div>
 
-                    {/* Timeline */}
-                    <div className="flex justify-between items-center py-3 border-b border-white/10">
-                      <span className="text-white/60 text-sm">Timeline</span>
-                      <span className="text-white text-sm">
-                        {formatDate(bountyData.startDate)} →{" "}
-                        {formatDate(bountyData.deadline)}
-                      </span>
-                    </div>
-
-                    {/* Reward */}
-                    <div className="flex justify-between items-center py-3 border-b border-white/10">
-                      <span className="text-white/60 text-sm">Reward</span>
-                      <span className="text-white text-sm font-medium">
-                        {bountyData.reward} {bountyData.token}
-                      </span>
-                    </div>
-
-                    {/* Service Fee */}
-                    <div className="flex justify-between items-center py-3 border-b border-white/10">
-                      <span className="text-white/60 text-sm">
-                        Service Fee (5%)
-                      </span>
-                      <span className="text-white text-sm">
-                        {fee.toFixed(4)} {bountyData.token}
-                      </span>
-                    </div>
-
                     {/* Total */}
-                    <div className="flex justify-between items-center py-3 border-b border-white/10">
-                      <span className="text-white/60 text-sm">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 px-5 py-5 bg-[#fbf7e9] border-b border-[#e7dfc9]">
+                      <span className="text-xs font-bold uppercase tracking-wider text-[#766e5d]">
                         Total Amount
                       </span>
-                      <span className="text-[#FF1AC6] text-sm font-bold">
+
+                      <span className="text-lg font-bold text-[#8f6c12]">
                         {totalAmount.toFixed(4)} {bountyData.token}
                       </span>
                     </div>
 
-                    {/* Multiple Winners Info */}
-                    <div className="flex justify-between items-center py-3 border-b border-white/10">
-                      <span className="text-white/60 text-sm">
+                    {/* Multiple Winners */}
+                    <div className="flex flex-col sm:flex-row sm:justify-between gap-2 px-5 py-4 border-b border-[#e7e3da]">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-[#898378]">
                         Multiple Winners
                       </span>
-                      <span className="text-white text-sm">
+
+                      <span className="text-sm font-medium text-[#25231e] sm:text-right">
                         {multipleWinner
                           ? selectedPayoutType === "MULTI_EQUAL"
                             ? `Yes (${winnerCount} winners, equal split)`
-                            : `Yes (${percentageArray.length} winners, ${percentageArray.join("% / ")}%)`
+                            : `Yes (${percentageArray.length} winners, ${percentageArray.join(
+                                "% / ",
+                              )}%)`
                           : "No (Single winner)"}
                       </span>
                     </div>
 
                     {/* Reward Type */}
-                    <div className="flex justify-between items-center py-3 border-b border-white/10">
-                      <span className="text-white/60 text-sm">Reward Type</span>
-                      <span className="text-white text-sm capitalize">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 px-5 py-4 border-b border-[#e7e3da]">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-[#898378]">
+                        Reward Type
+                      </span>
+
+                      <span className="text-sm font-medium text-[#25231e] capitalize">
                         {bountyData.rewardType?.replace("-", " ")}
                       </span>
                     </div>
 
                     {/* Network */}
-                    <div className="flex justify-between items-center py-3">
-                      <span className="text-white/60 text-sm">Network</span>
-                      <span className="text-white text-sm">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 px-5 py-4">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-[#898378]">
+                        Network
+                      </span>
+
+                      <span className="text-sm font-medium text-[#25231e]">
                         {supportedChains.find(
                           (c) => c.id === bountyData.network,
                         )?.name || "Not selected"}
@@ -911,33 +1127,41 @@ function Create() {
                     </div>
                   </div>
 
-                  <div className="mt-8 text-center">
-                    <p className="text-white/40 text-xs">
+                  <div className="mt-7 flex items-start gap-3 rounded-2xl bg-[#f7f5ed] border border-[#e7e1d2] p-4">
+                    <FiShield className="text-[#b28b20] mt-0.5 shrink-0" />
+
+                    <p className="text-xs leading-relaxed text-[#777267]">
                       By creating this bounty you agree to our{" "}
-                      <a href="#" className="text-blue-400 hover:underline">
+                      <a
+                        href="#"
+                        className="text-[#9a7619] font-semibold hover:underline"
+                      >
                         Terms and Conditions
                       </a>
+                      .
                     </p>
                   </div>
                 </div>
               </div>
             )}
 
-            {/* Navigation Buttons */}
-            <div className="flex justify-between items-center mt-8 gap-4">
+            {/* Navigation */}
+            <div className="flex justify-between items-center mt-7 gap-4">
               {currentStep === 1 ? (
                 <Link
                   to="/dashboard"
-                  className="px-6 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white/80 text-sm font-medium hover:bg-white/10 hover:text-white transition"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white border border-[#dcd8ce] text-[#4f4b43] text-sm font-semibold hover:border-[#bdb7a9] hover:bg-[#fbfaf6] transition"
                 >
-                  ← Cancel
+                  <FiX size={16} />
+                  Cancel
                 </Link>
               ) : (
                 <button
                   onClick={prevStep}
-                  className="px-6 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white/80 text-sm font-medium hover:bg-white/10 hover:text-white transition"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white border border-[#dcd8ce] text-[#4f4b43] text-sm font-semibold hover:border-[#bdb7a9] hover:bg-[#fbfaf6] transition"
                 >
-                  ← Back
+                  <FiArrowLeft size={16} />
+                  Back
                 </button>
               )}
 
@@ -945,16 +1169,27 @@ function Create() {
                 <button
                   onClick={handleFinalSubmit}
                   disabled={isProcessing}
-                  className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#FF1AC6] to-[#FF1AC6]/80 text-white text-sm font-semibold hover:shadow-lg transition disabled:opacity-50"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#171714] text-[#d4af37] text-sm font-bold border border-[#171714] hover:bg-[#292922] transition disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isProcessing ? "Processing..." : "✨ Create Bounty"}
+                  {isProcessing ? (
+                    <>
+                      <span className="w-4 h-4 border-2 border-[#d4af37]/30 border-t-[#d4af37] rounded-full animate-spin" />
+                      Processing...
+                    </>
+                  ) : (
+                    <>
+                      Create Bounty
+                      <FiCheck size={16} />
+                    </>
+                  )}
                 </button>
               ) : (
                 <button
                   onClick={nextStep}
-                  className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#FF1AC6] to-[#FF1AC6]/80 text-white text-sm font-semibold hover:shadow-lg transition"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#d4af37] text-[#171714] text-sm font-bold hover:bg-[#c49b2c] transition shadow-[0_8px_24px_rgba(212,175,55,0.16)]"
                 >
-                  Next →
+                  Continue
+                  <FiArrowRight size={16} />
                 </button>
               )}
             </div>
@@ -965,37 +1200,58 @@ function Create() {
       {/* Equal Split Modal */}
       {showEqualModal && (
         <div
-          className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50"
+          className="fixed inset-0 bg-[#171714]/60 backdrop-blur-sm flex items-center justify-center z-50 p-4"
           onClick={() => setShowEqualModal(false)}
         >
           <div
-            className="bg-gradient-to-br from-[#2D2D2D] to-[#252525] border border-white/20 rounded-2xl w-[90%] max-w-md p-6"
+            className="bg-[#f9f8f3] border border-[#ddd8ca] rounded-3xl w-full max-w-md p-6 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 className="text-xl font-semibold text-white mb-2">
-              Equal Split
-            </h3>
-            <p className="text-white/50 text-sm mb-4">
-              Enter the number of winners (2-5)
-            </p>
+            <div className="flex items-start justify-between gap-4 mb-6">
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-[#f1ead4] flex items-center justify-center text-[#a17a17] mb-3">
+                  <FiUsers size={18} />
+                </div>
+
+                <h3 className="text-xl font-bold text-[#171714]">
+                  Equal Split
+                </h3>
+
+                <p className="text-[#7c766b] text-sm mt-1">
+                  Enter the number of winners (2-5)
+                </p>
+              </div>
+
+              <button
+                onClick={() => setShowEqualModal(false)}
+                className="w-9 h-9 rounded-xl border border-[#ddd8ca] bg-white flex items-center justify-center text-[#777267] hover:text-[#171714]"
+              >
+                <FiX size={16} />
+              </button>
+            </div>
+
             <input
               type="number"
               min="2"
               max="5"
               value={winnerCount}
-              onChange={(e) => setWinnerCount(parseInt(e.target.value) || 2)}
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white mb-4 focus:outline-none focus:border-[#FF1AC6]/50"
+              onChange={(e) =>
+                setWinnerCount(parseInt(e.target.value) || 2)
+              }
+              className={inputClass}
             />
-            <div className="flex gap-3">
+
+            <div className="flex gap-3 mt-5">
               <button
                 onClick={() => setShowEqualModal(false)}
-                className="flex-1 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white/70 hover:bg-white/10 transition"
+                className="flex-1 px-4 py-3 rounded-xl bg-white border border-[#d9d4c8] text-[#555047] font-semibold hover:bg-[#f4f2ec] transition"
               >
                 Cancel
               </button>
+
               <button
                 onClick={handleEqualSplitConfirm}
-                className="flex-1 px-4 py-2 rounded-xl bg-gradient-to-r from-[#FF1AC6] to-[#FF1AC6]/80 text-white font-medium hover:shadow-lg transition"
+                className="flex-1 px-4 py-3 rounded-xl bg-[#171714] text-[#d4af37] font-semibold hover:bg-[#292922] transition"
               >
                 Confirm
               </button>
@@ -1007,49 +1263,87 @@ function Create() {
       {/* Percentage Split Modal */}
       {showPercentModal && (
         <div
-          className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50"
+          className="fixed inset-0 bg-[#171714]/60 backdrop-blur-sm flex items-center justify-center z-50 p-4"
           onClick={() => setShowPercentModal(false)}
         >
           <div
-            className="bg-gradient-to-br from-[#2D2D2D] to-[#252525] border border-white/20 rounded-2xl w-[90%] max-w-md p-6 max-h-[90vh] overflow-y-auto"
+            className="bg-[#f9f8f3] border border-[#ddd8ca] rounded-3xl w-full max-w-md p-6 max-h-[90vh] overflow-y-auto shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 className="text-xl font-semibold text-white mb-2">% Split</h3>
-            <p className="text-white/50 text-sm mb-4">
-              Select a preset or enter custom percentages
-            </p>
+            <div className="flex items-start justify-between gap-4 mb-6">
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-[#f1ead4] flex items-center justify-center text-[#a17a17] mb-3">
+                  <FiDollarSign size={18} />
+                </div>
 
-            <div className="space-y-2 mb-4">
+                <h3 className="text-xl font-bold text-[#171714]">
+                  Percentage Split
+                </h3>
+
+                <p className="text-[#7c766b] text-sm mt-1">
+                  Select a preset or enter custom percentages
+                </p>
+              </div>
+
               <button
-                onClick={() => handlePresetSelect([40, 30, 20, 5, 5])}
-                className="w-full text-left px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition"
+                onClick={() => setShowPercentModal(false)}
+                className="w-9 h-9 rounded-xl border border-[#ddd8ca] bg-white flex items-center justify-center text-[#777267] hover:text-[#171714]"
               >
-                [40, 30, 20, 5, 5] - 5 winners
-              </button>
-              <button
-                onClick={() => handlePresetSelect([40, 30, 20, 10])}
-                className="w-full text-left px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition"
-              >
-                [40, 30, 20, 10] - 4 winners
-              </button>
-              <button
-                onClick={() => handlePresetSelect([50, 30, 20])}
-                className="w-full text-left px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition"
-              >
-                [50, 30, 20] - 3 winners
-              </button>
-              <button
-                onClick={() => handlePresetSelect([50, 50])}
-                className="w-full text-left px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition"
-              >
-                [50, 50] - 2 winners
+                <FiX size={16} />
               </button>
             </div>
 
-            <div className="mb-4">
-              <label className="block text-sm text-white/60 mb-2">
-                Custom percentages (comma separated)
+            <div className="space-y-2.5 mb-5">
+              <button
+                onClick={() =>
+                  handlePresetSelect([40, 30, 20, 5, 5])
+                }
+                className="w-full text-left px-4 py-3 rounded-xl bg-white border border-[#ddd8ca] text-[#3e3b35] hover:border-[#c49b2c] transition"
+              >
+                <span className="font-semibold">
+                  [40, 30, 20, 5, 5]
+                </span>{" "}
+                <span className="text-[#888175]">— 5 winners</span>
+              </button>
+
+              <button
+                onClick={() =>
+                  handlePresetSelect([40, 30, 20, 10])
+                }
+                className="w-full text-left px-4 py-3 rounded-xl bg-white border border-[#ddd8ca] text-[#3e3b35] hover:border-[#c49b2c] transition"
+              >
+                <span className="font-semibold">
+                  [40, 30, 20, 10]
+                </span>{" "}
+                <span className="text-[#888175]">— 4 winners</span>
+              </button>
+
+              <button
+                onClick={() =>
+                  handlePresetSelect([50, 30, 20])
+                }
+                className="w-full text-left px-4 py-3 rounded-xl bg-white border border-[#ddd8ca] text-[#3e3b35] hover:border-[#c49b2c] transition"
+              >
+                <span className="font-semibold">[50, 30, 20]</span>{" "}
+                <span className="text-[#888175]">— 3 winners</span>
+              </button>
+
+              <button
+                onClick={() =>
+                  handlePresetSelect([50, 50])
+                }
+                className="w-full text-left px-4 py-3 rounded-xl bg-white border border-[#ddd8ca] text-[#3e3b35] hover:border-[#c49b2c] transition"
+              >
+                <span className="font-semibold">[50, 50]</span>{" "}
+                <span className="text-[#888175]">— 2 winners</span>
+              </button>
+            </div>
+
+            <div className="mb-5">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-[#6f6a60] mb-2.5">
+                Custom percentages
               </label>
+
               <input
                 type="text"
                 placeholder="e.g., 40,30,20,10"
@@ -1057,24 +1351,26 @@ function Create() {
                   const values = e.target.value
                     .split(",")
                     .map((v) => parseInt(v.trim()));
+
                   if (values.every((v) => !isNaN(v))) {
                     setPercentageArray(values);
                   }
                 }}
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-[#FF1AC6]/50"
+                className={inputClass}
               />
             </div>
 
             <div className="flex gap-3">
               <button
                 onClick={() => setShowPercentModal(false)}
-                className="flex-1 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white/70 hover:bg-white/10 transition"
+                className="flex-1 px-4 py-3 rounded-xl bg-white border border-[#d9d4c8] text-[#555047] font-semibold hover:bg-[#f4f2ec] transition"
               >
                 Cancel
               </button>
+
               <button
                 onClick={handlePercentSplitConfirm}
-                className="flex-1 px-4 py-2 rounded-xl bg-gradient-to-r from-[#FF1AC6] to-[#FF1AC6]/80 text-white font-medium hover:shadow-lg transition"
+                className="flex-1 px-4 py-3 rounded-xl bg-[#171714] text-[#d4af37] font-semibold hover:bg-[#292922] transition"
               >
                 Confirm
               </button>
