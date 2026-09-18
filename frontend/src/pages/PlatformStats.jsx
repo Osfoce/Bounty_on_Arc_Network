@@ -6,41 +6,41 @@ import {
   FiCode,
   FiDollarSign,
   FiLayers,
-  FiLock,
+  FiZap,
 } from "react-icons/fi";
 
 const platformHighlights = [
   {
     icon: FiLayers,
-    value: "3",
-    label: "Supported Networks",
+    value: "ARC",
+    label: "Built for Arc",
     description:
-      "Multi-chain infrastructure for Web3 bounty activity.",
-    accent: "pink",
-  },
-  {
-    icon: FiCode,
-    value: "4",
-    label: "Web3 Core Features",
-    description:
-      "Smart contracts, wallets, escrow, and on-chain rewards.",
-    accent: "purple",
-  },
-  {
-    icon: FiLock,
-    value: "On-chain",
-    label: "Bounty Infrastructure",
-    description:
-      "Bounty and reward logic can be secured through blockchain.",
-    accent: "pink",
+      "A bounty experience designed around Arc's fast, USDC-native on-chain environment.",
+    accent: "blue",
   },
   {
     icon: FiDollarSign,
-    value: "10%",
-    label: "Creator Fee",
+    value: "USDC",
+    label: "Reward Currency",
     description:
-      "A transparent platform fee applied to bounty creators.",
-    accent: "purple",
+      "Creators can fund bounties and contributors can earn rewards using USDC.",
+    accent: "blue",
+  },
+  {
+    icon: FiCode,
+    value: "ON-CHAIN",
+    label: "Bounty Workflow",
+    description:
+      "Connect wallets, fund opportunities, complete work, and move toward verifiable settlement.",
+    accent: "pink",
+  },
+  {
+    icon: FiZap,
+    value: "24/7",
+    label: "Open Opportunities",
+    description:
+      "A continuous marketplace for creators and contributors to discover and complete Web3 work.",
+    accent: "gold",
   },
 ];
 
@@ -81,35 +81,38 @@ const PlatformStats = () => {
         className="platform-stats-section"
       >
         {/* =====================================================
-            BACKGROUND
+            SUBTLE ARC / USDC BACKGROUND
         ===================================================== */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          {/* LEFT PINK GLOW */}
+          {/* USDC BLUE GLOW */}
           <div
-            className="absolute left-[-180px] top-[5%] h-[400px] w-[400px] rounded-full blur-[140px]"
+            className="absolute left-[-180px] top-[8%] h-[420px] w-[420px] rounded-full blur-[150px]"
             style={{
               background:
-                "radial-gradient(circle, rgba(255,26,198,0.12), transparent 70%)",
+                "radial-gradient(circle, rgba(39,117,202,0.10), transparent 70%)",
             }}
           />
 
-          {/* RIGHT PURPLE GLOW */}
+          {/* PINK GLOW */}
           <div
-            className="absolute bottom-[-180px] right-[-120px] h-[420px] w-[420px] rounded-full blur-[140px]"
+            className="absolute bottom-[-180px] right-[-130px] h-[430px] w-[430px] rounded-full blur-[150px]"
             style={{
               background:
-                "radial-gradient(circle, rgba(168,85,247,0.10), transparent 70%)",
+                "radial-gradient(circle, rgba(255,26,198,0.065), transparent 70%)",
             }}
           />
 
-          {/* CENTER GLOW */}
+          {/* CENTER LIGHT */}
           <div
-            className="absolute left-1/2 top-1/2 h-[300px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[130px]"
+            className="absolute left-1/2 top-[42%] h-[320px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[150px]"
             style={{
               background:
-                "radial-gradient(circle, rgba(255,26,198,0.045), transparent 70%)",
+                "radial-gradient(circle, rgba(39,117,202,0.045), transparent 70%)",
             }}
           />
+
+          {/* SUBTLE ARCHITECTURAL LINES */}
+          <div className="arc-brick-pattern absolute inset-0 opacity-60" />
         </div>
 
         {/* =====================================================
@@ -119,40 +122,40 @@ const PlatformStats = () => {
           {/* ===================================================
               HEADER
           =================================================== */}
-          <div className="mx-auto max-w-2xl text-center">
-            {/* BADGE */}
+          <div className="mx-auto max-w-3xl text-center">
+            {/* ARC BADGE */}
             <div
-              className="mx-auto mb-4 flex w-fit items-center gap-2 rounded-full border px-3 py-1.5"
-              style={{
-                borderColor: "rgba(255,26,198,0.25)",
-                backgroundColor: "rgba(255,26,198,0.08)",
-                boxShadow:
-                  "0 0 25px rgba(255,26,198,0.05)",
-              }}
+              className="arc-section-badge mx-auto mb-5 flex w-fit items-center gap-2 rounded-full border px-3.5 py-2"
             >
-              <FiCheckCircle
-                size={12}
-                className="text-[#FF1AC6]"
-              />
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#2775CA] opacity-40" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-[#2775CA]" />
+              </span>
 
-              <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-300">
-                Platform Highlights
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#1f2937]">
+                Built for Arc
+              </span>
+
+              <span className="h-3 w-px bg-black/10" />
+
+              <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#2775CA]">
+                USDC Native
               </span>
             </div>
 
             {/* TITLE */}
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
-              Built for{" "}
-              <span className="bg-gradient-to-r from-[#FF1AC6] via-pink-400 to-purple-500 bg-clip-text text-transparent">
-                On-chain Work
+            <h2 className="text-3xl font-bold tracking-[-0.04em] text-[#111111] sm:text-4xl lg:text-5xl">
+              Built for the{" "}
+              <span className="arc-gradient-text">
+                future of Web3 work.
               </span>
             </h2>
 
             {/* DESCRIPTION */}
-            <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-gray-400 sm:text-base">
-              A Web3 bounty infrastructure designed to connect
-              creators and contributors through transparent,
-              blockchain-powered workflows.
+            <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-[#66645f] sm:text-base">
+              Happy Bounty connects creators and contributors through
+              on-chain opportunities, with Arc and USDC powering a
+              simple path from funded bounty to completed work.
             </p>
           </div>
 
@@ -163,7 +166,29 @@ const PlatformStats = () => {
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {platformHighlights.map((item, index) => {
                 const Icon = item.icon;
-                const isPink = item.accent === "pink";
+
+                const accentStyles = {
+                  blue: {
+                    border: "rgba(39,117,202,0.18)",
+                    background: "rgba(39,117,202,0.07)",
+                    color: "#2775CA",
+                    glow: "rgba(39,117,202,0.16)",
+                  },
+                  pink: {
+                    border: "rgba(255,26,198,0.18)",
+                    background: "rgba(255,26,198,0.07)",
+                    color: "#FF1AC6",
+                    glow: "rgba(255,26,198,0.14)",
+                  },
+                  gold: {
+                    border: "rgba(117,91,38,0.20)",
+                    background: "rgba(117,91,38,0.07)",
+                    color: "#765B26",
+                    glow: "rgba(117,91,38,0.13)",
+                  },
+                };
+
+                const accent = accentStyles[item.accent];
 
                 return (
                   <div
@@ -171,104 +196,102 @@ const PlatformStats = () => {
                     className={`highlight-card highlight-card-${index + 1} group`}
                   >
                     <div
-                      className="relative h-full overflow-hidden rounded-2xl border p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2"
+                      className="highlight-card-shell relative h-full overflow-hidden rounded-[24px] border p-6 transition-all duration-500"
                       style={{
-                        borderColor: isPink
-                          ? "rgba(255,26,198,0.16)"
-                          : "rgba(168,85,247,0.16)",
-
+                        borderColor: accent.border,
                         background:
-                          "linear-gradient(145deg, rgba(24,24,27,0.96), rgba(13,13,15,0.96))",
-
+                          "linear-gradient(145deg, rgba(255,255,255,0.94), rgba(247,246,240,0.88))",
                         boxShadow:
-                          "0 15px 50px rgba(0,0,0,0.35)",
+                          "0 18px 50px rgba(35,31,22,0.07)",
                       }}
                     >
-                      {/* TOP LINE */}
+                      {/* MOVING LIGHT */}
+                      <div className="card-light-sweep pointer-events-none absolute inset-y-0 -left-[80%] w-[55%]" />
+
+                      {/* TOP ACCENT */}
                       <div
-                        className="absolute left-6 right-6 top-0 h-px opacity-50"
+                        className="absolute left-6 right-6 top-0 h-px opacity-80"
                         style={{
-                          background: isPink
-                            ? "linear-gradient(to right, transparent, rgba(255,26,198,0.7), transparent)"
-                            : "linear-gradient(to right, transparent, rgba(168,85,247,0.7), transparent)",
+                          background: `linear-gradient(
+                            to right,
+                            transparent,
+                            ${accent.color},
+                            transparent
+                          )`,
                         }}
                       />
 
-                      {/* HOVER GLOW */}
+                      {/* CORNER GLOW */}
                       <div
-                        className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full blur-[60px] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                        className="pointer-events-none absolute -right-20 -top-20 h-44 w-44 rounded-full blur-[65px] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                         style={{
-                          backgroundColor: isPink
-                            ? "rgba(255,26,198,0.16)"
-                            : "rgba(168,85,247,0.16)",
+                          background: accent.glow,
                         }}
                       />
 
                       {/* NUMBER */}
-                      <div className="absolute right-5 top-5 text-[10px] font-bold tracking-[0.2em] text-white/20">
+                      <div className="absolute right-5 top-5 text-[10px] font-bold tracking-[0.22em] text-black/[0.12]">
                         0{index + 1}
                       </div>
 
                       {/* ICON */}
                       <div
-                        className="relative mb-7 flex h-12 w-12 items-center justify-center rounded-xl border transition-all duration-500 group-hover:scale-110"
+                        className="relative mb-7 flex h-12 w-12 items-center justify-center rounded-xl border transition-all duration-500 group-hover:-translate-y-1 group-hover:scale-105"
                         style={{
-                          borderColor: isPink
-                            ? "rgba(255,26,198,0.25)"
-                            : "rgba(168,85,247,0.25)",
-
-                          backgroundColor: isPink
-                            ? "rgba(255,26,198,0.10)"
-                            : "rgba(168,85,247,0.10)",
-
-                          boxShadow: isPink
-                            ? "0 0 25px rgba(255,26,198,0.08)"
-                            : "0 0 25px rgba(168,85,247,0.08)",
+                          borderColor: accent.border,
+                          backgroundColor: accent.background,
+                          boxShadow: `0 10px 30px ${accent.glow}`,
                         }}
                       >
                         <Icon
                           size={20}
-                          className={
-                            isPink
-                              ? "text-[#FF1AC6]"
-                              : "text-purple-400"
-                          }
+                          style={{
+                            color: accent.color,
+                          }}
                         />
                       </div>
 
                       {/* VALUE */}
                       <div className="relative">
-                        <h3 className="text-3xl font-bold tracking-tight text-white">
+                        <div
+                          className="text-[27px] font-black tracking-[-0.04em]"
+                          style={{
+                            color:
+                              item.value === "USDC"
+                                ? "#2775CA"
+                                : "#111111",
+                          }}
+                        >
                           {item.value}
-                        </h3>
+                        </div>
 
-                        <p className="mt-2 text-sm font-semibold text-gray-200">
+                        <p className="mt-2 text-sm font-bold text-[#252525]">
                           {item.label}
                         </p>
 
-                        <p className="mt-3 text-xs leading-relaxed text-gray-500">
+                        <p className="mt-3 text-xs leading-[1.8] text-[#77736b]">
                           {item.description}
                         </p>
                       </div>
 
                       {/* STATUS */}
-                      <div className="relative mt-6 flex items-center gap-2">
+                      <div className="relative mt-7 flex items-center gap-2">
                         <span
                           className="h-1.5 w-1.5 rounded-full"
                           style={{
-                            backgroundColor: isPink
-                              ? "#FF1AC6"
-                              : "#A855F7",
-
-                            boxShadow: isPink
-                              ? "0 0 10px rgba(255,26,198,0.9)"
-                              : "0 0 10px rgba(168,85,247,0.9)",
+                            backgroundColor: accent.color,
+                            boxShadow: `0 0 10px ${accent.glow}`,
                           }}
                         />
 
-                        <span className="text-[9px] font-medium uppercase tracking-[0.14em] text-gray-600">
-                          Platform Feature
+                        <span className="text-[9px] font-bold uppercase tracking-[0.15em] text-[#99958c]">
+                          Arc ecosystem
                         </span>
+
+                        <FiArrowUpRight
+                          size={11}
+                          className="ml-auto text-[#aaa69d] transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                        />
                       </div>
                     </div>
                   </div>
@@ -278,79 +301,60 @@ const PlatformStats = () => {
           </div>
 
           {/* ===================================================
-              BOTTOM PANEL
+              ARC / USDC BOTTOM PANEL
           =================================================== */}
           <div className="mx-auto mt-6 max-w-6xl">
-            <div
-              className="relative overflow-hidden rounded-2xl border p-5 sm:p-6"
-              style={{
-                borderColor: "rgba(255,255,255,0.10)",
-                background:
-                  "linear-gradient(135deg, rgba(24,24,27,0.98), rgba(15,15,18,0.98))",
-                boxShadow:
-                  "0 20px 60px rgba(0,0,0,0.3)",
-              }}
-            >
-              {/* GLOW */}
-              <div
-                className="pointer-events-none absolute left-1/2 top-0 h-[140px] w-[420px] -translate-x-1/2 rounded-full blur-[90px]"
-                style={{
-                  background:
-                    "radial-gradient(circle, rgba(255,26,198,0.08), transparent 70%)",
-                }}
-              />
+            <div className="arc-bottom-panel relative overflow-hidden rounded-[24px] border p-5 sm:p-6">
+              {/* BLUE LIGHT */}
+              <div className="pointer-events-none absolute left-[18%] top-0 h-[160px] w-[300px] rounded-full bg-[#2775CA]/[0.07] blur-[90px]" />
 
-              <div className="relative flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+              {/* PINK LIGHT */}
+              <div className="pointer-events-none absolute bottom-[-80px] right-[10%] h-[180px] w-[280px] rounded-full bg-[#FF1AC6]/[0.05] blur-[90px]" />
+
+              <div className="relative flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
                 {/* LEFT */}
                 <div className="flex items-start gap-4">
-                  <div
-                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border"
-                    style={{
-                      borderColor:
-                        "rgba(255,26,198,0.20)",
-                      backgroundColor:
-                        "rgba(255,26,198,0.07)",
-                    }}
-                  >
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#2775CA]/20 bg-[#2775CA]/[0.07]">
                     <FiCheckCircle
                       size={18}
-                      className="text-[#FF1AC6]"
+                      className="text-[#2775CA]"
                     />
                   </div>
 
                   <div>
-                    <p className="text-sm font-semibold text-white">
-                      Designed for transparent Web3 work
-                    </p>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <p className="text-sm font-bold text-[#151515]">
+                        One workflow. Built around USDC.
+                      </p>
 
-                    <p className="mt-1 max-w-2xl text-xs leading-relaxed text-gray-500">
-                      Happy Bounty brings bounty creation,
-                      contributor workflows, escrow, and
-                      blockchain-based rewards together in one
-                      Web3 experience.
+                      <span className="rounded-full border border-[#2775CA]/15 bg-[#2775CA]/[0.06] px-2 py-1 text-[8px] font-bold uppercase tracking-[0.14em] text-[#2775CA]">
+                        ARC
+                      </span>
+                    </div>
+
+                    <p className="mt-1 max-w-2xl text-xs leading-relaxed text-[#77736b]">
+                      From discovering a bounty to completing the work
+                      and receiving rewards, Happy Bounty is being
+                      shaped around a fast, transparent and
+                      USDC-focused Web3 experience.
                     </p>
                   </div>
                 </div>
 
                 {/* RIGHT */}
-                <div
-                  className="flex shrink-0 items-center gap-2 self-start rounded-full border px-3 py-2 sm:self-auto"
-                  style={{
-                    borderColor:
-                      "rgba(255,26,198,0.15)",
-                    backgroundColor:
-                      "rgba(255,26,198,0.04)",
-                  }}
-                >
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#FF1AC6] shadow-[0_0_10px_rgba(255,26,198,0.9)]" />
+                <div className="flex shrink-0 items-center gap-2 self-start rounded-full border border-[#2775CA]/15 bg-white/70 px-3.5 py-2.5 shadow-sm sm:self-auto">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="absolute h-full w-full animate-ping rounded-full bg-[#2775CA]/40" />
+                    <span className="relative h-1.5 w-1.5 rounded-full bg-[#2775CA]" />
+                  </span>
 
-                  <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-gray-400">
-                    Web3 Native
+                  <span className="text-[9px] font-bold uppercase tracking-[0.14em] text-[#68655e]">
+                    Arc / USDC
                   </span>
 
                   <FiArrowUpRight
                     size={11}
-                    className="text-gray-500"
+                    className="text-[#2775CA]"
                   />
                 </div>
               </div>
@@ -360,22 +364,22 @@ const PlatformStats = () => {
       </section>
 
       {/* =======================================================
-          ANIMATIONS
+          ANIMATIONS + VISUAL SYSTEM
       ======================================================= */}
       <style>{`
         .platform-stats-section {
           position: relative;
           width: 100%;
-          padding: 90px 24px;
+          padding: 96px 24px;
           overflow: hidden;
           background:
             radial-gradient(
               circle at 50% 0%,
-              rgba(255, 26, 198, 0.025),
-              transparent 35%
+              rgba(39, 117, 202, 0.055),
+              transparent 34%
             ),
-            #070708;
-          color: white;
+            #f6f5ef;
+          color: #111111;
         }
 
         .platform-stats-inner {
@@ -387,22 +391,81 @@ const PlatformStats = () => {
         }
 
         /* ========================================
-           CARD REVEAL
+           SUBTLE GOLD ARCHITECTURAL TEXTURE
         ======================================== */
 
-        @media (min-width: 1024px) {
+        .arc-brick-pattern {
+          background-image:
+            linear-gradient(
+              rgba(104, 80, 30, 0.045) 1px,
+              transparent 1px
+            ),
+            linear-gradient(
+              90deg,
+              rgba(104, 80, 30, 0.035) 1px,
+              transparent 1px
+            );
+          background-size: 64px 32px;
+          mask-image: linear-gradient(
+            to bottom,
+            black,
+            transparent 75%
+          );
+          -webkit-mask-image: linear-gradient(
+            to bottom,
+            black,
+            transparent 75%
+          );
+        }
+
+        /* ========================================
+           BADGE
+        ======================================== */
+
+        .arc-section-badge {
+          border-color: rgba(39, 117, 202, 0.16);
+          background: rgba(255, 255, 255, 0.72);
+          box-shadow:
+            0 8px 30px rgba(39, 117, 202, 0.05),
+            inset 0 1px 0 rgba(255, 255, 255, 0.8);
+          backdrop-filter: blur(14px);
+        }
+
+        /* ========================================
+           GRADIENT TITLE
+        ======================================== */
+
+        .arc-gradient-text {
+          background: linear-gradient(
+            100deg,
+            #2775ca 0%,
+            #2775ca 38%,
+            #8b5cf6 68%,
+            #ff1ac6 100%
+          );
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+        }
+
+        /* ========================================
+           CARD INITIAL STATE
+        ======================================== */
+
+        @media (min-width: 768px) {
           .highlight-card {
             opacity: 0;
             transform:
-              translateY(50px)
-              scale(0.95);
+              translateY(38px)
+              scale(0.965);
+            filter: blur(7px);
           }
 
           .platform-stats-section.highlights-visible
             .highlight-card-1 {
             animation:
-              highlightReveal
-              0.8s
+              arcCardReveal
+              0.9s
               cubic-bezier(.22, 1, .36, 1)
               0.05s
               forwards;
@@ -411,75 +474,173 @@ const PlatformStats = () => {
           .platform-stats-section.highlights-visible
             .highlight-card-2 {
             animation:
-              highlightReveal
-              0.8s
+              arcCardReveal
+              0.9s
               cubic-bezier(.22, 1, .36, 1)
-              0.18s
+              0.15s
               forwards;
           }
 
           .platform-stats-section.highlights-visible
             .highlight-card-3 {
             animation:
-              highlightReveal
-              0.8s
+              arcCardReveal
+              0.9s
               cubic-bezier(.22, 1, .36, 1)
-              0.31s
+              0.25s
               forwards;
           }
 
           .platform-stats-section.highlights-visible
             .highlight-card-4 {
             animation:
-              highlightReveal
-              0.8s
+              arcCardReveal
+              0.9s
               cubic-bezier(.22, 1, .36, 1)
-              0.44s
+              0.35s
               forwards;
           }
+        }
 
-          @keyframes highlightReveal {
-            0% {
-              opacity: 0;
-              transform:
-                translateY(50px)
-                scale(0.95);
-            }
+        @keyframes arcCardReveal {
+          0% {
+            opacity: 0;
+            transform:
+              translateY(38px)
+              scale(0.965);
+            filter: blur(7px);
+          }
 
-            65% {
-              opacity: 1;
-              transform:
-                translateY(-5px)
-                scale(1.01);
-            }
+          65% {
+            opacity: 1;
+            transform:
+              translateY(-5px)
+              scale(1.008);
+            filter: blur(0);
+          }
 
-            100% {
-              opacity: 1;
-              transform:
-                translateY(0)
-                scale(1);
-            }
+          100% {
+            opacity: 1;
+            transform:
+              translateY(0)
+              scale(1);
+            filter: blur(0);
           }
         }
 
         /* ========================================
-           TABLET + MOBILE
+           CARD HOVER
         ======================================== */
 
-        @media (max-width: 1023px) {
-          .highlight-card {
-            opacity: 1 !important;
-            transform: none !important;
+        .highlight-card-shell {
+          isolation: isolate;
+        }
+
+        .highlight-card-shell::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          pointer-events: none;
+          opacity: 0;
+          background:
+            radial-gradient(
+              circle at 50% 0%,
+              rgba(39, 117, 202, 0.07),
+              transparent 45%
+            );
+          transition: opacity 500ms ease;
+        }
+
+        .highlight-card:hover .highlight-card-shell {
+          transform: translateY(-7px);
+          box-shadow:
+            0 24px 60px rgba(35, 31, 22, 0.11),
+            0 0 0 1px rgba(39, 117, 202, 0.035);
+        }
+
+        .highlight-card:hover
+          .highlight-card-shell::after {
+          opacity: 1;
+        }
+
+        /* ========================================
+           LIGHT SWEEP
+        ======================================== */
+
+        .card-light-sweep {
+          z-index: 2;
+          background: linear-gradient(
+            100deg,
+            transparent,
+            rgba(255, 255, 255, 0.7),
+            transparent
+          );
+          transform: skewX(-18deg);
+          opacity: 0;
+        }
+
+        .highlight-card:hover .card-light-sweep {
+          opacity: 1;
+          animation: cardLightSweep 1s
+            cubic-bezier(.22, 1, .36, 1);
+        }
+
+        @keyframes cardLightSweep {
+          0% {
+            left: -80%;
           }
+
+          100% {
+            left: 135%;
+          }
+        }
+
+        /* ========================================
+           BOTTOM PANEL
+        ======================================== */
+
+        .arc-bottom-panel {
+          background:
+            linear-gradient(
+              135deg,
+              rgba(255, 255, 255, 0.96),
+              rgba(247, 246, 239, 0.9)
+            );
+          border-color: rgba(20, 20, 20, 0.08);
+          box-shadow:
+            0 20px 60px rgba(35, 31, 22, 0.07),
+            inset 0 1px 0 rgba(255, 255, 255, 0.9);
+          backdrop-filter: blur(18px);
         }
 
         /* ========================================
            MOBILE
         ======================================== */
 
+        @media (max-width: 767px) {
+          .platform-stats-section {
+            padding: 76px 20px;
+          }
+
+          .highlight-card {
+            opacity: 1 !important;
+            transform: none !important;
+            filter: none !important;
+          }
+
+          .highlight-card-shell {
+            transform: none !important;
+          }
+        }
+
         @media (max-width: 640px) {
           .platform-stats-section {
-            padding: 70px 20px;
+            padding: 68px 18px;
+          }
+
+          .arc-brick-pattern {
+            background-size: 48px 24px;
           }
         }
 
@@ -488,7 +649,6 @@ const PlatformStats = () => {
         ======================================== */
 
         @media (prefers-reduced-motion: reduce) {
-          .platform-stats-section,
           .platform-stats-section *,
           .platform-stats-section *::before,
           .platform-stats-section *::after {
@@ -500,6 +660,7 @@ const PlatformStats = () => {
           .highlight-card {
             opacity: 1 !important;
             transform: none !important;
+            filter: none !important;
           }
         }
       `}</style>
@@ -508,3 +669,4 @@ const PlatformStats = () => {
 };
 
 export default PlatformStats;
+

@@ -7,7 +7,7 @@ import {
 import {
   FiArrowUp,
   FiCheck,
-  FiStar,
+  FiDollarSign,
 } from "react-icons/fi";
 import HappyBounty from "../../assets/images/HappyBounty.png";
 
@@ -20,118 +20,100 @@ function Footer() {
   };
 
   return (
-    <footer className="relative mt-24 overflow-hidden border-t border-white/[0.08] bg-[#080808] text-white">
-      {/* =====================================================
-          BACKGROUND GLOWS
-      ====================================================== */}
+    <footer className="relative mt-16 overflow-hidden border-t border-black/[0.08] bg-[#f1f0e8] text-[#111111]">
+      {/* Soft background glows */}
+      <div className="pointer-events-none absolute -top-32 left-1/4 h-72 w-72 rounded-full bg-[#2775CA]/[0.07] blur-[110px]" />
 
-      <div className="pointer-events-none absolute -top-32 left-1/4 h-72 w-72 rounded-full bg-[#FF1AC6]/10 blur-[120px]" />
+      <div className="pointer-events-none absolute -bottom-32 right-1/4 h-72 w-72 rounded-full bg-purple-500/[0.06] blur-[110px]" />
 
-      <div className="pointer-events-none absolute -bottom-32 right-1/4 h-72 w-72 rounded-full bg-purple-600/10 blur-[120px]" />
-
-      {/* =====================================================
-          SUBTLE GRID
-      ====================================================== */}
-
+      {/* Architectural grid */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.025]"
+        className="pointer-events-none absolute inset-0 opacity-[0.16]"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
-          backgroundSize: "40px 40px",
+            "linear-gradient(rgba(76,58,28,0.16) 1px, transparent 1px), linear-gradient(90deg, rgba(76,58,28,0.16) 1px, transparent 1px)",
+          backgroundSize: "44px 44px",
         }}
       />
 
-      {/* =====================================================
-          DECORATIVE STAR ICONS
-      ====================================================== */}
-
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <FiStar className="footer-star footer-star-1" />
-        <FiStar className="footer-star footer-star-2" />
-        <FiStar className="footer-star footer-star-3" />
-        <FiStar className="footer-star footer-star-4" />
-        <FiStar className="footer-star footer-star-5" />
-        <FiStar className="footer-star footer-star-6" />
-        <FiStar className="footer-star footer-star-7" />
-        <FiStar className="footer-star footer-star-8" />
+      {/* Gold corner detail */}
+      <div className="pointer-events-none absolute right-0 top-0 h-40 w-40 opacity-[0.07]">
+        <div className="absolute right-8 top-8 h-24 w-24 border border-[#6f5424]" />
+        <div className="absolute right-14 top-14 h-24 w-24 border border-[#6f5424]" />
       </div>
 
-      {/* =====================================================
-          MAIN CONTAINER
-      ====================================================== */}
+      <div className="relative z-10 mx-auto max-w-screen-2xl px-6 py-10 md:px-10 lg:px-16">
 
-      <div className="relative z-10 mx-auto max-w-screen-2xl px-6 py-12 md:px-10 lg:px-16">
-        {/* ===================================================
-            TOP SECTION
-        ==================================================== */}
+        {/* =====================================================
+            MAIN FOOTER
+        ====================================================== */}
 
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
-          {/* =================================================
-              BRAND
-          ================================================== */}
 
+          {/* BRAND */}
           <div className="lg:col-span-1">
-            <div className="mb-5 flex items-center gap-3">
+            <div className="mb-4 flex items-center gap-3">
+
               {/* Logo */}
-              <div className="group relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-xl border border-[#FF1AC6]/30 bg-[#FF1AC6]/10 shadow-[0_0_25px_rgba(255,26,198,0.12)]">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#FF1AC6]/20 to-purple-600/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+              <div className="group relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-xl border border-[#2775CA]/15 bg-white/70 shadow-sm backdrop-blur-xl">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#2775CA]/10 to-purple-500/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
                 <img
                   src={HappyBounty}
                   alt="Happy Bounty logo"
-                  className="relative z-10 h-7 w-7 object-contain transition-transform duration-300 group-hover:scale-110"
+                  className="relative z-10 h-8 w-8 object-contain transition-transform duration-300 group-hover:scale-110"
                 />
               </div>
 
-              {/* Brand Name */}
+              {/* Brand */}
               <div>
-                <h3 className="text-xl font-bold tracking-tight">
+                <h3 className="text-lg font-black tracking-tight">
                   Happy{" "}
                   <span className="text-[#FF1AC6]">
                     Bounty
                   </span>
                 </h3>
 
-                <p className="text-[10px] uppercase tracking-[0.2em] text-gray-600">
+                <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-black/35">
                   Web3 Bounty Platform
                 </p>
               </div>
             </div>
 
-            <p className="max-w-xs text-sm leading-relaxed text-gray-400">
-              Complete Web3 tasks, contribute your skills, and earn
-              cryptocurrency rewards across multiple networks.
+            <p className="max-w-xs text-sm leading-6 text-black/50">
+              A Web3 bounty platform connecting creators and contributors
+              through on-chain opportunities and USDC rewards.
             </p>
 
-            {/* STATUS */}
-            <div className="mt-6 flex w-fit items-center gap-2 rounded-full border border-green-500/10 bg-green-500/5 px-3 py-1.5">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-60" />
+            {/* Arc / USDC status */}
+            <div className="mt-5 flex w-fit items-center gap-2 rounded-full border border-[#2775CA]/15 bg-white/60 px-3 py-1.5 backdrop-blur-xl">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#FF1AC6] shadow-[0_0_8px_rgba(39,117,202,0.6)]" />
 
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-green-400" />
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#FF1AC6]">
+                Built for Arc
               </span>
 
-              <span className="text-xs text-gray-500">
-                Platform operational
+              <span className="h-3 w-px bg-black/10" />
+
+              <FiDollarSign className="h-3 w-3 text-[#2775CA]" />
+
+              <span className="text-[10px] font-bold uppercase tracking-wider text-black/40">
+                USDC
               </span>
             </div>
           </div>
 
-          {/* =================================================
-              PLATFORM
-          ================================================== */}
-
+          {/* PLATFORM */}
           <div>
-            <h4 className="mb-5 text-sm font-semibold uppercase tracking-[0.15em] text-white">
+            <h4 className="mb-4 text-xs font-bold uppercase tracking-[0.16em] text-[#111111]">
               Platform
             </h4>
 
-            <ul className="space-y-3 text-sm">
+            <ul className="space-y-2.5 text-sm">
               <li>
                 <a
                   href="/dashboard"
-                  className="text-gray-500 transition-colors duration-200 hover:text-[#FF1AC6]"
+                  className="text-black/45 transition-colors duration-200 hover:text-[#FF1AC6]"
                 >
                   Browse Bounties
                 </a>
@@ -140,7 +122,7 @@ function Footer() {
               <li>
                 <a
                   href="/dashboard"
-                  className="text-gray-500 transition-colors duration-200 hover:text-[#FF1AC6]"
+                  className="text-black/45 transition-colors duration-200 hover:text-[#FF1AC6]"
                 >
                   Categories
                 </a>
@@ -149,7 +131,7 @@ function Footer() {
               <li>
                 <a
                   href="/leaderboard"
-                  className="text-gray-500 transition-colors duration-200 hover:text-[#FF1AC6]"
+                  className="text-black/45 transition-colors duration-200 hover:text-[#FF1AC6]"
                 >
                   Leaderboard
                 </a>
@@ -158,7 +140,7 @@ function Footer() {
               <li>
                 <a
                   href="/rewards"
-                  className="text-gray-500 transition-colors duration-200 hover:text-[#FF1AC6]"
+                  className="text-black/45 transition-colors duration-200 hover:text-[#FF1AC6]"
                 >
                   Rewards
                 </a>
@@ -166,20 +148,17 @@ function Footer() {
             </ul>
           </div>
 
-          {/* =================================================
-              RESOURCES
-          ================================================== */}
-
+          {/* RESOURCES */}
           <div>
-            <h4 className="mb-5 text-sm font-semibold uppercase tracking-[0.15em] text-white">
+            <h4 className="mb-4 text-xs font-bold uppercase tracking-[0.16em] text-[#111111]">
               Resources
             </h4>
 
-            <ul className="space-y-3 text-sm">
+            <ul className="space-y-2.5 text-sm">
               <li>
                 <a
                   href="#"
-                  className="text-gray-500 transition-colors duration-200 hover:text-[#FF1AC6]"
+                  className="text-black/45 transition-colors duration-200 hover:text-[#FF1AC6]"
                 >
                   Documentation
                 </a>
@@ -188,7 +167,7 @@ function Footer() {
               <li>
                 <a
                   href="#"
-                  className="text-gray-500 transition-colors duration-200 hover:text-[#FF1AC6]"
+                  className="text-black/45 transition-colors duration-200 hover:text-[#FF1AC6]"
                 >
                   Blog
                 </a>
@@ -197,7 +176,7 @@ function Footer() {
               <li>
                 <a
                   href="#"
-                  className="text-gray-500 transition-colors duration-200 hover:text-[#FF1AC6]"
+                  className="text-black/45 transition-colors duration-200 hover:text-[#FF1AC6]"
                 >
                   Help Center
                 </a>
@@ -206,7 +185,7 @@ function Footer() {
               <li>
                 <a
                   href="#"
-                  className="text-gray-500 transition-colors duration-200 hover:text-[#FF1AC6]"
+                  className="text-black/45 transition-colors duration-200 hover:text-[#FF1AC6]"
                 >
                   Community
                 </a>
@@ -214,213 +193,140 @@ function Footer() {
             </ul>
           </div>
 
-          {/* =================================================
-              SOCIAL
-          ================================================== */}
-
+          {/* CONNECT */}
           <div>
-            <h4 className="mb-5 text-sm font-semibold uppercase tracking-[0.15em] text-white">
+            <h4 className="mb-4 text-xs font-bold uppercase tracking-[0.16em] text-[#111111]">
               Connect
             </h4>
 
-            <p className="mb-5 max-w-xs text-sm leading-relaxed text-gray-500">
-              Follow Happy Bounty and stay updated with new bounties,
-              platform updates, and Web3 opportunities.
+            <p className="mb-4 max-w-xs text-sm leading-6 text-black/45">
+              Follow Happy Bounty for new opportunities, platform updates,
+              and Web3 work.
             </p>
 
-            <div className="flex gap-3">
-              {/* X / Twitter */}
+            <div className="flex gap-2.5">
+
+              {/* X */}
               <a
                 href="https://x.com/Happy_bounty"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Happy Bounty on X"
-                className="group flex h-11 w-11 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.03] text-gray-400 transition-all duration-300 hover:-translate-y-1 hover:border-[#FF1AC6]/40 hover:bg-[#FF1AC6]/10 hover:text-[#FF1AC6]"
+                className="group flex h-10 w-10 items-center justify-center rounded-xl border border-black/[0.08] bg-white/60 text-black/45 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-black/15 hover:bg-white hover:text-black"
               >
-                <FaTwitter className="text-lg transition-transform duration-300 group-hover:scale-110" />
+                <FaTwitter className="text-base transition-transform duration-300 group-hover:scale-110" />
               </a>
 
               {/* Discord */}
               <a
                 href="#"
                 aria-label="Happy Bounty Discord"
-                className="group flex h-11 w-11 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.03] text-gray-400 transition-all duration-300 hover:-translate-y-1 hover:border-[#5865F2]/40 hover:bg-[#5865F2]/10 hover:text-[#5865F2]"
+                className="group flex h-10 w-10 items-center justify-center rounded-xl border border-black/[0.08] bg-white/60 text-black/45 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-[#5865F2]/25 hover:bg-[#5865F2]/[0.06] hover:text-[#5865F2]"
               >
-                <FaDiscord className="text-lg transition-transform duration-300 group-hover:scale-110" />
+                <FaDiscord className="text-base transition-transform duration-300 group-hover:scale-110" />
               </a>
 
               {/* GitHub */}
               <a
                 href="#"
                 aria-label="Happy Bounty GitHub"
-                className="group flex h-11 w-11 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.03] text-gray-400 transition-all duration-300 hover:-translate-y-1 hover:border-white/30 hover:bg-white/10 hover:text-white"
+                className="group flex h-10 w-10 items-center justify-center rounded-xl border border-black/[0.08] bg-white/60 text-black/45 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-black/20 hover:bg-white hover:text-black"
               >
-                <FaGithub className="text-lg transition-transform duration-300 group-hover:scale-110" />
+                <FaGithub className="text-base transition-transform duration-300 group-hover:scale-110" />
               </a>
             </div>
           </div>
         </div>
 
-        {/* ===================================================
+        {/* =====================================================
             DIVIDER
-        ==================================================== */}
+        ====================================================== */}
 
-        <div className="my-10 h-px bg-gradient-to-r from-transparent via-white/[0.1] to-transparent" />
+        <div className="my-8 h-px bg-gradient-to-r from-transparent via-black/[0.09] to-transparent" />
 
-        {/* ===================================================
-            BOTTOM SECTION
-        ==================================================== */}
+        {/* =====================================================
+            BOTTOM
+        ====================================================== */}
 
-        <div className="flex flex-col items-center justify-between gap-5 text-center md:flex-row md:text-left">
+        <div className="flex flex-col items-center justify-between gap-4 text-center md:flex-row md:text-left">
+
           {/* Copyright */}
-          <p className="text-xs text-gray-600">
+          <p className="text-[11px] text-black/35">
             © 2026 Happy Bounty. All rights reserved.
           </p>
 
           {/* Legal */}
-          <div className="flex flex-wrap justify-center gap-6 text-xs text-gray-600">
+          <div className="flex flex-wrap justify-center gap-5 text-[11px] text-black/35">
             <a
               href="#"
-              className="transition-colors hover:text-gray-300"
+              className="transition-colors hover:text-black/70"
             >
               Privacy Policy
             </a>
 
             <a
               href="#"
-              className="transition-colors hover:text-gray-300"
+              className="transition-colors hover:text-black/70"
             >
               Terms of Service
             </a>
 
             <a
               href="#"
-              className="transition-colors hover:text-gray-300"
+              className="transition-colors hover:text-black/70"
             >
               Security
             </a>
           </div>
 
           {/* Built For */}
-          <div className="flex items-center gap-2 text-xs text-gray-600">
-            <span>
-              Built for
+          <div className="flex items-center gap-2 text-[11px] text-black/35">
+            <span>Built for</span>
+
+            <span className="font-bold text-[#FF1AC6]">
+              Arc
             </span>
 
-            <span className="font-medium text-[#FF1AC6]">
-              Web3
+            <span className="h-1 w-1 rounded-full bg-black/20" />
+
+            <span className="font-bold text-[#2775CA]">
+              USDC
             </span>
 
-            <FiCheck className="h-3.5 w-3.5 text-green-400" />
+            <FiCheck className="h-3.5 w-3.5 text-green-600" />
           </div>
         </div>
 
-        {/* ===================================================
+        {/* =====================================================
             BACK TO TOP
-        ==================================================== */}
+        ====================================================== */}
 
-        <div className="mt-10 flex justify-center">
+        <div className="mt-7 flex justify-center">
           <button
             type="button"
             onClick={scrollToTop}
             aria-label="Back to top"
-            className="group inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.025] px-4 py-2.5 text-xs font-medium text-gray-500 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-[#FF1AC6]/30 hover:bg-[#FF1AC6]/[0.05] hover:text-white"
+            className="group inline-flex items-center gap-2 rounded-full border border-black/[0.08] bg-white/60 px-3.5 py-2 text-[10px] font-semibold text-black/40 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-[#2775CA]/20 hover:bg-white hover:text-[#FF1AC6]"
           >
-            <span>
-              Back to top
-            </span>
+            <span>Back to top</span>
 
-            <span className="flex h-6 w-6 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.04] transition-all duration-300 group-hover:border-[#FF1AC6]/30 group-hover:bg-[#FF1AC6]/10">
-              <FiArrowUp className="h-3.5 w-3.5 text-gray-500 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:text-[#FF1AC6]" />
+            <span className="flex h-5 w-5 items-center justify-center rounded-full border border-black/[0.07] bg-white transition-all duration-300 group-hover:border-[#2775CA]/20">
+              <FiArrowUp className="h-3 w-3 transition-transform duration-300 group-hover:-translate-y-0.5" />
             </span>
           </button>
         </div>
+
+        {/* Bottom system label */}
+        <div className="mt-7 flex items-center justify-center gap-3 text-[8px] font-bold uppercase tracking-[0.22em] text-black/20">
+          <span>ARC</span>
+          <span>•</span>
+          <span>USDC</span>
+          <span>•</span>
+          <span>WEB3 WORK</span>
+          <span>•</span>
+          <span>ON-CHAIN</span>
+        </div>
       </div>
-
-      {/* =====================================================
-          STAR ANIMATION
-      ====================================================== */}
-
-      <style>{`
-        .footer-star {
-          position: absolute;
-          width: 12px;
-          height: 12px;
-          color: rgba(255, 255, 255, 0.45);
-          animation: footerStarShine 4s ease-in-out infinite;
-        }
-
-        .footer-star-1 {
-          top: 15%;
-          left: 8%;
-          animation-delay: 0s;
-        }
-
-        .footer-star-2 {
-          top: 30%;
-          left: 28%;
-          animation-delay: 1.2s;
-        }
-
-        .footer-star-3 {
-          top: 12%;
-          right: 18%;
-          animation-delay: 0.6s;
-        }
-
-        .footer-star-4 {
-          top: 45%;
-          right: 7%;
-          animation-delay: 1.8s;
-        }
-
-        .footer-star-5 {
-          bottom: 20%;
-          right: 28%;
-          animation-delay: 0.9s;
-        }
-
-        .footer-star-6 {
-          bottom: 15%;
-          left: 42%;
-          animation-delay: 2s;
-        }
-
-        .footer-star-7 {
-          top: 65%;
-          left: 15%;
-          animation-delay: 1.5s;
-        }
-
-        .footer-star-8 {
-          bottom: 30%;
-          left: 32%;
-          animation-delay: 0.4s;
-        }
-
-        @keyframes footerStarShine {
-          0%,
-          100% {
-            opacity: 0.1;
-            transform: scale(0.7) rotate(0deg);
-            filter: drop-shadow(0 0 0 rgba(255, 26, 198, 0));
-          }
-
-          50% {
-            opacity: 1;
-            transform: scale(1.25) rotate(45deg);
-            filter:
-              drop-shadow(0 0 5px rgba(255, 255, 255, 0.8))
-              drop-shadow(0 0 12px rgba(255, 26, 198, 0.7));
-          }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .footer-star {
-            animation: none;
-          }
-        }
-      `}</style>
     </footer>
   );
 }

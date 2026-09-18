@@ -1,4 +1,6 @@
+
 import { useEffect, useState } from "react";
+import Usdc from "../assets/images/Usdc.png";
 
 function LoadingScreen({ onComplete }) {
   const [progress, setProgress] = useState(0);
@@ -39,78 +41,119 @@ function LoadingScreen({ onComplete }) {
 
   return (
     <div
-      className={`fixed inset-0 z-[9999] flex min-h-screen items-center justify-center overflow-hidden bg-[#080609] text-white transition-opacity duration-500 ${
+      className={`fixed inset-0 z-[9999] flex min-h-screen items-center justify-center overflow-hidden bg-white text-black transition-opacity duration-500 ${
         fadeOut ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
     >
-      {/* Background glow */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-fuchsia-600/10 blur-[120px]" />
+      {/* =====================================================
+          BACKGROUND
+      ===================================================== */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        {/* Main USDC glow */}
+        <div className="absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#2775CA]/[0.06] blur-[110px]" />
 
-        <div className="absolute left-[15%] top-[20%] h-32 w-32 rounded-full bg-purple-600/10 blur-[80px]" />
+        {/* Pink accent glow */}
+        <div className="absolute left-[12%] top-[18%] h-32 w-32 rounded-full bg-fuchsia-500/[0.04] blur-[80px]" />
 
-        <div className="absolute bottom-[15%] right-[15%] h-40 w-40 rounded-full bg-pink-600/10 blur-[90px]" />
+        {/* Blue accent glow */}
+        <div className="absolute bottom-[12%] right-[12%] h-40 w-40 rounded-full bg-[#2775CA]/[0.04] blur-[90px]" />
       </div>
 
-      {/* Grid */}
+      {/* =====================================================
+          SUBTLE GRID
+      ===================================================== */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.08]"
+        className="pointer-events-none absolute inset-0 opacity-[0.035]"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px)",
+            "linear-gradient(rgba(0,0,0,0.25) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.25) 1px, transparent 1px)",
           backgroundSize: "50px 50px",
         }}
       />
 
-      {/* Scan line */}
-      <div className="pointer-events-none absolute left-0 top-0 h-px w-full animate-[scan_3s_linear_infinite] bg-gradient-to-r from-transparent via-fuchsia-500/60 to-transparent" />
+      {/* =====================================================
+          SCAN LINE
+      ===================================================== */}
+      <div className="pointer-events-none absolute left-0 top-0 h-px w-full animate-[scan_3s_linear_infinite] bg-gradient-to-r from-transparent via-[#2775CA]/40 to-transparent" />
 
-      {/* Main */}
+      {/* =====================================================
+          MAIN
+      ===================================================== */}
       <div className="relative z-10 flex w-full max-w-md flex-col items-center px-6">
-        {/* Logo */}
-        <div className="relative mb-10 flex h-28 w-28 items-center justify-center">
-          {/* Outer ring */}
-          <div className="absolute inset-0 animate-[spin_8s_linear_infinite] rounded-full border border-fuchsia-500/30 border-t-fuchsia-400" />
+        {/* =================================================
+            USDC VISUAL
+        ================================================= */}
+        <div className="relative mb-8 flex h-32 w-32 items-center justify-center">
+          {/* Outer rotating ring */}
+          <div className="absolute inset-0 animate-[spin_10s_linear_infinite] rounded-full border border-[#2775CA]/15 border-t-[#2775CA]/70" />
 
-          {/* Inner ring */}
-          <div className="absolute inset-3 animate-[spin_5s_linear_infinite_reverse] rounded-full border border-purple-500/20 border-b-pink-500/70" />
+          {/* Inner rotating ring */}
+          <div className="absolute inset-3 animate-[spin_7s_linear_infinite_reverse] rounded-full border border-fuchsia-500/10 border-b-fuchsia-500/50" />
 
-          {/* Glow */}
-          <div className="absolute h-16 w-16 rounded-2xl bg-fuchsia-500/20 blur-xl" />
+          {/* Soft glow */}
+          <div className="absolute h-24 w-24 rounded-full bg-[#2775CA]/10 blur-2xl" />
 
-          {/* Logo box */}
-          <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06] shadow-[0_0_40px_rgba(217,70,239,0.2)] backdrop-blur-xl">
-            <span className="text-2xl font-black tracking-tight">
-              <span className="text-white">H</span>
-              <span className="text-fuchsia-500">B</span>
-            </span>
+          {/* USDC image */}
+          <div className="relative z-10 animate-[coinFloat_4s_ease-in-out_infinite]">
+            <img
+              src={Usdc}
+              alt="USDC"
+              className="h-20 w-20 select-none object-contain drop-shadow-[0_12px_20px_rgba(39,117,202,0.18)]"
+              draggable="false"
+            />
           </div>
+
+          {/* Small orbit dot */}
+          <span className="absolute right-1 top-7 h-2 w-2 animate-pulse rounded-full bg-[#2775CA] shadow-[0_0_12px_rgba(39,117,202,0.5)]" />
+
+          {/* Pink orbit dot */}
+          <span className="absolute bottom-5 left-3 h-1.5 w-1.5 animate-pulse rounded-full bg-fuchsia-500 shadow-[0_0_10px_rgba(217,70,239,0.5)]" />
         </div>
 
-        {/* Brand */}
-        <h1 className="text-center text-2xl font-bold tracking-[0.2em]">
+        {/* =================================================
+            BRAND
+        ================================================= */}
+        <h1 className="text-center text-2xl font-bold tracking-[0.2em] text-black">
           HAPPY BOUNTY
         </h1>
 
-        <p className="mt-2 text-center text-[10px] font-medium uppercase tracking-[0.35em] text-white/35">
+        <p className="mt-2 text-center text-[10px] font-medium uppercase tracking-[0.35em] text-black/35">
           The Future of Web3 Work
         </p>
 
-        {/* Progress */}
-        <div className="mt-12 w-full">
+        {/* =================================================
+            ARC BADGE
+        ================================================= */}
+        <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-black/[0.08] bg-black/[0.025] px-3 py-1.5">
+          <span className="relative flex h-1.5 w-1.5">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#2775CA] opacity-40" />
+
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#2775CA]" />
+          </span>
+
+          <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-black/45">
+            Built for Arc
+          </span>
+        </div>
+
+        {/* =================================================
+            PROGRESS
+        ================================================= */}
+        <div className="mt-10 w-full">
           <div className="mb-3 flex items-center justify-between">
-            <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-white/40">
+            <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-black/40">
               Initializing Network
             </span>
 
-            <span className="font-mono text-xs text-fuchsia-400">
+            <span className="font-mono text-xs font-medium text-[#2775CA]">
               {progress}%
             </span>
           </div>
 
-          <div className="h-[3px] w-full overflow-hidden rounded-full bg-white/[0.08]">
+          {/* Track */}
+          <div className="h-[3px] w-full overflow-hidden rounded-full bg-black/[0.07]">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-purple-500 via-fuchsia-500 to-pink-500 transition-[width] duration-100"
+              className="h-full rounded-full bg-gradient-to-r from-[#2775CA] via-[#2775CA] to-fuchsia-500 transition-[width] duration-100"
               style={{
                 width: `${progress}%`,
               }}
@@ -118,8 +161,10 @@ function LoadingScreen({ onComplete }) {
           </div>
         </div>
 
-        {/* Status */}
-        <div className="mt-6 flex w-full items-center justify-between text-[9px] uppercase tracking-[0.18em] text-white/25">
+        {/* =================================================
+            STATUS
+        ================================================= */}
+        <div className="mt-6 flex w-full items-center justify-between text-[9px] uppercase tracking-[0.18em] text-black/30">
           <span>
             {progress < 35
               ? "Connecting"
@@ -131,30 +176,41 @@ function LoadingScreen({ onComplete }) {
           </span>
 
           <span className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-fuchsia-500" />
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#2775CA]" />
             Network Online
           </span>
         </div>
 
-        {/* Bottom text */}
-        <div className="mt-10 flex items-center gap-3 text-[9px] uppercase tracking-[0.25em] text-white/20">
+        {/* =================================================
+            BOTTOM TEXT
+        ================================================= */}
+        <div className="mt-10 flex items-center gap-3 text-[9px] uppercase tracking-[0.25em] text-black/20">
           <span>Find</span>
-          <span className="h-px w-5 bg-white/10" />
+
+          <span className="h-px w-5 bg-black/10" />
+
           <span>Build</span>
-          <span className="h-px w-5 bg-white/10" />
+
+          <span className="h-px w-5 bg-black/10" />
+
           <span>Earn</span>
         </div>
       </div>
 
-      {/* Corner details */}
-      <div className="absolute left-6 top-6 text-[8px] uppercase tracking-[0.25em] text-white/20">
+      {/* =====================================================
+          CORNER DETAILS
+      ===================================================== */}
+      <div className="absolute left-6 top-6 text-[8px] uppercase tracking-[0.25em] text-black/20">
         HB // 001
       </div>
 
-      <div className="absolute bottom-6 right-6 text-[8px] uppercase tracking-[0.25em] text-white/20">
-        WEB3 BOUNTY NETWORK
+      <div className="absolute bottom-6 right-6 text-[8px] uppercase tracking-[0.25em] text-black/20">
+        ARC // USDC NETWORK
       </div>
 
+      {/* =====================================================
+          ANIMATIONS
+      ===================================================== */}
       <style>{`
         @keyframes scan {
           0% {
@@ -173,6 +229,23 @@ function LoadingScreen({ onComplete }) {
           100% {
             transform: translateY(110vh);
             opacity: 0;
+          }
+        }
+
+        @keyframes coinFloat {
+          0%,
+          100% {
+            transform: translateY(0) rotateZ(-2deg);
+          }
+
+          50% {
+            transform: translateY(-8px) rotateZ(2deg);
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          * {
+            animation: none !important;
           }
         }
       `}</style>
