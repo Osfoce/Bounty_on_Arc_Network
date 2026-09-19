@@ -127,7 +127,7 @@ export default function Hero() {
   ];
 
   return (
-    <section className="relative min-h-[620px] overflow-hidden bg-[#f6f5ef] text-black sm:min-h-[650px]">
+    <section className="relative min-h-[620px] overflow-hidden bg-[#f6f5ef] border-y-[0.9px] border-l-[0.9px] border-t-[0.9px] border-r-[0.9px] border-[#D4AF37] text-black sm:min-h-[650px]">
       {/* =====================================================
           ARCHITECTURAL BRICK BACKGROUND
       ===================================================== */}
