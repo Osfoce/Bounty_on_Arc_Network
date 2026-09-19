@@ -496,94 +496,70 @@ Start the frontend:
 
 cd frontend
 npm run dev
-Development Status
+```
 
-Fresh Bounty's existing implementation already provides:
+Vite prints the local frontend URL (normally `http://localhost:5173`). The API uses port `5000` unless `PORT` is set.
 
-bounty marketplace
-wallet connection
-bounty creation
-contributor enrolment
-submissions
-winner selection
-reward distribution
-reward claims
-Express API
-MongoDB persistence
-EVM smart-contract integration
+> **Note:** several frontend API calls currently target the deployed endpoint `https://fresh-bounty.onrender.com`. To run completely locally, move that base URL into a Vite environment variable and update those calls to use it.
 
-The Arc version focuses on moving the financial settlement layer to Arc and making USDC the primary asset throughout the bounty lifecycle.
+## Available scripts
 
-Important: Arc Mainnet integration should only be described as live after the contract has actually been deployed to Arc Mainnet and the complete bounty flow has been tested there.
+| Directory | Command | Purpose |
+| --- | --- | --- |
+| `frontend` | `npm run dev` | Run the Vite development server. |
+| `frontend` | `npm run build` | Create a production build. |
+| `frontend` | `npm run lint` | Lint frontend source files. |
+| `frontend` | `npm run preview` | Preview the production build. |
+| `backend` | `npm start` | Run the Express API. |
+| `backend` | `npm run dev` | Run the API with Nodemon. |
 
-Why Fresh Bounty Fits Arc
+## Main API routes
 
-Fresh Bounty is fundamentally a platform for coordinating economic activity between creators and contributors.
+The API is mounted under `/api` unless noted otherwise.
 
-Arc is designed around stablecoin-native financial activity, predictable USDC-denominated fees, fast deterministic settlement, and EVM compatibility.
+| Route | Description |
+| --- | --- |
+| `GET /task` | List bounties with filtering and pagination. |
+| `POST /task` | Save a new bounty record. |
+| `GET/PATCH/DELETE /task/:id` | Read, update, or remove a bounty. |
+| `GET /user/:wallet` | Create or retrieve a wallet user and its activity. |
+| `GET /dashboard/:wallet` | Get wallet-specific bounty and submission metrics. |
+| `POST /enroll` | Enrol a wallet in a bounty. |
+| `POST /submission` | Submit work to a bounty. |
+| `POST /task/:id/distribute` | Sync an on-chain winner distribution. |
+| `POST /task/:id/claim` | Record a reward claim. |
+| `/api/v1/bounty/*` | Alternate controller-based bounty endpoints. |
 
-This creates a natural integration:
+## Project structure
 
-                 FRESH BOUNTY
-                       │
-                       ▼
-              Web3 Work Marketplace
-                       │
-             ┌─────────┴─────────┐
-             │                   │
-          Creators          Contributors
-             │                   │
-             └─────────┬─────────┘
-                       │
-                       ▼
-                    USDC
-                       │
-                       ▼
-                ARC MAINNET
-                       │
-          ┌────────────┼────────────┐
-          │            │            │
-       Funding      Escrow       Rewards
-          │            │            │
-          └────────────┼────────────┘
-                       ▼
-               Fast Settlement
+```text
+fresh-bounty/
+├── contract/              # ABI, contract address map, and event listener
+├── backend/
+│   ├── config/            # Database and chain clients
+│   ├── routes/            # Bounty, user, enrolment, submission, reward APIs
+│   ├── jobs/              # Hourly bounty-status updater
+│   └── server.js          # Express entry point
+└── frontend/
+    └── src/
+        ├── pages/         # Landing, dashboard, create, detail, profile pages
+        ├── components/    # Layout, wallet, and bounty UI components
+        ├── hooks/         # On-chain bounty actions
+        └── services/      # Transaction configuration helpers
+```
 
-The goal is not simply to deploy an existing bounty app on another chain.
+## Contract configuration
 
-The Arc version makes USDC-native settlement a core part of the product's economic design.
+The shared package exports `BOUNTY_ABI` and `CONTRACT_ADDRESSES`. Its configured Injective Testnet bounty contract is:
 
-Arc Microgrant Direction
+```text
+0xc49c0457c656B901324cB7f9b6736D80f1DBD28B
+```
 
-Fresh Bounty can be positioned as an Arc-native continuation of an existing Web3 product.
+Update [`contract/address.js`](contract/address.js) after deploying to another network. The frontend uses this address map to decide which networks can create and interact with bounties.
 
-The key implementation milestone is a working Arc Mainnet deployment.
+## Notes for contributors
 
-The current Arc Microgrants program states that submissions must be already deployed and working on Arc Mainnet, with a public project link and repository. The program offers twenty 500 USDC microgrants from a 10,000 USDC pool, with submissions closing October 14, 2026.
-
-For Fresh Bounty, the strongest technical milestone is therefore:
-
-Existing Fresh Bounty
-        ↓
-Arc Integration
-        ↓
-Arc Smart Contract Deployment
-        ↓
-USDC Bounty Funding
-        ↓
-On-chain Escrow
-        ↓
-USDC Reward Distribution
-        ↓
-Arc Mainnet
-        ↓
-Live Demo
-License
-
-Add the project's license information here.
-
-Project Links
-1. Live App: Add Arc Mainnet deployment URL
-2. Repository: Add public GitHub repository
-3. Contract: Add verified Arc Mainnet contract address
-4. Explorer: Add Arc transaction/contract explorer link
+- Do not commit `.env` files or private RPC URLs.
+- Bounty status is derived from `startDate` and `deadline`, and the backend also refreshes statuses hourly.
+- The repository currently has no automated test suite. Run `npm run lint` and `npm run build` in `frontend` before opening a change.
