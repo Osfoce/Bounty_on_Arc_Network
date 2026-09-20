@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { FiArrowUpRight } from "react-icons/fi";
@@ -28,10 +27,7 @@ export default function Hero() {
 
     const timer = setTimeout(() => {
       if (!isDeleting) {
-        const nextText = currentMessage.slice(
-          0,
-          displayText.length + 1
-        );
+        const nextText = currentMessage.slice(0, displayText.length + 1);
 
         setDisplayText(nextText);
 
@@ -41,18 +37,13 @@ export default function Hero() {
           }, 1400);
         }
       } else {
-        const nextText = currentMessage.slice(
-          0,
-          displayText.length - 1
-        );
+        const nextText = currentMessage.slice(0, displayText.length - 1);
 
         setDisplayText(nextText);
 
         if (nextText.length === 0) {
           setIsDeleting(false);
-          setHeroText(
-            (prev) => (prev + 1) % heroMessages.length
-          );
+          setHeroText((prev) => (prev + 1) % heroMessages.length);
         }
       }
     }, typingSpeed);
@@ -75,18 +66,12 @@ export default function Hero() {
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
 
-      const rotateY = ((x / rect.width) - 0.5) * 12;
-      const rotateX = ((y / rect.height) - 0.5) * -12;
+      const rotateY = (x / rect.width - 0.5) * 12;
+      const rotateX = (y / rect.height - 0.5) * -12;
 
-      visual.style.setProperty(
-        "--rotate-x",
-        `${rotateX}deg`
-      );
+      visual.style.setProperty("--rotate-x", `${rotateX}deg`);
 
-      visual.style.setProperty(
-        "--rotate-y",
-        `${rotateY}deg`
-      );
+      visual.style.setProperty("--rotate-y", `${rotateY}deg`);
     };
 
     const handleMouseLeave = () => {
@@ -298,9 +283,8 @@ export default function Hero() {
             {/* DESCRIPTION */}
 
             <p className="mx-auto mt-3 max-w-xl text-sm font-semibold leading-relaxed text-black/65 sm:mx-0 sm:text-base md:mt-4">
-              Complete quests and earn USDC, tokens, and digital
-              rewards. Post bounties and get quality work done —
-              fully on-chain.
+              Complete quests and earn USDC, tokens, and digital rewards. Post
+              bounties and get quality work done — fully on-chain.
             </p>
 
             {/* BUTTONS */}
@@ -314,7 +298,6 @@ export default function Hero() {
               >
                 <span className="relative z-10 flex items-center gap-2">
                   Explore Bounties
-
                   <FiArrowUpRight className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </span>
 
@@ -328,7 +311,6 @@ export default function Hero() {
                 className="group flex items-center gap-2 rounded-lg border-2 border-black/10 bg-white px-6 py-3 text-sm font-bold text-black shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[#D4AF37] hover:text-[#B8860B]"
               >
                 Create a Bounty
-
                 <FiArrowUpRight className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Link>
             </div>
