@@ -565,9 +565,7 @@ const BountyCard = ({ bounty }) => {
               )}
 
               <span className="truncate">
-                {bounty.status === "completed"
-                  ? "Ended"
-                  : "Coming Soon"}
+                {bounty.status === "completed" ? "Ended" : "Coming Soon"}
               </span>
             </button>
           )}
