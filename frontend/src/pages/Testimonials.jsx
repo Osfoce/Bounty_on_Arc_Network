@@ -162,7 +162,7 @@ function Testimonials() {
 
       <section
         ref={testimonialsRef}
-        className="relative z-10 mx-6 my-24 overflow-hidden bg-[#f6f5ef] md:mx-10 lg:mx-16"
+        className="relative z-10 mx-6  overflow-hidden bg-[#f6f5ef] md:mx-10 lg:mx-16"
       >
         {/* BACKGROUND GRID */}
 
