@@ -1,4 +1,3 @@
-
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -48,7 +47,7 @@ function LandingPage() {
   const statsRef = useRef(null);
   const testimonialsRef = useRef(null);
 
-  const API_URL = "https://fresh-bounty.onrender.com/api";
+  const API_URL = import.meta.env.VITE_API_URL;
 
   // HERO TEXT ROTATION
   useEffect(() => {
@@ -63,7 +62,7 @@ function LandingPage() {
   useEffect(() => {
     const fetchFeaturedBounties = async () => {
       try {
-        const response = await axios.get(`${API_URL}/task`, {
+        const response = await axios.get(`${API_URL}/bounty/bounties`, {
           params: {
             status: "active",
             limit: 3,
@@ -81,14 +80,13 @@ function LandingPage() {
 
     const fetchStats = async () => {
       try {
-        const allBounties = await axios.get(`${API_URL}/task`, {
+        const allBounties = await axios.get(`${API_URL}/bounty/bounties`, {
           params: {
             limit: 1,
           },
         });
 
-        const totalBounties =
-          allBounties.data.pagination?.total || 0;
+        const totalBounties = allBounties.data.pagination?.total || 0;
 
         setStats({
           totalBounties,
@@ -110,15 +108,9 @@ function LandingPage() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add(
-              "opacity-100",
-              "translate-y-0"
-            );
+            entry.target.classList.add("opacity-100", "translate-y-0");
 
-            entry.target.classList.remove(
-              "opacity-0",
-              "translate-y-10"
-            );
+            entry.target.classList.remove("opacity-0", "translate-y-10");
 
             observer.unobserve(entry.target);
           }
@@ -126,7 +118,7 @@ function LandingPage() {
       },
       {
         threshold: 0.3,
-      }
+      },
     );
 
     if (card1Ref.current) observer.observe(card1Ref.current);
@@ -223,9 +215,8 @@ function LandingPage() {
 
             {/* DESCRIPTION */}
             <p className="mt-5 max-w-xl text-sm leading-7 text-[#77736b]">
-              Discover active opportunities, contribute your skills,
-              and work toward earning rewards through the Arc-powered
-              bounty experience.
+              Discover active opportunities, contribute your skills, and work
+              toward earning rewards through the Arc-powered bounty experience.
             </p>
           </div>
 
@@ -297,8 +288,8 @@ function LandingPage() {
               </h3>
 
               <p className="mt-2 max-w-md text-sm leading-6 text-[#77736b]">
-                There are no featured opportunities available right now.
-                New bounties will appear here as they are posted.
+                There are no featured opportunities available right now. New
+                bounties will appear here as they are posted.
               </p>
 
               <Link
@@ -306,7 +297,6 @@ function LandingPage() {
                 className="mt-6 inline-flex items-center gap-2 rounded-xl border border-[#D4AF37]/40 bg-white px-5 py-2.5 text-sm font-semibold text-[#8F6D12] shadow-[0_10px_25px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#D4AF37] hover:text-[#B28B20]"
               >
                 Browse bounties
-
                 <FiArrowRight className="h-4 w-4" />
               </Link>
             </div>
@@ -503,4 +493,3 @@ function LandingPage() {
 }
 
 export default LandingPage;
-
