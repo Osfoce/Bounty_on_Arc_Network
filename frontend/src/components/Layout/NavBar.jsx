@@ -13,6 +13,7 @@ import {
 function NavBar() {
   const { address, isConnected } = useAccount();
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -57,36 +58,88 @@ function NavBar() {
     }
   };
 
+  // Detect scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <div className="fixed left-0 top-0 z-50 w-full px-3 pt-3 sm:px-4 md:px-6 lg:px-8">
+    <div
+      className={`
+        fixed left-0 top-0 z-50 w-full
+        transition-all duration-500 ease-out
+        ${
+          scrolled
+            ? "px-4 pt-3 sm:px-6 md:px-8"
+            : "px-3 pt-3 sm:px-4 md:px-6 lg:px-8"
+        }
+      `}
+    >
       <nav
-        className="
-          relative mx-auto flex h-[68px] max-w-[1500px]
+        className={`
+          relative mx-auto flex
           items-center justify-between
-          overflow-visible rounded-[20px]
-          border border-black/[0.07]
-          bg-white/95
-          px-3
-          shadow-[0_12px_45px_rgba(0,0,0,0.08)]
-          backdrop-blur-2xl
-          sm:px-5 md:px-6
-        "
+          overflow-visible
+          border
+          transition-all duration-500 ease-out
+          ${
+            scrolled
+              ? `
+                h-[62px]
+                max-w-[1180px]
+                rounded-full
+                border-black/[0.08]
+                bg-[#f6f5ef]/95
+                px-4
+                shadow-[0_12px_40px_rgba(0,0,0,0.10)]
+                backdrop-blur-xl
+                sm:px-5 md:px-6
+              `
+              : `
+                h-[74px]
+                max-w-[1500px]
+                rounded-[22px]
+                border-transparent
+                bg-transparent
+                px-3
+                shadow-none
+                sm:px-5 md:px-6
+              `
+          }
+        `}
       >
         {/* =====================================================
             GOLD TOP ACCENT
         ====================================================== */}
 
         <div
-          className="
-            pointer-events-none absolute left-1/2 top-0
-            h-[2px] w-40 -translate-x-1/2
+          className={`
+            pointer-events-none absolute
+            left-1/2 top-0
+            h-[2px]
+            -translate-x-1/2
             rounded-full
             bg-gradient-to-r
             from-transparent
             via-[#D4AF37]
             to-transparent
-            opacity-90
-          "
+            transition-all duration-500
+            ${
+              scrolled
+                ? "w-28 opacity-100"
+                : "w-40 opacity-90"
+            }
+          `}
         />
 
         {/* =====================================================
@@ -94,14 +147,22 @@ function NavBar() {
         ====================================================== */}
 
         <div
-          className="
+          className={`
             pointer-events-none absolute inset-0
-            rounded-[20px]
-            bg-gradient-to-b
-            from-[#D4AF37]/[0.035]
-            via-transparent
-            to-transparent
-          "
+            transition-all duration-500
+            ${
+              scrolled
+                ? `
+                  rounded-full
+                  bg-gradient-to-b
+                  from-[#D4AF37]/[0.035]
+                  via-transparent
+                  to-transparent
+                  opacity-100
+                `
+                : "rounded-[22px] bg-transparent opacity-0"
+            }
+          `}
         />
 
         {/* =====================================================
@@ -117,12 +178,16 @@ function NavBar() {
               aria-label="Go to dashboard"
             >
               <img
-                className="
-                  h-[66px] w-auto object-contain
-                  transition-all duration-300
+                className={`
+                  w-auto object-contain
+                  transition-all duration-500
                   group-hover:scale-[1.04]
-                  sm:h-[62px]
-                "
+                  ${
+                    scrolled
+                      ? "h-[52px]"
+                      : "h-[66px] sm:h-[62px]"
+                  }
+                `}
                 src={HappyBounty}
                 alt="Happy Bounty"
               />
@@ -135,12 +200,16 @@ function NavBar() {
               aria-label="Back to top"
             >
               <img
-                className="
-                  h-[66px] w-auto object-contain
-                  transition-all duration-300
+                className={`
+                  w-auto object-contain
+                  transition-all duration-500
                   group-hover:scale-[1.04]
-                  sm:h-[62px]
-                "
+                  ${
+                    scrolled
+                      ? "h-[52px]"
+                      : "h-[66px] sm:h-[62px]"
+                  }
+                `}
                 src={HappyBounty}
                 alt="Happy Bounty"
               />
