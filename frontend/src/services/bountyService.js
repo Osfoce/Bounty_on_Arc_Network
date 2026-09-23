@@ -1,7 +1,7 @@
-import { parseEther, formatEther, parseEventLogs } from "viem";
+import { parseEther, formatEther } from "viem";
 import { BOUNTY_ABI } from "../utils/abi";
 import { CONTRACT_ADDRESSES } from "../utils/chains.address";
-import { resolveTokenType, getPayoutType } from "../utils/enums";
+import { getPayoutType } from "../utils/enums";
 
 /**
  * Get contract address dynamically
@@ -10,49 +10,49 @@ export const getBountyContract = (chainId) => {
   return CONTRACT_ADDRESSES[chainId]?.bounty;
 };
 
+/* -------------------------------------------------------------------------- */
+/*                              CREATE BOUNTY                                 */
+/* -------------------------------------------------------------------------- */
+
 /**
- * Create bounty (prepared config for wagmi)
- * make sure to check for chain ID to be sure the contract is deployed on that network
+ * Prepare `createBounty` transaction config for wagmi.
+ *
+ * The contract accepts only native USDC (18 decimals).
+ * msg.value must equal `reward + fee`, where fee = reward * 700 / 10000.
+ *
+ * @param {Object} params
+ * @param {Object} params.bountyData  - { reward, winnersAllowed, payoutType }
+ * @param {string} params.account     - caller address
+ * @param {number} params.chainId
+ * @returns wagmi `useWriteContract` config
  */
 export const prepareCreateBountyTx = ({ bountyData, account, chainId }) => {
   const address = getBountyContract(chainId);
 
-  const tokenType = resolveTokenType(bountyData.token, chainId);
+  // const tokenType = resolveTokenType(bountyData.token, chainId);
   const payoutType = getPayoutType(
     bountyData.winnersAllowed,
     bountyData.payoutType,
   );
   console.log(`Payout type: ${payoutType} (0 for single, 1 for multiple)`);
-
-  const feePercent = 5; // or fetch from contract
-  const fee = (bountyData.reward * feePercent) / 100;
-
-  const total = bountyData.reward + fee;
-
+  // Contract fee is 7% (700 basis points). Keep in sync with FEE_PERCENT().
   const rewardWei = parseEther(bountyData.reward.toString());
-  const totalWei = parseEther(total.toString());
-
+  const feeWei = (rewardWei * 700n) / 10000n;
+  const totalWei = rewardWei + feeWei;
   return {
     address,
     abi: BOUNTY_ABI,
     functionName: "createBounty",
-    args: [tokenType, rewardWei, payoutType],
+    args: [rewardWei, payoutType],
     account,
-    value: tokenType === 0 ? totalWei : undefined, // ETH only
+    value: totalWei, // native USDC — always required
   };
 };
 
-// Get current bounty counter (used as fallback when event logs are unavailable)
-export const getBountyCounterConfig = ({ chainId }) => ({
-  address: getBountyContract(chainId),
-  abi: BOUNTY_ABI,
-  functionName: "bountyCounter",
-  args: [],
-});
+/* -------------------------------------------------------------------------- */
+/*                              CLAIM REWARD                                  */
+/* -------------------------------------------------------------------------- */
 
-/**
- * Claim reward (prepared config)
- */
 export const prepareClaimTx = ({ bountyId, account, chainId }) => {
   return {
     address: getBountyContract(chainId),
@@ -78,15 +78,19 @@ export const getClaimableConfig = ({ bountyId, user, chainId }) => {
   };
 };
 
-/**
- * Format reward safely
- */
-export const formatReward = (value) => {
-  if (!value) return "0";
-  return formatEther(value);
+// claimed ststus onchain
+export const getClaimedConfig = ({ bountyId, user, chainId }) => {
+  return {
+    address: getBountyContract(chainId),
+    abi: BOUNTY_ABI,
+    functionName: "claimed",
+    args: [BigInt(bountyId), user],
+  };
 };
 
-// Asigning single winner
+/* -------------------------------------------------------------------------- */
+/*                            ASSIGN WINNERS                                  */
+/* -------------------------------------------------------------------------- */
 export const prepareAssignSingleWinnerTx = ({
   bountyId,
   winner,
@@ -114,12 +118,14 @@ export const prepareAssignMultipleWinnersTx = ({
     address: getBountyContract(chainId),
     abi: BOUNTY_ABI,
     functionName: "assignMultipleWinners",
-    args: [BigInt(bountyId), winners, percentages],
+    args: [BigInt(bountyId), winners, percentages.map((p) => BigInt(p))],
     account,
   };
 };
 
-// submission onchain
+/* -------------------------------------------------------------------------- */
+/*                              SUBMISSIONS                                   */
+/* -------------------------------------------------------------------------- */
 export const prepareSubmitTx = ({ bountyId, link, account, chainId }) => {
   return {
     address: getBountyContract(chainId),
@@ -130,15 +136,15 @@ export const prepareSubmitTx = ({ bountyId, link, account, chainId }) => {
   };
 };
 
-// claimed ststus onchain
-export const getClaimedConfig = ({ bountyId, user, chainId }) => {
-  return {
-    address: getBountyContract(chainId),
-    abi: BOUNTY_ABI,
-    functionName: "claimed",
-    args: [BigInt(bountyId), user],
-  };
-};
+/* -------------------------------------------------------------------------- */
+/*                              READS                                         */
+/* -------------------------------------------------------------------------- */
+export const getBountyCounterConfig = ({ chainId }) => ({
+  address: getBountyContract(chainId),
+  abi: BOUNTY_ABI,
+  functionName: "bountyCounter",
+  args: [],
+});
 
 // Get full bounty info (read)
 export const getBountyInfoConfig = ({ bountyId, chainId }) => ({
@@ -173,29 +179,26 @@ export const getUserSubmissionsConfig = ({ user, chainId }) => ({
 });
 
 // Get all bounty IDs (historical)
-export const getAllBountyIdsConfig = ({ chainId }) => ({
+// change name to "getAllBountyIdAtIndexConfig"
+export const getAllBountyIdsConfig = ({ index, chainId }) => ({
   address: getBountyContract(chainId),
   abi: BOUNTY_ABI,
   functionName: "allBountyIds",
-  args: [],
+  args: [BigInt(index)],
 });
 
 // Get total fees
 export const getTotalEthFeesConfig = ({ chainId }) => ({
   address: getBountyContract(chainId),
   abi: BOUNTY_ABI,
-  functionName: "totalEthFees",
+  functionName: "totalFees",
   args: [],
 });
 
-export const getTotalUsdcFeesConfig = ({ chainId }) => ({
-  address: getBountyContract(chainId),
-  abi: BOUNTY_ABI,
-  functionName: "totalUsdcFees",
-  args: [],
-});
+/* -------------------------------------------------------------------------- */
+/*                              CONSTANTS                                     */
+/* -------------------------------------------------------------------------- */
 
-// Get constants
 export const getFeePercentConfig = ({ chainId }) => ({
   address: getBountyContract(chainId),
   abi: BOUNTY_ABI,
@@ -224,7 +227,9 @@ export const getOwnerConfig = ({ chainId }) => ({
   args: [],
 });
 
-// Transfer ownership
+/* -------------------------------------------------------------------------- */
+/*                              OWNERSHIP                                     */
+/* -------------------------------------------------------------------------- */
 export const prepareTransferOwnershipTx = ({ newOwner, account, chainId }) => {
   return {
     address: getBountyContract(chainId),
@@ -235,25 +240,30 @@ export const prepareTransferOwnershipTx = ({ newOwner, account, chainId }) => {
   };
 };
 
-export const getUsdcTokenConfig = ({ chainId }) => ({
-  address: getBountyContract(chainId),
-  abi: BOUNTY_ABI,
-  functionName: "usdcToken",
-  args: [],
-});
+/* -------------------------------------------------------------------------- */
+/*                              FEE WITHDRAWAL                                */
+/* -------------------------------------------------------------------------- */
 
 // fees withdrawal
-export const prepareWithdrawTx = ({
-  tokenType,
-  recipient,
-  account,
-  chainId,
-}) => {
+export const prepareWithdrawTx = ({ recipient, account, chainId }) => {
   return {
     address: getBountyContract(chainId),
     abi: BOUNTY_ABI,
     functionName: "withdraw",
-    args: [tokenType, recipient],
+    args: [recipient],
     account,
   };
+};
+
+/* -------------------------------------------------------------------------- */
+/*                              FORMATTING                                    */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Format an 18-decimal native USDC value into a human-readable string.
+ * Note: USDC is 1:1 with USD, so `formatReward(1e18)` → "1".
+ */
+export const formatReward = (value) => {
+  if (value === undefined || value === null) return "0";
+  return formatEther(value);
 };
