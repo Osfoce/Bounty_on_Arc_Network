@@ -217,7 +217,7 @@ export default function Hero() {
               LEFT SIDE
           ================================================= */}
 
-          <div className="max-w-2xl text-center sm:text-left">
+          <div className="w-full max-w-2xl text-center sm:text-left">
             {/* BADGE */}
 
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#D4AF37]/25 bg-white px-4 py-2 shadow-[0_5px_20px_rgba(17,17,17,0.04)]">
@@ -245,7 +245,7 @@ export default function Hero() {
 
               {/* TYPING TEXT */}
 
-              <div className="relative mt-1 h-[52px] overflow-hidden sm:h-[64px] md:h-[80px]">
+              <div className="relative mt-1 min-h-[52px] w-full overflow-visible sm:min-h-[64px] md:min-h-[80px]">
                 <div className="absolute left-1/2 top-0 flex -translate-x-1/2 items-center whitespace-nowrap text-3xl font-extrabold leading-[1] sm:left-0 sm:translate-x-0 sm:text-4xl md:text-6xl lg:text-[4.2rem]">
                   <span className="bg-gradient-to-r from-[#B8860B] via-[#D4AF37] to-[#B8860B] bg-clip-text text-transparent">
                     {displayText}
