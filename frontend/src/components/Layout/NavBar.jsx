@@ -14,6 +14,7 @@ function NavBar() {
   const { address, isConnected } = useAccount();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [resourcesHovered, setResourcesHovered] = useState(false);
 
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -55,6 +56,8 @@ function NavBar() {
   const handleResourcesClick = () => {
     if (isMobile()) {
       setIsOpen((prev) => !prev);
+    } else {
+      setIsOpen((prev) => !prev);
     }
   };
 
@@ -72,6 +75,10 @@ function NavBar() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  // Desktop Resources expansion
+  const resourcesExpanded =
+    resourcesHovered || isOpen || scrolled;
 
   return (
     <div
@@ -236,11 +243,13 @@ function NavBar() {
             className="relative"
             onMouseEnter={() => {
               if (!isMobile()) {
+                setResourcesHovered(true);
                 setIsOpen(true);
               }
             }}
             onMouseLeave={() => {
               if (!isMobile()) {
+                setResourcesHovered(false);
                 setIsOpen(false);
               }
             }}
@@ -248,24 +257,66 @@ function NavBar() {
             <button
               type="button"
               onClick={handleResourcesClick}
+              aria-label="Resources"
               className={`
-                group flex items-center gap-2
-                rounded-xl border
-                px-3 py-2
+                group flex h-10 items-center
+                justify-center
+                overflow-hidden
+                rounded-full
+                border
                 text-[13px] font-bold
-                transition-all duration-200
+                transition-all duration-300 ease-out
+
                 ${
                   isOpen
                     ? "border-[#D4AF37]/30 bg-[#D4AF37]/[0.08] text-[#111111]"
-                    : "border-transparent text-[#222222] hover:border-[#D4AF37]/25 hover:bg-[#D4AF37]/[0.055] hover:text-[#111111]"
+                    : "border-black/[0.06] bg-white/[0.55] text-[#222222] hover:border-[#D4AF37]/25 hover:bg-[#D4AF37]/[0.055]"
+                }
+
+                /* Desktop */
+                md:px-0
+                ${
+                  resourcesExpanded
+                    ? "md:w-[126px] md:gap-2"
+                    : "md:w-10 md:gap-0"
+                }
+
+                /* Mobile */
+                max-md:px-3
+                max-md:gap-2
+                max-md:w-auto
+
+                ${
+                  scrolled
+                    ? "max-md:h-10 max-md:w-10 max-md:gap-0 max-md:px-0"
+                    : ""
                 }
               `}
             >
-              <span>Resources</span>
+              <span
+                className={`
+                  whitespace-nowrap
+                  transition-all duration-300 ease-out
+                  ${
+                    resourcesExpanded
+                      ? "md:max-w-[75px] md:opacity-100"
+                      : "md:max-w-0 md:opacity-0"
+                  }
+
+                  ${
+                    scrolled
+                      ? "max-md:hidden"
+                      : ""
+                  }
+                `}
+              >
+                Resources
+              </span>
 
               <FiChevronDown
                 className={`
                   h-4 w-4
+                  shrink-0
                   transition-all duration-300
                   ${
                     isOpen
@@ -323,9 +374,7 @@ function NavBar() {
                 </div>
               </div>
 
-              {/* =================================================
-                  FAQ
-              ================================================== */}
+              {/* FAQ */}
 
               <Link
                 to="/faqs"
@@ -371,9 +420,7 @@ function NavBar() {
                 />
               </Link>
 
-              {/* =================================================
-                  WHITE PAPER
-              ================================================== */}
+              {/* WHITE PAPER */}
 
               <Link
                 to="/whitepaper"
@@ -420,9 +467,7 @@ function NavBar() {
                 />
               </Link>
 
-              {/* =================================================
-                  CONTACT
-              ================================================== */}
+              {/* CONTACT */}
 
               <Link
                 to="/contact"
@@ -490,7 +535,12 @@ function NavBar() {
               CONNECT / SIGN UP
           ====================================================== */}
 
-          <div className="flex items-center">
+          <div
+            className="
+              flex shrink-0 items-center
+              [&>button]:shrink-0
+            "
+          >
             {!isConnected && pathname === "/" ? (
               <SignUp />
             ) : (
