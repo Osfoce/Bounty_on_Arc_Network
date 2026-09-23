@@ -23,7 +23,7 @@ import {
   getBountiesByCreatorConfig,
   getUserSubmissionsConfig,
   getTotalEthFeesConfig,
-  getTotalUsdcFeesConfig,
+  // getTotalUsdcFeesConfig,
   getFeePercentConfig,
   getMaxWinnersConfig,
   getOwnerConfig,
@@ -232,13 +232,13 @@ export const useBounty = () => {
     });
   };
 
-  const useTotalUsdcFees = () => {
-    const config = chainId ? getTotalUsdcFeesConfig({ chainId }) : null;
-    return useReadContract({
-      ...config,
-      query: { enabled: !!chainId && !!config?.address },
-    });
-  };
+  // const useTotalUsdcFees = () => {
+  //   const config = chainId ? getTotalUsdcFeesConfig({ chainId }) : null;
+  //   return useReadContract({
+  //     ...config,
+  //     query: { enabled: !!chainId && !!config?.address },
+  //   });
+  // };
 
   const useFeePercent = () => {
     const config = chainId ? getFeePercentConfig({ chainId }) : null;
@@ -345,7 +345,7 @@ export const useBounty = () => {
     useBountiesByCreator,
     useUserSubmissions,
     useTotalEthFees,
-    useTotalUsdcFees,
+    // useTotalUsdcFees,
     useFeePercent,
     useMaxWinners,
     useOwner,

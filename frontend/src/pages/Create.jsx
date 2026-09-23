@@ -18,11 +18,17 @@ import {
   FiX,
   FiZap,
 } from "react-icons/fi";
+import {
+  BOUNTY_CATEGORIES,
+  TAGS_BY_CATEGORY,
+  DEFAULT_TAGS,
+} from "../constants/categories";
 import NavBar from "../components/Layout/NavBar";
 import Footer from "../components/Layout/Footer";
 import { supportedChains } from "../rainbowChains";
 import { useBounty } from "../hooks/useBounty";
-import { CONTRACT_ADDRESSES } from "contract";
+import { listTokensForChain } from "../utils/enums";
+import { CONTRACT_ADDRESSES } from "../utils/chains.address";
 
 function Create() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -47,8 +53,7 @@ function Create() {
   });
 
   const [multipleWinner, setMultipleWinner] = useState(false);
-  const [selectedPayoutType, setSelectedPayoutType] =
-    useState("MULTI_EQUAL");
+  const [selectedPayoutType, setSelectedPayoutType] = useState("MULTI_EQUAL");
   const [winnerCount, setWinnerCount] = useState(2);
   const [percentageArray, setPercentageArray] = useState([]);
 
@@ -234,9 +239,7 @@ function Create() {
     }
 
     const finalWinnersAllowed = multipleWinner ? winnerCount : 1;
-    const finalPayoutType = multipleWinner
-      ? selectedPayoutType
-      : "SINGLE";
+    const finalPayoutType = multipleWinner ? selectedPayoutType : "SINGLE";
 
     console.log(
       `Final payout type: ${finalPayoutType}, winners allowed: ${finalWinnersAllowed}`,
@@ -437,9 +440,7 @@ function Create() {
                     </div>
 
                     <div>
-                      <h2 className="text-xl font-bold">
-                        Choose Network
-                      </h2>
+                      <h2 className="text-xl font-bold">Choose Network</h2>
                       <p className="text-sm text-[#817b70] mt-1">
                         Select where your bounty will be created.
                       </p>
@@ -468,25 +469,28 @@ function Create() {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold uppercase tracking-wider text-[#6f6a60] mb-2.5">
+                      <label className="block text-sm font-medium text-white/60 mb-2">
                         Category
                       </label>
-
                       <select
                         value={bountyData.category}
-                        onChange={(e) =>
-                          updateBountyData("category", e.target.value)
-                        }
-                        className={selectClass}
+                        onChange={(e) => {
+                          updateBountyData("category", e.target.value);
+                          updateBountyData("tags", []); // reset tags — they were category-specific
+                          setCustomTag("");
+                        }}
+                        className="w-full bg-[#2D2D2D] border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-[#FF1AC6]/50 focus:ring-1 focus:ring-[#FF1AC6]/50 transition"
                       >
                         <option value="">Select Category</option>
-                        <option value="Development">Development</option>
-                        <option value="Design">Design</option>
-                        <option value="Marketing">Marketing</option>
-                        <option value="AI & Machine Learning">
-                          AI & Machine Learning
-                        </option>
-                        <option value="Others">Others</option>
+                        {BOUNTY_CATEGORIES.map(({ group, values }) => (
+                          <optgroup key={group} label={group}>
+                            {values.map((v) => (
+                              <option key={v} value={v}>
+                                {v}
+                              </option>
+                            ))}
+                          </optgroup>
+                        ))}
                       </select>
                     </div>
                   </div>
@@ -495,8 +499,8 @@ function Create() {
                     <FiShield className="text-[#b28b20] mt-0.5 shrink-0" />
 
                     <p className="text-xs leading-relaxed text-[#777267]">
-                      Your selected network determines where the bounty
-                      contract transaction will be executed.
+                      Your selected network determines where the bounty contract
+                      transaction will be executed.
                     </p>
                   </div>
                 </div>
@@ -517,8 +521,8 @@ function Create() {
                     <div>
                       <h2 className="text-xl font-bold">Task Details</h2>
                       <p className="text-sm text-[#817b70] mt-1">
-                        Give contributors everything they need to understand
-                        the work.
+                        Give contributors everything they need to understand the
+                        work.
                       </p>
                     </div>
                   </div>
@@ -541,8 +545,7 @@ function Create() {
 
                     <div>
                       <label className="block text-xs font-semibold uppercase tracking-wider text-[#6f6a60] mb-2.5">
-                        Description{" "}
-                        <span className="text-[#b28b20]">*</span>
+                        Description <span className="text-[#b28b20]">*</span>
                       </label>
 
                       <textarea
@@ -568,9 +571,7 @@ function Create() {
                         className={selectClass}
                       >
                         <option value="">Select a tag</option>
-                        <option value="smart-contract">
-                          Smart Contract
-                        </option>
+                        <option value="smart-contract">Smart Contract</option>
                         <option value="frontend">Frontend</option>
                         <option value="backend">Backend</option>
                         <option value="AI/ML">AI/ML</option>
@@ -584,8 +585,7 @@ function Create() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       <div>
                         <label className="block text-xs font-semibold uppercase tracking-wider text-[#6f6a60] mb-2.5">
-                          Start Date{" "}
-                          <span className="text-[#b28b20]">*</span>
+                          Start Date <span className="text-[#b28b20]">*</span>
                         </label>
 
                         <div className="relative">
@@ -595,10 +595,7 @@ function Create() {
                             type="date"
                             value={bountyData.startDate}
                             onChange={(e) =>
-                              updateBountyData(
-                                "startDate",
-                                e.target.value,
-                              )
+                              updateBountyData("startDate", e.target.value)
                             }
                             className={`${inputClass} pl-11`}
                           />
@@ -607,8 +604,7 @@ function Create() {
 
                       <div>
                         <label className="block text-xs font-semibold uppercase tracking-wider text-[#6f6a60] mb-2.5">
-                          End Date{" "}
-                          <span className="text-[#b28b20]">*</span>
+                          End Date <span className="text-[#b28b20]">*</span>
                         </label>
 
                         <div className="relative">
@@ -618,10 +614,7 @@ function Create() {
                             type="date"
                             value={bountyData.deadline}
                             onChange={(e) =>
-                              updateBountyData(
-                                "deadline",
-                                e.target.value,
-                              )
+                              updateBountyData("deadline", e.target.value)
                             }
                             className={`${inputClass} pl-11`}
                           />
@@ -640,10 +633,7 @@ function Create() {
                         <input
                           value={bountyData.originLink}
                           onChange={(e) =>
-                            updateBountyData(
-                              "originLink",
-                              e.target.value,
-                            )
+                            updateBountyData("originLink", e.target.value)
                           }
                           className={`${inputClass} pl-11`}
                           placeholder="https://github.com/... or https://figma.com/..."
@@ -667,9 +657,7 @@ function Create() {
                     </div>
 
                     <div>
-                      <h2 className="text-xl font-bold">
-                        Reward Information
-                      </h2>
+                      <h2 className="text-xl font-bold">Reward Information</h2>
                       <p className="text-sm text-[#817b70] mt-1">
                         Configure how contributors will receive the bounty.
                       </p>
@@ -688,9 +676,9 @@ function Create() {
                           </p>
 
                           <p className="text-xs text-[#777267] mt-1.5 leading-relaxed">
-                            You use your own money to create the task. You
-                            will be responsible for providing the reward money
-                            to the winner(s).
+                            You use your own money to create the task. You will
+                            be responsible for providing the reward money to the
+                            winner(s).
                           </p>
                         </div>
                       </div>
@@ -720,9 +708,7 @@ function Create() {
                             type="checkbox"
                             className="sr-only peer"
                             checked={multipleWinner}
-                            onChange={() =>
-                              setMultipleWinner(!multipleWinner)
-                            }
+                            onChange={() => setMultipleWinner(!multipleWinner)}
                           />
 
                           <div className="w-12 h-6 rounded-full bg-[#d8d4ca] peer-checked:bg-[#d4af37] transition-all" />
@@ -751,9 +737,7 @@ function Create() {
 
                           <div className="relative">
                             <button
-                              onClick={() =>
-                                setShowInfoMenu(!showInfoMenu)
-                              }
+                              onClick={() => setShowInfoMenu(!showInfoMenu)}
                               className="w-10 h-10 rounded-xl border border-[#ddd8cb] bg-white flex items-center justify-center text-[#777267] hover:text-[#b28b20] hover:border-[#c49b2c] transition"
                             >
                               <FiInfo size={17} />
@@ -808,17 +792,13 @@ function Create() {
                     {/* Reward Type */}
                     <div>
                       <label className="block text-xs font-semibold uppercase tracking-wider text-[#6f6a60] mb-3">
-                        Reward Type{" "}
-                        <span className="text-[#b28b20]">*</span>
+                        Reward Type <span className="text-[#b28b20]">*</span>
                       </label>
 
                       <div className="flex flex-wrap gap-3">
                         <button
                           onClick={() =>
-                            updateBountyData(
-                              "rewardType",
-                              "self-fund",
-                            )
+                            updateBountyData("rewardType", "self-fund")
                           }
                           className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition ${
                             bountyData.rewardType === "self-fund"
@@ -834,9 +814,7 @@ function Create() {
                           className="px-5 py-2.5 rounded-xl bg-[#f2f0ea] border border-[#dedad0] text-[#aaa59b] text-sm cursor-not-allowed"
                         >
                           Seek Funding{" "}
-                          <span className="text-[#b28b20] text-xs">
-                            soon
-                          </span>
+                          <span className="text-[#b28b20] text-xs">soon</span>
                         </button>
                       </div>
                     </div>
@@ -845,9 +823,7 @@ function Create() {
                     <div className="border-t border-[#e7e3da] pt-6">
                       <div className="flex flex-col md:flex-row md:justify-between gap-4">
                         <div>
-                          <h4 className="font-semibold text-sm">
-                            Set reward
-                          </h4>
+                          <h4 className="font-semibold text-sm">Set reward</h4>
 
                           <p className="text-xs text-[#858075] mt-1">
                             Amount distributed to the winner(s)
@@ -916,9 +892,7 @@ function Create() {
                     <div className="rounded-2xl border border-[#d9cfb4] bg-[#fbf7e9] p-5">
                       <div className="flex flex-col md:flex-row md:justify-between gap-4 md:items-center">
                         <div>
-                          <h4 className="font-bold text-sm">
-                            Total Amount
-                          </h4>
+                          <h4 className="font-bold text-sm">Total Amount</h4>
 
                           <p className="text-xs text-[#7c7567] mt-1">
                             Reward + service fees
@@ -976,9 +950,7 @@ function Create() {
                     </div>
 
                     <div>
-                      <h2 className="text-xl font-bold">
-                        Review & Submit
-                      </h2>
+                      <h2 className="text-xl font-bold">Review & Submit</h2>
 
                       <p className="text-sm text-[#817b70] mt-1">
                         Confirm your bounty details before submitting.
@@ -988,39 +960,22 @@ function Create() {
 
                   <div className="rounded-2xl border border-[#e1ddd2] overflow-hidden">
                     {[
-                      [
-                        "Category",
-                        bountyData.category || "Not selected",
-                      ],
-                      [
-                        "Title",
-                        bountyData.title || "Not entered",
-                      ],
-                      [
-                        "Tags",
-                        bountyData.tags || "Not selected",
-                      ],
+                      ["Category", bountyData.category || "Not selected"],
+                      ["Title", bountyData.title || "Not entered"],
+                      ["Tags", bountyData.tags || "Not selected"],
                       [
                         "Timeline",
                         `${formatDate(bountyData.startDate)} → ${formatDate(
                           bountyData.deadline,
                         )}`,
                       ],
-                      [
-                        "Reward",
-                        `${bountyData.reward} ${bountyData.token}`,
-                      ],
-                      [
-                        "Service Fee",
-                        `${fee.toFixed(4)} ${bountyData.token}`,
-                      ],
+                      ["Reward", `${bountyData.reward} ${bountyData.token}`],
+                      ["Service Fee", `${fee.toFixed(4)} ${bountyData.token}`],
                     ].map(([label, value], index) => (
                       <div
                         key={label}
                         className={`flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 px-5 py-4 ${
-                          index !== 5
-                            ? "border-b border-[#e7e3da]"
-                            : ""
+                          index !== 5 ? "border-b border-[#e7e3da]" : ""
                         }`}
                       >
                         <span className="text-xs font-semibold uppercase tracking-wider text-[#898378]">
@@ -1042,8 +997,7 @@ function Create() {
                       <span className="text-sm text-[#4f4b43] sm:text-right max-w-full sm:max-w-[60%]">
                         {bountyData.description
                           ? bountyData.description.length > 100
-                            ? bountyData.description.substring(0, 100) +
-                              "..."
+                            ? bountyData.description.substring(0, 100) + "..."
                             : bountyData.description
                           : "Not entered"}
                       </span>
@@ -1064,8 +1018,7 @@ function Create() {
                             className="text-[#9a7619] hover:underline"
                           >
                             {bountyData.originLink.length > 40
-                              ? bountyData.originLink.substring(0, 40) +
-                                "..."
+                              ? bountyData.originLink.substring(0, 40) + "..."
                               : bountyData.originLink}
                           </a>
                         ) : (
@@ -1235,9 +1188,7 @@ function Create() {
               min="2"
               max="5"
               value={winnerCount}
-              onChange={(e) =>
-                setWinnerCount(parseInt(e.target.value) || 2)
-              }
+              onChange={(e) => setWinnerCount(parseInt(e.target.value) || 2)}
               className={inputClass}
             />
 
@@ -1295,33 +1246,23 @@ function Create() {
 
             <div className="space-y-2.5 mb-5">
               <button
-                onClick={() =>
-                  handlePresetSelect([40, 30, 20, 5, 5])
-                }
+                onClick={() => handlePresetSelect([40, 30, 20, 5, 5])}
                 className="w-full text-left px-4 py-3 rounded-xl bg-white border border-[#ddd8ca] text-[#3e3b35] hover:border-[#c49b2c] transition"
               >
-                <span className="font-semibold">
-                  [40, 30, 20, 5, 5]
-                </span>{" "}
+                <span className="font-semibold">[40, 30, 20, 5, 5]</span>{" "}
                 <span className="text-[#888175]">— 5 winners</span>
               </button>
 
               <button
-                onClick={() =>
-                  handlePresetSelect([40, 30, 20, 10])
-                }
+                onClick={() => handlePresetSelect([40, 30, 20, 10])}
                 className="w-full text-left px-4 py-3 rounded-xl bg-white border border-[#ddd8ca] text-[#3e3b35] hover:border-[#c49b2c] transition"
               >
-                <span className="font-semibold">
-                  [40, 30, 20, 10]
-                </span>{" "}
+                <span className="font-semibold">[40, 30, 20, 10]</span>{" "}
                 <span className="text-[#888175]">— 4 winners</span>
               </button>
 
               <button
-                onClick={() =>
-                  handlePresetSelect([50, 30, 20])
-                }
+                onClick={() => handlePresetSelect([50, 30, 20])}
                 className="w-full text-left px-4 py-3 rounded-xl bg-white border border-[#ddd8ca] text-[#3e3b35] hover:border-[#c49b2c] transition"
               >
                 <span className="font-semibold">[50, 30, 20]</span>{" "}
@@ -1329,9 +1270,7 @@ function Create() {
               </button>
 
               <button
-                onClick={() =>
-                  handlePresetSelect([50, 50])
-                }
+                onClick={() => handlePresetSelect([50, 50])}
                 className="w-full text-left px-4 py-3 rounded-xl bg-white border border-[#ddd8ca] text-[#3e3b35] hover:border-[#c49b2c] transition"
               >
                 <span className="font-semibold">[50, 50]</span>{" "}
