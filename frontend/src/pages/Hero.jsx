@@ -111,7 +111,7 @@ export default function Hero() {
   ];
 
   return (
-    <section className="relative min-h-[620px] overflow-hidden bg-[#f6f5ef] text-black sm:min-h-[650px]">
+    <section className="relative min-h-[620px] w-full overflow-hidden bg-[#f6f5ef] text-black sm:min-h-[650px]">
       {/* =====================================================
           ARCHITECTURAL BRICK BACKGROUND
       ===================================================== */}
@@ -210,13 +210,13 @@ export default function Hero() {
           MAIN CONTAINER
       ===================================================== */}
 
-      <div className="relative z-10 mx-auto flex min-h-[620px] max-w-full items-center px-5 py-12 sm:min-h-[650px] sm:px-8 sm:py-16 lg:px-10">
-        <div className="grid w-full items-center gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-8">
+      <div className="relative z-10 mx-auto flex w-full min-h-[620px] max-w-full items-center overflow-hidden px-5 py-12 sm:min-h-[650px] sm:px-8 sm:py-16 lg:px-10">
+        <div className="grid w-full min-w-0 items-center gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-8">
           {/* =================================================
               LEFT SIDE
           ================================================= */}
 
-          <div className="w-full max-w-2xl text-center sm:text-left">
+          <div className="mx-auto w-full min-w-0 max-w-2xl text-center sm:text-left">
             {/* BADGE */}
 
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#D4AF37]/25 bg-white px-4 py-2 shadow-[0_5px_20px_rgba(17,17,17,0.04)]">
@@ -244,27 +244,27 @@ export default function Hero() {
 
               {/* TYPING TEXT */}
 
-              <div className="relative mt-1 flex min-h-[52px] w-full items-start justify-center overflow-visible sm:min-h-[64px] sm:justify-start md:min-h-[80px]">
-                <div className="flex items-center whitespace-nowrap text-3xl font-extrabold leading-[1] sm:text-4xl md:text-6xl lg:text-[4.2rem]">
+              <div className="relative mt-1 flex min-h-[52px] w-full min-w-0 items-start justify-center overflow-hidden sm:min-h-[64px] sm:justify-start md:min-h-[80px]">
+                <div className="flex max-w-full min-w-0 items-center whitespace-nowrap text-3xl font-extrabold leading-[1] sm:text-4xl md:text-6xl lg:text-[4.2rem]">
                   <span className="bg-gradient-to-r from-[#B8860B] via-[#D4AF37] to-[#B8860B] bg-clip-text text-transparent">
                     {displayText}
                   </span>
 
-                  <span className="ml-1 inline-block h-[0.8em] w-[3px] rounded-full bg-[#D4AF37]" />
+                  <span className="ml-1 inline-block h-[0.8em] w-[3px] shrink-0 rounded-full bg-[#D4AF37]" />
                 </div>
               </div>
             </div>
 
             {/* DESCRIPTION */}
 
-            <p className="mx-auto mt-3 max-w-xl text-sm font-semibold leading-relaxed text-black/65 sm:mx-0 sm:text-base md:mt-4">
+            <p className="mx-auto mt-3 w-full min-w-0 max-w-xl text-sm font-semibold leading-relaxed text-black/65 sm:mx-0 sm:text-base md:mt-4">
               Complete quests and earn USDC, tokens, and digital rewards. Post
               bounties and get quality work done — fully on-chain.
             </p>
 
             {/* BUTTONS */}
 
-            <div className="mt-6 flex flex-wrap justify-center gap-3 sm:justify-start">
+            <div className="mt-6 flex w-full flex-wrap justify-center gap-3 sm:justify-start">
               <Link
                 to="/dashboard"
                 className="group relative overflow-hidden rounded-lg bg-[#D4AF37] px-6 py-3 text-sm font-bold text-white shadow-[0_8px_25px_rgba(212,175,55,0.18)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#B8962E] hover:shadow-[0_12px_30px_rgba(212,175,55,0.28)]"
@@ -314,9 +314,9 @@ export default function Hero() {
 
           <div
             ref={visualRef}
-            className="usdc-visual relative flex min-h-[360px] items-center justify-center sm:min-h-[430px] lg:min-h-[500px]"
+            className="usdc-visual relative flex min-h-[360px] min-w-0 items-center justify-center overflow-visible sm:min-h-[430px] lg:min-h-[500px]"
           >
-            <div className="usdc-scene relative flex h-[340px] w-[340px] items-center justify-center sm:h-[430px] sm:w-[430px] lg:h-[500px] lg:w-[500px]">
+            <div className="usdc-scene relative flex h-[340px] w-[340px] max-w-full items-center justify-center sm:h-[430px] sm:w-[430px] lg:h-[500px] lg:w-[500px]">
               <div className="absolute h-[230px] w-[230px] rounded-full bg-[#D4AF37]/10 blur-[75px] sm:h-[300px] sm:w-[300px]" />
 
               <div className="absolute h-[270px] w-[270px] rounded-full border border-[#D4AF37]/15 sm:h-[350px] sm:w-[350px] lg:h-[410px] lg:w-[410px]" />
