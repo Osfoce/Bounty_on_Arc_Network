@@ -34,11 +34,14 @@ const getOrCreateUserProfile = async (req, res) => {
 const getUserDashboard = async (req, res) => {
   const wallet = req.params.wallet.toLowerCase();
   try {
-    const user = await User.findOne({ walletAddress: wallet });
-
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
+    const user = await User.findOneAndUpdate(
+      { walletAddress: wallet },
+      {
+        $set: { lastLogin: new Date() },
+        $setOnInsert: { walletAddress: wallet },
+      },
+      { new: true, upsert: true, setDefaultsOnInsert: true },
+    );
 
     const [createdBounties, submissions] = await Promise.all([
       Bounty.find({ creator: wallet }),
