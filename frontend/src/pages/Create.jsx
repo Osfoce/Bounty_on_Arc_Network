@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { useAccount, useChainId, useSwitchChain } from "wagmi";
 import { Link, useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
+import{ showToast } from "../components/UI/Toast";
 import axios from "axios";
 import {
   FiArrowLeft,
@@ -167,40 +167,40 @@ function Create() {
     switch (step) {
       case 1:
         if (!bountyData.network) {
-          toast.error("Please select a network");
+          showToast.error("Please select a network");
           return false;
         }
         if (!bountyData.category) {
-          toast.error("Please select a category");
+          showToast.error("Please select a category");
           return false;
         }
         break;
       case 2:
         if (!bountyData.title || bountyData.title.length < 5) {
-          toast.error("Title must be at least 5 characters");
+          showToast.error("Title must be at least 5 characters");
           return false;
         }
         if (!bountyData.description || bountyData.description.length < 20) {
-          toast.error("Description must be at least 20 characters");
+          showToast.error("Description must be at least 20 characters");
           return false;
         }
         if (!bountyData.tags || bountyData.tags.length === 0) {
-          toast.error("Please select at least one tag");
+          showToast.error("Please select at least one tag");
           return false;
         }
         if (!bountyData.startDate || !bountyData.deadline) {
-          toast.error("Please select start and end dates");
+          showToast.error("Please select start and end dates");
           return false;
         }
         const urlErr = isValidUrl(bountyData.originLink);
         if (urlErr) {
-          toast.error(urlErr);
+          showToast.error(urlErr);
           return false;
         }
         break;
       case 3:
         if (bountyData.reward <= 0) {
-          toast.error("Please enter a valid reward amount");
+          showToast.error("Please enter a valid reward amount");
           return false;
         }
         break;
@@ -211,30 +211,30 @@ function Create() {
   const handleEqualSplitConfirm = () => {
     const count = winnerCount;
     if (count < 2 || count > 5) {
-      toast.error("Number of winners must be between 2 and 5");
+      showToast.error("Number of winners must be between 2 and 5");
       return;
     }
     setWinnerCount(count);
     setSelectedPayoutType("MULTI_EQUAL");
     setPercentageArray([]);
     setShowEqualModal(false);
-    toast.success(`${count} winners selected for equal split`);
+    showToast.success(`${count} winners selected for equal split`);
   };
 
   const handlePercentSplitConfirm = () => {
     if (percentageArray.length === 0) {
-      toast.error("Please select a preset or enter percentages");
+      showToast.error("Please select a preset or enter percentages");
       return;
     }
     const total = percentageArray.reduce((sum, p) => sum + p, 0);
     if (total !== 100) {
-      toast.error("Percentages must sum to 100");
+      showToast.error("Percentages must sum to 100");
       return;
     }
     setSelectedPayoutType("MULTI_PERCENTAGE");
     setWinnerCount(percentageArray.length);
     setShowPercentModal(false);
-    toast.success(
+    showToast.success(
       `${percentageArray.length} winners selected with percentage split`,
     );
   };
@@ -271,7 +271,7 @@ function Create() {
         return { ...prev, tags: prev.tags.filter((t) => t !== tag) };
       }
       if (prev.tags.length >= 5) {
-        toast.error("Max 5 tags");
+        showToast.error("Max 5 tags");
         return prev;
       }
       return { ...prev, tags: [...prev.tags, tag] };
@@ -282,11 +282,11 @@ function Create() {
     const trimmed = customTag.trim();
     if (!trimmed) return;
     if (bountyData.tags.includes(trimmed)) {
-      toast.error("Tag already added");
+      showToast.error("Tag already added");
       return;
     }
     if (bountyData.tags.length >= 5) {
-      toast.error("Max 5 tags");
+      showToast.error("Max 5 tags");
       return;
     }
     setBountyData((prev) => ({ ...prev, tags: [...prev.tags, trimmed] }));
@@ -308,14 +308,14 @@ function Create() {
     // if (bountyData.originLink && !isValidUrl(bountyData.originLink)) {
     const urlErr = isValidUrl(bountyData.originLink);
     if (urlErr) {
-      toast.error(urlErr);
+      showToast.error(urlErr);
       setCurrentStep(2); // send them to the right step
       return;
     }
 
     // 2. Check wallet connection
     if (!isConnected || !address) {
-      toast.error("Please connect your wallet");
+      showToast.error("Please connect your wallet");
       return;
     }
 
@@ -325,14 +325,14 @@ function Create() {
     console.log("Selected chain ID:", selectedChainId);
 
     if (!selectedChainId) {
-      toast.error("Please select a network");
+      showToast.error("Please select a network");
       return;
     }
 
     // 4. Check if contract is deployed on the selected network
     const contractAddress = CONTRACT_ADDRESSES[selectedChainId]?.bounty;
     if (!contractAddress || contractAddress === "Loading...") {
-      toast.error(
+      showToast.error(
         `Contract not deployed on ${supportedChains.find((c) => c.id === selectedChainId)?.name}.`,
       );
       return;
@@ -340,15 +340,15 @@ function Create() {
 
     // 5. If user is on a different chain, prompt to switch
     if (currentChainId !== selectedChainId) {
-      toast.loading(
+      showToast.loading(
         `Switching to ${supportedChains.find((c) => c.id === selectedChainId)?.name}...`,
       );
       try {
         //await remove
         switchChain({ chainId: selectedChainId });
-        toast.success("Network switched!");
+        showToast.success("Network switched!");
       } catch (err) {
-        toast.error("Failed to switch network. Please switch manually.");
+        showToast.error("Failed to switch network. Please switch manually.");
         return;
       }
     }
@@ -403,13 +403,13 @@ function Create() {
       }
 
       if (!blockchainId) {
-        toast.error(
+        showToast.error(
           "Bounty was created on-chain but we couldn't read its ID. " +
             "Please check the explorer and contact support.",
         );
         return;
       }
-      // if (hash) return toast.success("Bounty created onchain");
+      // if (hash) return showToast.success("Bounty created onchain");
 
       // 8. Save to backend with blockchain info
       console.log("posting to db");
@@ -422,14 +422,14 @@ function Create() {
       });
       console.log("posting sucess");
       if (saveResponse.status === 201) {
-        toast.success("Bounty created on-chain and saved!");
+        showToast.success("Bounty created on-chain and saved!");
         navigate("/dashboard");
       } else {
         throw new Error("Backend save failed");
       }
     } catch (err) {
       console.error(err);
-      toast.error(err.message || "Creation failed");
+      showToast.error(err.message || "Creation failed");
     }
   };
 

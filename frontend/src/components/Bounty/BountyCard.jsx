@@ -1,7 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-import toast from "react-hot-toast";
+// import showToast from "react-hot-showToast";
+import{ showToast } from "../UI/Toast";
 import { useAccount } from "wagmi";
 import {
   FiArrowUpRight,
@@ -97,12 +98,12 @@ const BountyCard = ({ bounty }) => {
   const handleEnroll = async (e) => {
     e.preventDefault();
     if (!isConnected || !address) {
-      toast.error("Please connect your wallet first");
+      showToast.error("Please connect your wallet first");
       return;
     }
 
     setIsEnrolling(true);
-    const loadingToast = toast.loading("Enrolling in bounty...");
+    const loadingshowToast = showToast.loading("Enrolling in bounty...");
 
     try {
       const response = await axios.post(`${API_URL}/user/enrollment`, {
@@ -111,8 +112,8 @@ const BountyCard = ({ bounty }) => {
       });
 
       if (response.status === 200 || response.status === 201) {
-        toast.success("Enrolled! Redirecting...", {
-          id: loadingToast,
+        showToast.success("Enrolled! Redirecting...", {
+          id: loadingshowToast,
           duration: 2000,
         });
         setIsEnrolled(true);
@@ -120,11 +121,11 @@ const BountyCard = ({ bounty }) => {
       }
     } catch (error) {
       console.error("Enrollment error:", error);
-      toast.error(
+      showToast.error(
         error.response?.status === 400
           ? "You are already enrolled in this bounty"
           : "Failed to enroll. Please try again.",
-        { id: loadingToast, duration: 3000 },
+        { id: loadingshowToast, duration: 3000 },
       );
     } finally {
       setIsEnrolling(false);
