@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAccount } from "wagmi";
 import axios from "axios";
-import toast from "react-hot-toast";
+import{ showToast } from "../components/UI/Toast";
 import {
   FiActivity,
   FiArrowRight,
@@ -54,7 +54,7 @@ function Dashboard() {
       setPagination(response.data.pagination);
     } catch (err) {
       console.error("Error loading bounties:", err);
-      toast.error("Couldn't fetch bounties");
+      showToast.error("Couldn't fetch bounties");
     } finally {
       setLoading(false);
     }
@@ -71,7 +71,7 @@ function Dashboard() {
       });
     } catch (err) {
       console.error("Error loading userInfo:", err);
-      toast.error("Couldn't fetch user info");
+      showToast.error("Couldn't fetch user info");
     }
   };
 

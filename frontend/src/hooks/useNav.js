@@ -1,5 +1,5 @@
 import { useAccount } from "wagmi";
-import toast from "react-hot-toast";
+import {showToast} from "../components/UI/Toast"
 import { useNavigate } from "react-router-dom";
 
 export const useNav = () => {
@@ -8,7 +8,7 @@ export const useNav = () => {
 
   const handleNavigate = (path) => {
     if (!account) {
-      toast.error("Please sign in to continue");
+      showToast.error("Please sign in to continue");
       return;
     }
     navigate(path);

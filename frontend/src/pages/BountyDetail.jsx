@@ -2,7 +2,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import toast from "react-hot-toast";
+import{ showToast } from "../components/UI/Toast";
 import {
   FiArrowLeft,
   FiCheck,
@@ -211,7 +211,7 @@ const BountyDetail = () => {
             try {
               await switchChain({ chainId: bountyData.network });
             } catch {
-              toast.error("Please switch network manually");
+              showToast.error("Please switch network manually");
               return;
             }
           }
@@ -237,7 +237,7 @@ const BountyDetail = () => {
         await loadComments(id);
       } catch (err) {
         console.error(err);
-        toast.error("Failed to load bounty details");
+        showToast.error("Failed to load bounty details");
         navigate("/");
       } finally {
         setLoading(false);
@@ -249,20 +249,20 @@ const BountyDetail = () => {
   /* ---------------- Enrollment ---------------- */
 
   const handleEnroll = async () => {
-    if (!address) return toast.error("Please connect your wallet");
+    if (!address) return showToast.error("Please connect your wallet");
     setIsEnrolling(true);
-    const loadingToast = toast.loading("Enrolling in bounty...");
+    const loadingshowToast = showToast.loading("Enrolling in bounty...");
     try {
       await axios.post(`${API_URL}/user/enrollment`, {
         bountyId: id,
         user: address,
       });
-      toast.success("Enrolled!", { id: loadingToast });
+      showToast.success("Enrolled!", { id: loadingshowToast });
       setIsEnrolled(true);
     } catch (err) {
-      toast.error(
+      showToast.error(
         err.response?.status === 400 ? "Already enrolled" : "Enrollment failed",
-        { id: loadingToast },
+        { id: loadingshowToast },
       );
     } finally {
       setIsEnrolling(false);
@@ -287,13 +287,13 @@ const BountyDetail = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!address) return toast.error("Please connect your wallet");
+    if (!address) return showToast.error("Please connect your wallet");
     if (!submissionDescription || !submissionLink) {
-      return toast.error("Please fill in description and link");
+      return showToast.error("Please fill in description and link");
     }
 
     setSubmitting(true);
-    const loadingToast = toast.loading("Submitting...");
+    const loadingshowToast = showToast.loading("Submitting...");
     try {
       const formData = new FormData();
       formData.append("bountyId", id);
@@ -309,7 +309,7 @@ const BountyDetail = () => {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      toast.success("Submitted! Pending review.", { id: loadingToast });
+      showToast.success("Submitted! Pending review.", { id: loadingshowToast });
       setHasUserSubmitted(true);
       setUserSubmission({
         ...data,
@@ -327,7 +327,7 @@ const BountyDetail = () => {
         err.response?.status === 400
           ? err.response.data?.error || "Submission rejected"
           : "Failed to submit";
-      toast.error(msg, { id: loadingToast });
+      showToast.error(msg, { id: loadingshowToast });
     } finally {
       setSubmitting(false);
     }
@@ -345,19 +345,19 @@ const BountyDetail = () => {
   /* ---------------- Claim ---------------- */
 
   const handleClaimReward = async () => {
-    if (!address) return toast.error("Please connect your wallet");
-    if (!bounty?.blockchainId) return toast.error("Not on-chain");
+    if (!address) return showToast.error("Please connect your wallet");
+    if (!bounty?.blockchainId) return showToast.error("Not on-chain");
     if (currentChainId !== bounty.network) {
       try {
         await switchChain({ chainId: bounty.network });
       } catch {
-        return toast.error("Please switch network manually");
+        return showToast.error("Please switch network manually");
       }
     }
     if (!onChainClaimable || onChainClaimable === 0n) {
-      return toast.error("No reward available");
+      return showToast.error("No reward available");
     }
-    if (onChainClaimed) return toast.error("Already claimed");
+    if (onChainClaimed) return showToast.error("Already claimed");
 
     try {
       const { hash } = await claimReward(blockchainId);
@@ -365,11 +365,11 @@ const BountyDetail = () => {
         winnerAddress: address,
         txHash: hash,
       });
-      toast.success("Reward claimed!");
+      showToast.success("Reward claimed!");
       await loadWinnersData(id);
       refetchClaimable();
     } catch (err) {
-      toast.error(err.shortMessage || err.message || "Claim failed");
+      showToast.error(err.shortMessage || err.message || "Claim failed");
     }
   };
 
@@ -378,19 +378,19 @@ const BountyDetail = () => {
   const handleDistributeReward = async () => {
     const valid = winnerAddresses.filter((a) => a?.startsWith("0x"));
     if (!valid.length || valid.length !== winnerAddresses.length) {
-      return toast.error("Enter valid winner addresses");
+      return showToast.error("Enter valid winner addresses");
     }
-    if (!bounty?.blockchainId) return toast.error("Not on-chain");
+    if (!bounty?.blockchainId) return showToast.error("Not on-chain");
     if (currentChainId !== bounty.network) {
       try {
         await switchChain({ chainId: bounty.network });
       } catch {
-        return toast.error("Please switch network manually");
+        return showToast.error("Please switch network manually");
       }
     }
 
     setDistributing(true);
-    const loadingToast = toast.loading("Distributing...");
+    const loadingshowToast = showToast.loading("Distributing...");
     try {
       let tx;
       if (valid.length === 1) {
@@ -408,12 +408,12 @@ const BountyDetail = () => {
         bountyContract: CONTRACT_ADDRESSES[bounty.network]?.bounty || null,
       });
 
-      toast.success("Distributed!", { id: loadingToast });
+      showToast.success("Distributed!", { id: loadingshowToast });
       setShowDistributeModal(false);
       await loadWinnersData(id);
     } catch (err) {
-      toast.error(err.shortMessage || err.message || "Distribution failed", {
-        id: loadingToast,
+      showToast.error(err.shortMessage || err.message || "Distribution failed", {
+        id: loadingshowToast,
       });
     } finally {
       setDistributing(false);
@@ -430,8 +430,8 @@ const BountyDetail = () => {
   /* ---------------- Comments ---------------- */
 
   const handleAddComment = async () => {
-    if (!address) return toast.error("Please connect your wallet");
-    if (!newComment.trim()) return toast.error("Enter a comment");
+    if (!address) return showToast.error("Please connect your wallet");
+    if (!newComment.trim()) return showToast.error("Enter a comment");
     try {
       const { data } = await axios.post(`${API_URL}/comments/${id}`, {
         user: address,
@@ -439,9 +439,9 @@ const BountyDetail = () => {
       });
       setComments((prev) => [data.comment, ...prev]);
       setNewComment("");
-      toast.success("Comment added");
+      showToast.success("Comment added");
     } catch (err) {
-      toast.error(err.response?.data?.error || "Failed to add comment");
+      showToast.error(err.response?.data?.error || "Failed to add comment");
     }
   };
 
