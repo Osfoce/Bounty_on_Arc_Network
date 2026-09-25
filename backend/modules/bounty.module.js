@@ -135,7 +135,7 @@ const bountySchema = new mongoose.Schema(
       trim: true,
       lowercase: true,
       enum: {
-        values: ["1439", "102031"],
+        values: ["5042002", "5042"],
         message: "{VALUE} is not a supported network",
       },
     },
@@ -143,12 +143,6 @@ const bountySchema = new mongoose.Schema(
       type: Number,
       required: [true, "Reward is required"],
       min: [0, "Reward cannot be negative"],
-      // validate: {
-      //   validator: function (v) {
-      //     return Number.isFinite(v) && v >= 0;
-      //   },
-      //   message: "Reward must be a valid number",
-      // },
     },
     token: {
       type: String,

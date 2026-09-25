@@ -49,7 +49,7 @@ const userEnrollment = async (req, res) => {
   }
 };
 
-// GET /enrollments/user/:wallet
+// GET 
 const getUserEnrollment = async (req, res) => {
   const { wallet } = req.params;
 
