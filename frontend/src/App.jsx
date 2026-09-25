@@ -33,7 +33,7 @@ function App() {
           <Route path="/whitepaper" element={<WhitepaperPage />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/setting" element={<Setting />} />
-          <Route path="/task/:id" element={<BountyDetail />} />
+          <Route path="/bounty/:id" element={<BountyDetail />} />
           <Route path="/admin-224466" element={<Admin />} />
           <Route path="*" element={<h1>404 Not Found</h1>} />
         </Routes>
