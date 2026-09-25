@@ -102,7 +102,7 @@ export const showToast = {
     });
   },
 
-  error: (message, duration = 4000, options = {}) => {
+  error: (message, duration = 1000, options = {}) => {
     return toast.error(message, {
       duration,
       position: POSITION,
