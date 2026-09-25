@@ -22,7 +22,7 @@ import {
   getAvailableBountiesConfig,
   getBountiesByCreatorConfig,
   getUserSubmissionsConfig,
-  getTotalEthFeesConfig,
+  getTotalFeesConfig,
   getBountyCounterConfig,
   getFeePercentConfig,
   getMaxWinnersConfig,
@@ -62,7 +62,9 @@ export const useBounty = () => {
     }
   }, [isWaiting, isSuccess]);
 
-  // Core transaction executor with event parsing
+  /* ------------------------------------------------------------------ */
+  /*                     CORE TRANSACTION EXECUTOR                      */
+  /* ------------------------------------------------------------------ */
   const executeTx = async (prepareFn, params, options = {}) => {
     const { successMessage = "Transaction successful", eventName } = options;
 
@@ -75,7 +77,17 @@ export const useBounty = () => {
       throw new Error("No chain ID");
     }
 
-    const txConfig = prepareFn({ ...params, account, chainId });
+    // Prepare the tx config — wrap in try/catch because prepare fns can throw
+    // (e.g., getPayoutType throws on an unknown payout type).
+    let txConfig;
+    try {
+      txConfig = prepareFn({ ...params, account, chainId });
+    } catch (err) {
+      console.error("Failed to prepare transaction:", err);
+      toast.error(err.message || "Invalid transaction parameters");
+      throw err;
+    }
+
     if (!txConfig.address) {
       toast.error("Contract not deployed on this network");
       throw new Error("Contract address missing");
@@ -91,10 +103,12 @@ export const useBounty = () => {
         id: hash,
       });
 
+      // ...........
       // Wait for receipt using public client
       const receipt = await publicClient.waitForTransactionReceipt({ hash });
       console.log("Receipt logs:", receipt.logs);
       console.log("Full receipt:", receipt);
+
       if (receipt.status !== "success") {
         throw new Error("Transaction reverted");
       }
@@ -113,26 +127,45 @@ export const useBounty = () => {
 
         const matched = events.find((e) => e.eventName === eventName);
 
-        if (matched) {
-          eventData = matched.args;
-        }
+        if (matched) eventData = matched.args;
       }
 
       return { hash, receipt, eventData };
     } catch (err) {
       console.error(err);
       setTxError(err);
-      toast.error(err.message || "Transaction failed");
+      toast.error(err.shortMessage || err.message || "Transaction failed");
       throw err;
     } finally {
       setIsPending(false);
     }
   };
 
-  // ---------- Public read hooks (using useReadContract) ----------
+  /* ------------------------------------------------------------------ */
+  /*                   FETCH BOUNTY ID FROM A TRANSACTION               */
+  /* ------------------------------------------------------------------ */
+
+  /**
+   * Resolve a bounty ID from a createBounty transaction.
+   *
+   * Primary path: parse the `BountyCreated` event from the receipt.
+   * Fallback path: read `bountyCounter()` and use the current value —
+   *   the counter is incremented on every createBounty, so the latest
+   *   bounty ID equals the counter's current value.
+   *
+   * The fallback is useful when:
+   *  - the receipt logs are missing (rare RPC issue)
+   *  - the event was emitted but the log decoder fails
+   *  - you're on a chain where the indexer hasn't caught up
+   *
+   * @param {`0x${string}`} txHash
+   * @returns {Promise<number|null>} bountyId or null on failure
+   */
+
   const fetchBountyIdFromTx = async (txHash) => {
     console.log(`Fetching bountyId from txHash: ${txHash}`);
     console.log(typeof txHash);
+
     if (!txHash) {
       toast.error("Transaction hash is required");
       return null;
@@ -146,24 +179,53 @@ export const useBounty = () => {
       if (receipt.status !== "success") {
         throw new Error("Transaction reverted");
       }
+
       console.log("Receipt logs for bountyId fetch:", receipt.logs);
       console.log("Full receipt for bountyId fetch:", receipt);
-      const events = parseEventLogs({
-        abi: BOUNTY_ABI,
-        logs: receipt.logs,
-        eventName: "BountyCreated",
-      });
-      console.log(`retrived id ${events?.[0]?.args?.bountyId}`);
 
-      return events?.[0]?.args?.bountyId
-        ? Number(events[0].args.bountyId)
-        : null;
+      // ---- Primary: parse the BountyCreated event ----
+      try {
+        const events = parseEventLogs({
+          abi: BOUNTY_ABI,
+          logs: receipt.logs,
+          eventName: "BountyCreated",
+        });
+        const eventBountyId = events?.[0]?.args?.bountyId;
+        if (eventBountyId !== undefined && eventBountyId !== null) {
+          return Number(eventBountyId);
+        }
+      } catch (parseErr) {
+        console.warn(
+          "Failed to parse BountyCreated event, falling back to counter:",
+          parseErr,
+        );
+      }
+
+      // ---- Fallback: read bountyCounter() ----
+      if (!chainId) return null;
+      const config = getBountyCounterConfig({ chainId });
+      if (!config?.address) return null;
+
+      const counter = await publicClient.readContract({
+        address: config.address,
+        abi: config.abi,
+        functionName: config.functionName,
+        args: config.args,
+      });
+
+      // counter is a bigint; the latest bounty ID equals the counter value
+      // because the contract increments the counter BEFORE storing the bounty.
+      return counter !== undefined && counter !== null ? Number(counter) : null;
     } catch (error) {
       console.error(error);
       toast.error("Failed to retrieve bountyId from transaction");
       return null;
     }
   };
+
+  /* ------------------------------------------------------------------ */
+  /*                         READ HOOKS                                 */
+  /* ------------------------------------------------------------------ */
 
   const useClaimableReward = (bountyId, user) => {
     return useReadContract({
@@ -224,21 +286,21 @@ export const useBounty = () => {
     });
   };
 
-  const useTotalEthFees = () => {
-    const config = chainId ? getTotalEthFeesConfig({ chainId }) : null;
+  const useTotalFees = () => {
+    const config = chainId ? getTotalFeesConfig({ chainId }) : null;
     return useReadContract({
       ...config,
       query: { enabled: !!chainId && !!config?.address },
     });
   };
 
-  // const useTotalUsdcFees = () => {
-  //   const config = chainId ? getTotalUsdcFeesConfig({ chainId }) : null;
-  //   return useReadContract({
-  //     ...config,
-  //     query: { enabled: !!chainId && !!config?.address },
-  //   });
-  // };
+  const useBountyCounter = () => {
+    const config = chainId ? getBountyCounterConfig({ chainId }) : null;
+    return useReadContract({
+      ...config,
+      query: { enabled: !!chainId && !!config?.address },
+    });
+  };
 
   const useFeePercent = () => {
     const config = chainId ? getFeePercentConfig({ chainId }) : null;
@@ -264,9 +326,10 @@ export const useBounty = () => {
     });
   };
 
-  // Then add all these to the return object.
+  /* ------------------------------------------------------------------ */
+  /*                        WRITE ACTIONS                               */
+  /* ------------------------------------------------------------------ */
 
-  // ---------- Write actions with event parsing ----------
   const createBounty = async (bountyData) => {
     return executeTx(
       prepareCreateBountyTx,
@@ -321,14 +384,22 @@ export const useBounty = () => {
     );
   };
 
-  //   only admin can call this function, so we don't need to expose it in the UI for now
-  const withdrawFees = async (tokenType, recipient) => {
+  /**
+   * Withdraw accumulated protocol fees (owner only).
+   * The contract is native-USDC-only, so there's no token type argument.
+   */
+
+  const withdrawFees = async (recipient) => {
     return executeTx(
       prepareWithdrawTx,
-      { tokenType, recipient },
+      { recipient },
       { successMessage: "Fees withdrawn!", eventName: "FeeWithdrawn" },
     );
   };
+
+  /* ------------------------------------------------------------------ */
+  /*                             RETURN                                 */
+  /* ------------------------------------------------------------------ */
 
   return {
     // States
@@ -336,19 +407,24 @@ export const useBounty = () => {
     isConfirming,
     txHash,
     txError,
-    // Read hooks
+
+    // Helpers
     fetchBountyIdFromTx,
+    formatReward,
+
+    // Read hooks
     useClaimableReward,
     useClaimedStatus,
     useBountyInfo,
     useAvailableBounties,
     useBountiesByCreator,
     useUserSubmissions,
-    useTotalEthFees,
-    // useTotalUsdcFees,
+    useTotalFees,
+    useBountyCounter,
     useFeePercent,
     useMaxWinners,
     useOwner,
+
     // Write actions
     createBounty,
     claimReward,
@@ -356,7 +432,5 @@ export const useBounty = () => {
     assignMultipleWinners,
     submitSolution,
     withdrawFees,
-    // Helpers
-    formatReward,
   };
 };

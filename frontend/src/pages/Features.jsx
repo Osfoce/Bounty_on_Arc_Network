@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from "react";
 import {
   FiShield,
@@ -10,10 +9,12 @@ import {
   FiArrowRight,
 } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import { useNav } from "../hooks/useNav";
 
 function Features() {
   const sectionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
+  const { handleNavigate } = useNav();
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -190,15 +191,13 @@ function Features() {
 
             <h2 className="text-4xl font-bold tracking-[-0.04em] text-[#111111] md:text-5xl">
               Everything You Need to{" "}
-              <span className="text-[#B28B20]">
-                Earn
-              </span>
+              <span className="text-[#B28B20]">Earn</span>
             </h2>
 
             <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-[#77736b] md:text-base">
-              Fresh Bounty connects creators and contributors through
-              on-chain opportunities, with Arc and USDC powering a
-              faster way to fund, complete, and reward Web3 work.
+              Fresh Bounty connects creators and contributors through on-chain
+              opportunities, with Arc and USDC powering a faster way to fund,
+              complete, and reward Web3 work.
             </p>
           </div>
 
@@ -234,8 +233,8 @@ function Features() {
                   <div className="mt-4 h-px w-10 bg-[#D4AF37]/70 transition-all duration-500 group-hover:w-16" />
 
                   <p className="mt-4 text-sm leading-6 text-[#77736b]">
-                    Complete approved bounties and work toward earning
-                    rewards through a USDC-powered bounty experience.
+                    Complete approved bounties and work toward earning rewards
+                    through a USDC-powered bounty experience.
                   </p>
                 </div>
 
@@ -273,9 +272,8 @@ function Features() {
                   <div className="mt-4 h-px w-10 bg-[#D4AF37]/70 transition-all duration-500 group-hover:w-16" />
 
                   <p className="mt-4 text-sm leading-6 text-[#77736b]">
-                    A bounty experience designed around Arc, giving
-                    creators and contributors a focused on-chain
-                    environment for Web3 work.
+                    A bounty experience designed around Arc, giving creators and
+                    contributors a focused on-chain environment for Web3 work.
                   </p>
                 </div>
 
@@ -352,8 +350,8 @@ function Features() {
                   <div className="mt-4 h-px w-10 bg-[#D4AF37]/70 transition-all duration-500 group-hover:w-16" />
 
                   <p className="mt-4 text-sm leading-6 text-[#77736b]">
-                    Keep bounty activity, submissions, and reward flows
-                    visible through a transparent Web3 experience.
+                    Keep bounty activity, submissions, and reward flows visible
+                    through a transparent Web3 experience.
                   </p>
                 </div>
 
@@ -395,6 +393,10 @@ function Features() {
 
             <Link
               to="/dashboard"
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavigate("/dashboard");
+              }}
               className="group flex items-center gap-2 rounded-xl border border-[#D4AF37]/30 bg-white px-5 py-2.5 text-sm font-semibold text-[#B28B20] transition-all duration-300 hover:border-[#D4AF37] hover:bg-[#D4AF37] hover:text-white hover:shadow-[0_10px_30px_rgba(212,175,55,0.18)]"
             >
               <span>Explore Opportunities</span>
@@ -436,4 +438,3 @@ function Features() {
 }
 
 export default Features;
-

@@ -15,15 +15,3 @@ export const NATIVE_TOKENS = {
     decimals: 18,
   },
 };
-
-// export const TOKEN_ADDRESSES = {
-//   [CHAIN_IDS.ARC]: {
-//     USDC: {
-//       address: "0x0000000088827d2d103ee2d9A6b781773AE03FfB",
-//       symbol: "USDC",
-//       decimals: 18,
-//       // On-chain TokenType this UI token maps to
-//       contractTokenType: "USDC", // or add a new enum value if the contract supports it
-//     },
-//   },
-// };

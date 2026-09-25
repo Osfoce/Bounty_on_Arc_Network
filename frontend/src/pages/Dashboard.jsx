@@ -22,21 +22,21 @@ import BountyCard from "../components/Bounty/BountyCard";
 
 function Dashboard() {
   const { address, isConnected } = useAccount();
-
   const [loading, setLoading] = useState(true);
   const [bounties, setBounties] = useState([]);
   const [filter, setFilter] = useState("all");
   const [pagination, setPagination] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
-
   const [stats, setStats] = useState({
     completed: 0,
     inProgress: 0,
     earnings: 0,
   });
 
-  const bountyApi = "https://fresh-bounty.onrender.com/api/task";
-  const userInfoApi = `https://fresh-bounty.onrender.com/api/dashboard/${address}`;
+  const API_URL = import.meta.env.VITE_API_URL;
+
+  const bountyApi = `${API_URL}/bounty/bounties`;
+  const userInfoApi = `${API_URL}/user/details/${address}`;
 
   const loadBounties = async () => {
     setLoading(true);
@@ -140,14 +140,12 @@ function Dashboard() {
 
       <main className="relative z-10 min-h-screen pt-24 pb-20">
         <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
-
           {/* =====================================================
               HEADER
           ====================================================== */}
 
           <section className="mb-10 animate-[fadeInUp_0.7s_ease-out_both]">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-
               <div>
                 <div className="mb-4 flex items-center gap-2">
                   <span className="relative flex h-2 w-2">
@@ -176,7 +174,6 @@ function Dashboard() {
               </div>
 
               <div className="flex items-center gap-3">
-
                 {/* Refresh */}
 
                 <button
@@ -190,7 +187,6 @@ function Dashboard() {
                       loading ? "animate-spin" : "group-hover:rotate-180"
                     } transition-transform duration-500`}
                   />
-
                   Refresh
                 </button>
 
@@ -202,9 +198,7 @@ function Dashboard() {
                 >
                   <span className="relative z-10 flex items-center gap-2">
                     <FiPlus className="text-base" />
-
                     Create Bounty
-
                     <FiArrowRight className="text-sm transition-transform duration-300 group-hover:translate-x-1" />
                   </span>
 
@@ -221,7 +215,6 @@ function Dashboard() {
           ====================================================== */}
 
           <section className="mb-12 grid grid-cols-1 gap-4 md:grid-cols-3">
-
             {/* =====================================================
                 EARNINGS
             ====================================================== */}
@@ -354,7 +347,6 @@ function Dashboard() {
 
           <section className="animate-[fadeInUp_0.7s_ease-out_0.4s_both]">
             <div className="mb-6 flex flex-col gap-5 xl:flex-row xl:items-center xl:justify-between">
-
               <div>
                 <div className="flex items-center gap-2">
                   <FiSearch className="text-[#D4A017]" />
@@ -434,8 +426,8 @@ function Dashboard() {
                 </h3>
 
                 <p className="mt-2 max-w-sm text-sm leading-6 text-black/40">
-                  There are no opportunities matching your current filter.
-                  Try another category or create a new bounty.
+                  There are no opportunities matching your current filter. Try
+                  another category or create a new bounty.
                 </p>
 
                 <Link
@@ -443,9 +435,7 @@ function Dashboard() {
                   className="group mt-6 flex items-center gap-2 rounded-xl bg-gold-700 px-5 py-2.5 text-sm font-bold text-black transition-all duration-300 hover:-translate-y-1 hover:bg-[#D4A017] hover:shadow-[0_10px_25px_rgba(212,160,23,0.2)] hover:text-white"
                 >
                   <FiPlus />
-
                   Create Bounty
-
                   <FiArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
               </div>
@@ -453,10 +443,7 @@ function Dashboard() {
               <>
                 <div className="grid grid-cols-1 items-stretch gap-5 md:grid-cols-2">
                   {bounties.map((bounty) => (
-                    <BountyCard
-                      key={bounty._id}
-                      bounty={bounty}
-                    />
+                    <BountyCard key={bounty._id} bounty={bounty} />
                   ))}
                 </div>
 
@@ -470,9 +457,7 @@ function Dashboard() {
                       <button
                         type="button"
                         onClick={() =>
-                          setCurrentPage((prev) =>
-                            Math.max(0, prev - 1),
-                          )
+                          setCurrentPage((prev) => Math.max(0, prev - 1))
                         }
                         disabled={currentPage === 0}
                         aria-label="Previous page"
@@ -486,9 +471,7 @@ function Dashboard() {
                           {currentPage + 1}
                         </span>
 
-                        <span className="mx-2 text-black/20">
-                          /
-                        </span>
+                        <span className="mx-2 text-black/20">/</span>
 
                         {pagination.pages}
                       </div>
@@ -497,15 +480,10 @@ function Dashboard() {
                         type="button"
                         onClick={() =>
                           setCurrentPage((prev) =>
-                            Math.min(
-                              pagination.pages - 1,
-                              prev + 1,
-                            ),
+                            Math.min(pagination.pages - 1, prev + 1),
                           )
                         }
-                        disabled={
-                          currentPage + 1 >= pagination.pages
-                        }
+                        disabled={currentPage + 1 >= pagination.pages}
                         aria-label="Next page"
                         className="flex h-9 w-9 items-center justify-center rounded-lg text-black/40 transition-all duration-200 hover:bg-[#D4A017] hover:text-white disabled:cursor-not-allowed disabled:opacity-20 disabled:hover:bg-transparent disabled:hover:text-black/40"
                       >

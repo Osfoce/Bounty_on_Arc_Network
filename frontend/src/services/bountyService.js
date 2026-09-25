@@ -188,7 +188,7 @@ export const getAllBountyIdsConfig = ({ index, chainId }) => ({
 });
 
 // Get total fees
-export const getTotalEthFeesConfig = ({ chainId }) => ({
+export const getTotalFeesConfig = ({ chainId }) => ({
   address: getBountyContract(chainId),
   abi: BOUNTY_ABI,
   functionName: "totalFees",
