@@ -9,8 +9,7 @@ import {
 import { parseEther, formatEther } from "viem";
 import {
   getOwnerConfig,
-  getTotalEthFeesConfig,
-  // getTotalUsdcFeesConfig,
+  getTotalFeesConfig,
   getFeePercentConfig,
   prepareWithdrawTx,
   prepareTransferOwnershipTx,
@@ -34,7 +33,7 @@ export default function AdminPage() {
 
   // Read: Total ETH fees
   const { data: totalEthFeesRaw } = useReadContract({
-    ...getTotalEthFeesConfig({ chainId }),
+    ...getTotalFeesConfig({ chainId }),
     query: { enabled: !!chainId },
   });
   console.log("Total ETH Fees (raw):", totalEthFeesRaw);

@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import { useNav } from "../hooks/useNav";
 import axios from "axios";
 import {
   FiZap,
@@ -17,7 +18,6 @@ import HowItWorks from "./Howitwork";
 import PlatformStats from "./PlatformStats";
 import Features from "./Features";
 import Testimonials from "./Testimonials";
-
 import CallToAction from "./CallToAction";
 import BuiltForWeb3 from "./BuiltForWeb3";
 import Footer from "../components/Layout/Footer";
@@ -25,6 +25,7 @@ import Footer from "../components/Layout/Footer";
 function LandingPage() {
   const [featuredBounties, setFeaturedBounties] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { handleNavigate } = useNav();
 
   const [stats, setStats] = useState({
     totalBounties: 0,
@@ -223,6 +224,10 @@ function LandingPage() {
           {/* VIEW ALL */}
           <Link
             to="/dashboard"
+            onClick={(e) => {
+              e.preventDefault();
+              handleNavigate("/dashboard");
+            }}
             className="group inline-flex w-fit items-center gap-2 rounded-xl border border-black/[0.08] bg-white/75 px-4 py-2.5 text-sm font-semibold text-[#383631] shadow-[0_8px_30px_rgba(35,31,22,0.04)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-[#D4AF37]/35 hover:bg-white hover:text-[#B28B20]"
           >
             <span>View all bounties</span>
@@ -294,6 +299,10 @@ function LandingPage() {
 
               <Link
                 to="/dashboard"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavigate("/dashboard");
+                }}
                 className="mt-6 inline-flex items-center gap-2 rounded-xl border border-[#D4AF37]/40 bg-white px-5 py-2.5 text-sm font-semibold text-[#8F6D12] shadow-[0_10px_25px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#D4AF37] hover:text-[#B28B20]"
               >
                 Browse bounties

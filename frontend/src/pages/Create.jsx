@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useAccount, useChainId, useSwitchChain } from "wagmi";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -28,10 +28,13 @@ import Footer from "../components/Layout/Footer";
 import { supportedChains } from "../rainbowChains";
 import { useBounty } from "../hooks/useBounty";
 import { listTokensForChain } from "../utils/enums";
+import { formatAmount } from "../utils/format";
 import { CONTRACT_ADDRESSES } from "../utils/chains.address";
 
 function Create() {
+  const API_URL = import.meta.env.VITE_API_URL;
   const [currentStep, setCurrentStep] = useState(1);
+  const [customTag, setCustomTag] = useState("");
   const totalSteps = 4;
 
   const [bountyData, setBountyData] = useState({
@@ -39,24 +42,34 @@ function Create() {
     description: "",
     category: "",
     network: "",
-    tags: "",
+    tags: [], // string for input (will convert later)
+
     startDate: "",
     deadline: "",
+
     originLink: "",
+
     reward: 0,
-    token: "INJ",
+    token: "INJ", // pick your default
+
+    // payout logic (needed for contract/backend)
     winnersAllowed: 1,
     payoutType: "",
     percentages: [],
+
+    // UI-specific logic
     rewardType: "self-fund",
-    creator: "",
+
+    creator: "", // will be filled from wallet
   });
 
+  // Multi-winner state
   const [multipleWinner, setMultipleWinner] = useState(false);
-  const [selectedPayoutType, setSelectedPayoutType] = useState("MULTI_EQUAL");
+  const [selectedPayoutType, setSelectedPayoutType] = useState("MULTI_EQUAL"); // default to equal split
   const [winnerCount, setWinnerCount] = useState(2);
   const [percentageArray, setPercentageArray] = useState([]);
 
+  // Modal states
   const [showEqualModal, setShowEqualModal] = useState(false);
   const [showPercentModal, setShowPercentModal] = useState(false);
   const [showInfoMenu, setShowInfoMenu] = useState(false);
@@ -65,23 +78,75 @@ function Create() {
   const navigate = useNavigate();
   const { address, isConnected } = useAccount();
   const currentChainId = useChainId();
-
   const {
     createBounty,
+    fetchBountyIdFromTx,
     isPending: isContractPending,
     isConfirming,
   } = useBounty();
+  // Inside Create(), near your other state
 
+  // Accepts only http(s) URLs with a valid-looking domain
+  const isValidUrl = (value) => {
+    if (!value) return "";
+
+    let url;
+    try {
+      url = new URL(value);
+    } catch {
+      return "Enter a full URL, e.g. https://github.com/user/repo";
+    }
+
+    if (url.protocol !== "http:" && url.protocol !== "https:") {
+      return "Only http:// and https:// links are allowed";
+    }
+
+    const hostname = url.hostname;
+    if (
+      !/^(?!-)[A-Za-z0-9-]{1,63}(?<!-)(\.(?!-)[A-Za-z0-9-]{1,63}(?<!-))*\.[A-Za-z]{2,}$/.test(
+        hostname,
+      )
+    ) {
+      return "Enter a valid domain, e.g. github.com or figma.com";
+    }
+
+    return "";
+  };
+
+  const originLinkError = isValidUrl(bountyData.originLink);
+
+  const availableTokens = useMemo(() => {
+    if (!currentChainId) return [];
+    return listTokensForChain(currentChainId);
+  }, [currentChainId]);
+
+  // Helper to update bounty data
   const updateBountyData = (field, value) => {
     setBountyData((prev) => ({ ...prev, [field]: value }));
   };
 
+  // Set creator when wallet connects
   useEffect(() => {
     if (isConnected && address) {
       updateBountyData("creator", address);
     }
   }, [address, isConnected]);
 
+  useEffect(() => {
+    if (availableTokens.length === 0) return;
+
+    const stillValid = availableTokens.some(
+      (t) =>
+        t.key.toUpperCase() === (bountyData.token || "").toUpperCase() ||
+        t.label.toUpperCase() === (bountyData.token || "").toUpperCase(),
+    );
+
+    if (!stillValid) {
+      updateBountyData("token", availableTokens[0].key);
+    }
+  }, [availableTokens, bountyData.token]);
+
+  // Network selection handler (also updates form)
   const handleChainChange = (e) => {
     const chainId = Number(e.target.value);
     updateBountyData("network", chainId);
@@ -110,7 +175,6 @@ function Create() {
           return false;
         }
         break;
-
       case 2:
         if (!bountyData.title || bountyData.title.length < 5) {
           toast.error("Title must be at least 5 characters");
@@ -120,12 +184,20 @@ function Create() {
           toast.error("Description must be at least 20 characters");
           return false;
         }
+        if (!bountyData.tags || bountyData.tags.length === 0) {
+          toast.error("Please select at least one tag");
+          return false;
+        }
         if (!bountyData.startDate || !bountyData.deadline) {
           toast.error("Please select start and end dates");
           return false;
         }
+        const urlErr = isValidUrl(bountyData.originLink);
+        if (urlErr) {
+          toast.error(urlErr);
+          return false;
+        }
         break;
-
       case 3:
         if (bountyData.reward <= 0) {
           toast.error("Please enter a valid reward amount");
@@ -133,23 +205,19 @@ function Create() {
         }
         break;
     }
-
     return true;
   };
 
   const handleEqualSplitConfirm = () => {
     const count = winnerCount;
-
     if (count < 2 || count > 5) {
       toast.error("Number of winners must be between 2 and 5");
       return;
     }
-
     setWinnerCount(count);
     setSelectedPayoutType("MULTI_EQUAL");
     setPercentageArray([]);
     setShowEqualModal(false);
-
     toast.success(`${count} winners selected for equal split`);
   };
 
@@ -158,18 +226,14 @@ function Create() {
       toast.error("Please select a preset or enter percentages");
       return;
     }
-
     const total = percentageArray.reduce((sum, p) => sum + p, 0);
-
     if (total !== 100) {
       toast.error("Percentages must sum to 100");
       return;
     }
-
     setSelectedPayoutType("MULTI_PERCENTAGE");
     setWinnerCount(percentageArray.length);
     setShowPercentModal(false);
-
     toast.success(
       `${percentageArray.length} winners selected with percentage split`,
     );
@@ -179,14 +243,19 @@ function Create() {
     setPercentageArray(preset);
   };
 
-  const fee = bountyData.reward * 0.05;
+  // Calculate fees (7%)
+  const fee = bountyData.reward * 0.07;
   const totalAmount = bountyData.reward + fee;
 
+  // Formatted display strings (commas, no trailing .00)
+  const feeDisplay = formatAmount(fee);
+  const totalAmountDisplay = formatAmount(totalAmount);
+  const rewardDisplay = formatAmount(bountyData.reward);
+
+  // Format date for display
   const formatDate = (dateString) => {
     if (!dateString) return "Not set";
-
     const date = new Date(dateString);
-
     return date.toLocaleDateString("en-US", {
       year: "numeric",
       month: "short",
@@ -194,16 +263,65 @@ function Create() {
     });
   };
 
+  // toogle tags
+  const toggleTag = (tag) => {
+    setBountyData((prev) => {
+      const alreadySelected = prev.tags.includes(tag);
+      if (alreadySelected) {
+        return { ...prev, tags: prev.tags.filter((t) => t !== tag) };
+      }
+      if (prev.tags.length >= 5) {
+        toast.error("Max 5 tags");
+        return prev;
+      }
+      return { ...prev, tags: [...prev.tags, tag] };
+    });
+  };
+
+  const addCustomTag = () => {
+    const trimmed = customTag.trim();
+    if (!trimmed) return;
+    if (bountyData.tags.includes(trimmed)) {
+      toast.error("Tag already added");
+      return;
+    }
+    if (bountyData.tags.length >= 5) {
+      toast.error("Max 5 tags");
+      return;
+    }
+    setBountyData((prev) => ({ ...prev, tags: [...prev.tags, trimmed] }));
+    setCustomTag("");
+  };
+
+  const removeTag = (tag) => {
+    setBountyData((prev) => ({
+      ...prev,
+      tags: prev.tags.filter((t) => t !== tag),
+    }));
+  };
+
+  // --- Contract submission logic ---
   const handleFinalSubmit = async () => {
+    // 1. Validate final step
     if (!validateStep(3)) return;
 
+    // if (bountyData.originLink && !isValidUrl(bountyData.originLink)) {
+    const urlErr = isValidUrl(bountyData.originLink);
+    if (urlErr) {
+      toast.error(urlErr);
+      setCurrentStep(2); // send them to the right step
+      return;
+    }
+
+    // 2. Check wallet connection
     if (!isConnected || !address) {
       toast.error("Please connect your wallet");
       return;
     }
 
+    // 3. Network verification
+    // Currently there is no sync with the backend on this. if any chain is to be supporte in the future, create a shared file
     const selectedChainId = bountyData.network;
-
     console.log("Selected chain ID:", selectedChainId);
 
     if (!selectedChainId) {
@@ -211,25 +329,22 @@ function Create() {
       return;
     }
 
+    // 4. Check if contract is deployed on the selected network
     const contractAddress = CONTRACT_ADDRESSES[selectedChainId]?.bounty;
-
     if (!contractAddress || contractAddress === "Loading...") {
       toast.error(
-        `Contract not deployed on ${
-          supportedChains.find((c) => c.id === selectedChainId)?.name
-        }. Only Injective testnet is supported currently.`,
+        `Contract not deployed on ${supportedChains.find((c) => c.id === selectedChainId)?.name}.`,
       );
       return;
     }
 
+    // 5. If user is on a different chain, prompt to switch
     if (currentChainId !== selectedChainId) {
       toast.loading(
-        `Switching to ${
-          supportedChains.find((c) => c.id === selectedChainId)?.name
-        }...`,
+        `Switching to ${supportedChains.find((c) => c.id === selectedChainId)?.name}...`,
       );
-
       try {
+        //await remove
         switchChain({ chainId: selectedChainId });
         toast.success("Network switched!");
       } catch (err) {
@@ -238,37 +353,40 @@ function Create() {
       }
     }
 
+    console.log("chain is correct");
+
+    // 6. Prepare bounty data for contract (transform form data)
     const finalWinnersAllowed = multipleWinner ? winnerCount : 1;
     const finalPayoutType = multipleWinner ? selectedPayoutType : "SINGLE";
-
     console.log(
       `Final payout type: ${finalPayoutType}, winners allowed: ${finalWinnersAllowed}`,
     );
-
     const finalPercentages =
       multipleWinner && selectedPayoutType === "MULTI_PERCENTAGE"
         ? percentageArray
         : [];
 
+    // Create a copy for backend (convert tags string to array if needed)
     const backendData = {
       ...bountyData,
-      tags: bountyData.tags ? [bountyData.tags] : [],
+      tags: bountyData.tags, // ? [bountyData.tags] : [],
       winnersAllowed: finalWinnersAllowed,
       payoutType: finalPayoutType,
       percentages: finalPercentages,
-      status: "upcoming",
+      status: "upcoming", // will be calculated by backend
     };
 
+    // 7. Call smart contract
     try {
       const { eventData, hash } = await createBounty({
-        reward: bountyData.reward,
+        reward: bountyData.reward, // send total (reward + fee) to contract
         token: bountyData.token,
         winnersAllowed: finalWinnersAllowed,
         payoutType: finalPayoutType,
         percentages: finalPercentages,
       });
 
-      const blockchainId = eventData?.bountyId
+      let blockchainId = eventData?.bountyId
         ? Number(eventData.bountyId)
         : null;
 
@@ -277,22 +395,32 @@ function Create() {
       );
 
       console.log("Full eventData:", eventData);
-
+      // This blockchainId is currently causeing error on various networks...
       if (!blockchainId) {
-        throw new Error("No bountyId from contract event");
+        // Fallback chain — handles Injective's sparse logs and Creditcoin's
+        // log-less receipts via explorer API + bountyCounter() contract read.
+        blockchainId = await fetchBountyIdFromTx(hash);
       }
 
-      const saveResponse = await axios.post(
-        `${"https://fresh-bounty.onrender.com"}/api/task`,
-        {
-          ...backendData,
-          blockchainId: Number(blockchainId),
-          txHash: hash,
-          isOnChain: true,
-          creator: address,
-        },
-      );
+      if (!blockchainId) {
+        toast.error(
+          "Bounty was created on-chain but we couldn't read its ID. " +
+            "Please check the explorer and contact support.",
+        );
+        return;
+      }
+      // if (hash) return toast.success("Bounty created onchain");
 
+      // 8. Save to backend with blockchain info
+      console.log("posting to db");
+      const saveResponse = await axios.post(`${API_URL}/bounty/create`, {
+        ...backendData,
+        blockchainId: blockchainId,
+        txHash: hash,
+        isOnChain: true,
+        creator: address,
+      });
+      console.log("posting sucess");
       if (saveResponse.status === 201) {
         toast.success("Bounty created on-chain and saved!");
         navigate("/dashboard");
@@ -305,6 +433,7 @@ function Create() {
     }
   };
 
+  // Determine button loading state
   const isProcessing = isContractPending || isConfirming;
 
   const inputClass =
@@ -469,17 +598,17 @@ function Create() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-white/60 mb-2">
+                      <label className="block text-xs font-semibold uppercase tracking-wider text-[#6f6a60] mb-2.5">
                         Category
                       </label>
                       <select
                         value={bountyData.category}
                         onChange={(e) => {
                           updateBountyData("category", e.target.value);
-                          updateBountyData("tags", []); // reset tags — they were category-specific
+                          updateBountyData("tags", []);
                           setCustomTag("");
                         }}
-                        className="w-full bg-[#2D2D2D] border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-[#FF1AC6]/50 focus:ring-1 focus:ring-[#FF1AC6]/50 transition"
+                        className={selectClass}
                       >
                         <option value="">Select Category</option>
                         {BOUNTY_CATEGORIES.map(({ group, values }) => (
@@ -559,86 +688,168 @@ function Create() {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold uppercase tracking-wider text-[#6f6a60] mb-2.5">
-                        Tags <span className="text-[#b28b20]">*</span>
-                      </label>
+                      <div className="flex items-center justify-between mb-2.5">
+                        <label className="block text-xs font-semibold uppercase tracking-wider text-[#6f6a60]">
+                          Tags <span className="text-[#b28b20]">*</span>
+                        </label>
+                        <span className="text-xs text-[#8b8579]">
+                          {bountyData.tags.length} / 5 selected
+                        </span>
+                      </div>
 
-                      <select
-                        value={bountyData.tags}
-                        onChange={(e) =>
-                          updateBountyData("tags", e.target.value)
-                        }
-                        className={selectClass}
-                      >
-                        <option value="">Select a tag</option>
-                        <option value="smart-contract">Smart Contract</option>
-                        <option value="frontend">Frontend</option>
-                        <option value="backend">Backend</option>
-                        <option value="AI/ML">AI/ML</option>
-                        <option value="ui-ux">Backend</option>
-                        <option value="ui-ux">UI/UX</option>
-                        <option value="marketing">Marketing</option>
-                        <option value="content">Content Creation</option>
-                      </select>
+                      {!bountyData.category ? (
+                        <p className="text-xs text-[#8b8579] italic">
+                          Select a category first to see related tags.
+                        </p>
+                      ) : (
+                        <>
+                          <div className="flex flex-wrap gap-2">
+                            {(
+                              TAGS_BY_CATEGORY[bountyData.category] ||
+                              DEFAULT_TAGS
+                            ).map((tag) => {
+                              const selected = bountyData.tags.includes(tag);
+                              return (
+                                <button
+                                  key={tag}
+                                  type="button"
+                                  onClick={() => toggleTag(tag)}
+                                  className={`px-3 py-1.5 rounded-full text-xs font-medium border transition ${
+                                    selected
+                                      ? "bg-[#f4ecd5] border-[#d4af37] text-[#8f6c12]"
+                                      : "bg-white border-[#ddd8ca] text-[#625e55] hover:border-[#c49b2c] hover:text-[#8f6c12]"
+                                  }`}
+                                >
+                                  {tag}
+                                </button>
+                              );
+                            })}
+                          </div>
+
+                          {bountyData.category === "Other" && (
+                            <div className="mt-4">
+                              <label className="block text-xs text-[#6f6a60] mb-1.5">
+                                Add your own tags
+                              </label>
+                              <div className="flex gap-2">
+                                <input
+                                  type="text"
+                                  value={customTag}
+                                  onChange={(e) => setCustomTag(e.target.value)}
+                                  onKeyDown={(e) => {
+                                    if (e.key === "Enter") {
+                                      e.preventDefault();
+                                      addCustomTag();
+                                    }
+                                  }}
+                                  maxLength={24}
+                                  placeholder="e.g., memes, dao-tools, onboarding"
+                                  className="flex-1 bg-white border border-[#ddd8ca] rounded-xl px-4 py-2 text-[#171714] text-sm placeholder:text-[#99958a] focus:outline-none focus:border-[#c49b2c] focus:ring-2 focus:ring-[#d4af37]/10 transition"
+                                />
+                                <button
+                                  type="button"
+                                  onClick={addCustomTag}
+                                  disabled={
+                                    !customTag.trim() ||
+                                    bountyData.tags.length >= 5
+                                  }
+                                  className="px-4 py-2 rounded-xl bg-[#171714] border border-[#171714] text-[#d4af37] text-sm font-semibold hover:bg-[#292922] transition disabled:opacity-40 disabled:cursor-not-allowed"
+                                >
+                                  Add
+                                </button>
+                              </div>
+                              <p className="mt-1 text-[10px] text-[#99958a]">
+                                Press Enter or click Add. Max 5 tags total.
+                              </p>
+                            </div>
+                          )}
+
+                          {bountyData.tags.length > 0 && (
+                            <div className="mt-4">
+                              <p className="text-xs text-[#6f6a60] mb-2">
+                                Selected:
+                              </p>
+                              <div className="flex flex-wrap gap-2">
+                                {bountyData.tags.map((tag) => (
+                                  <span
+                                    key={tag}
+                                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#f4ecd5] border border-[#e5d9b8] text-[#8f6c12]"
+                                  >
+                                    {tag}
+                                    <button
+                                      type="button"
+                                      onClick={() => removeTag(tag)}
+                                      aria-label={`Remove ${tag}`}
+                                      className="text-[#8f6c12] hover:text-[#171714] transition"
+                                    >
+                                      ×
+                                    </button>
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+
+                          {bountyData.tags.length === 0 && (
+                            <p className="mt-2 text-xs text-[#8b8579]">
+                              Pick at least one tag.
+                            </p>
+                          )}
+                        </>
+                      )}
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-xs font-semibold uppercase tracking-wider text-[#6f6a60] mb-2.5">
                           Start Date <span className="text-[#b28b20]">*</span>
                         </label>
-
-                        <div className="relative">
-                          <FiCalendar className="absolute left-4 top-1/2 -translate-y-1/2 text-[#938d81] pointer-events-none" />
-
-                          <input
-                            type="date"
-                            value={bountyData.startDate}
-                            onChange={(e) =>
-                              updateBountyData("startDate", e.target.value)
-                            }
-                            className={`${inputClass} pl-11`}
-                          />
-                        </div>
+                        <input
+                          type="date"
+                          value={bountyData.startDate}
+                          onChange={(e) =>
+                            updateBountyData("startDate", e.target.value)
+                          }
+                          className={inputClass}
+                        />
                       </div>
 
                       <div>
                         <label className="block text-xs font-semibold uppercase tracking-wider text-[#6f6a60] mb-2.5">
                           End Date <span className="text-[#b28b20]">*</span>
                         </label>
-
-                        <div className="relative">
-                          <FiCalendar className="absolute left-4 top-1/2 -translate-y-1/2 text-[#938d81] pointer-events-none" />
-
-                          <input
-                            type="date"
-                            value={bountyData.deadline}
-                            onChange={(e) =>
-                              updateBountyData("deadline", e.target.value)
-                            }
-                            className={`${inputClass} pl-11`}
-                          />
-                        </div>
+                        <input
+                          type="date"
+                          value={bountyData.deadline}
+                          onChange={(e) =>
+                            updateBountyData("deadline", e.target.value)
+                          }
+                          className={inputClass}
+                        />
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold uppercase tracking-wider text-[#6f6a60] mb-2.5">
+                      <label className="block text-sm font-medium text-white/60 mb-2">
                         Origin Link
                       </label>
-
-                      <div className="relative">
-                        <FiLink className="absolute left-4 top-1/2 -translate-y-1/2 text-[#938d81]" />
-
-                        <input
-                          value={bountyData.originLink}
-                          onChange={(e) =>
-                            updateBountyData("originLink", e.target.value)
-                          }
-                          className={`${inputClass} pl-11`}
-                          placeholder="https://github.com/... or https://figma.com/..."
-                        />
-                      </div>
+                      <input
+                        value={bountyData.originLink}
+                        onChange={(e) =>
+                          updateBountyData("originLink", e.target.value)
+                        }
+                        className={`${inputClass} ${
+                          originLinkError
+                            ? "!border-red-500/60 focus:!border-red-500 focus:!ring-1 focus:!ring-red-500/50"
+                            : ""
+                        }`}
+                        placeholder="https://github.com/... or https://figma.com/..."
+                      />
+                      {originLinkError && (
+                        <p className="mt-1.5 text-xs text-red-500">
+                          {originLinkError}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -833,17 +1044,26 @@ function Create() {
                         <div className="w-full md:w-64">
                           <div className="flex items-center justify-between border border-[#dcd8cd] rounded-xl bg-white h-12 px-4 focus-within:border-[#c49b2c]">
                             <input
-                              type="number"
-                              min="0"
-                              step="0.01"
-                              value={bountyData.reward}
-                              onChange={(e) =>
+                              type="text"
+                              inputMode="decimal"
+                              value={rewardDisplay}
+                              onChange={(e) => {
+                                // Strip everything except digits and a single dot
+                                const raw = e.target.value
+                                  .replace(/,/g, "")
+                                  .replace(/[^\d.]/g, "");
+                                // Prevent multiple dots
+                                const parts = raw.split(".");
+                                const cleaned =
+                                  parts.length > 2
+                                    ? `${parts[0]}.${parts.slice(1).join("")}`
+                                    : raw;
                                 updateBountyData(
                                   "reward",
-                                  parseFloat(e.target.value) || 0,
-                                )
-                              }
-                              placeholder="0.00"
+                                  parseFloat(cleaned) || 0,
+                                );
+                              }}
+                              placeholder="0"
                               className="bg-transparent outline-none text-[#171714] text-sm w-full"
                             />
 
@@ -860,7 +1080,7 @@ function Create() {
                       <div className="flex flex-col md:flex-row md:justify-between gap-4">
                         <div>
                           <h4 className="font-semibold text-sm">
-                            Service fees (5%)
+                            Service fees (7%)
                           </h4>
 
                           <a
@@ -875,7 +1095,7 @@ function Create() {
                           <div className="flex items-center justify-between border border-[#e0dcd2] rounded-xl bg-[#f5f3ed] h-12 px-4">
                             <input
                               type="text"
-                              value={fee.toFixed(4)}
+                              value={feeDisplay}
                               disabled
                               className="bg-transparent outline-none text-[#777267] text-sm w-full"
                             />
@@ -902,7 +1122,7 @@ function Create() {
                         <div className="flex items-center justify-between border border-[#d8c895] rounded-xl bg-white h-12 px-4 w-full md:w-64">
                           <input
                             type="text"
-                            value={totalAmount.toFixed(4)}
+                            value={totalAmountDisplay}
                             disabled
                             className="bg-transparent outline-none text-[#171714] text-sm w-full font-bold"
                           />
@@ -919,7 +1139,6 @@ function Create() {
                       <label className="block text-xs font-semibold uppercase tracking-wider text-[#6f6a60] mb-2.5">
                         Select Token
                       </label>
-
                       <select
                         value={bountyData.token}
                         onChange={(e) =>
@@ -927,10 +1146,18 @@ function Create() {
                         }
                         className={`${selectClass} sm:w-64`}
                       >
-                        <option value="INJ">INJ (Injective)</option>
-                        <option value="USDC">USDC</option>
-                        <option value="USDT">USDT</option>
-                        <option value="ETH">ETH</option>
+                        {availableTokens.length === 0 ? (
+                          <option value="" disabled>
+                            No tokens available for this network
+                          </option>
+                        ) : (
+                          availableTokens.map((t) => (
+                            <option key={t.key} value={t.key}>
+                              {t.label}
+                              {t.kind === "native" ? " (Native)" : ""}
+                            </option>
+                          ))
+                        )}
                       </select>
                     </div>
                   </div>
@@ -969,8 +1196,8 @@ function Create() {
                           bountyData.deadline,
                         )}`,
                       ],
-                      ["Reward", `${bountyData.reward} ${bountyData.token}`],
-                      ["Service Fee", `${fee.toFixed(4)} ${bountyData.token}`],
+                      ["Reward", `${rewardDisplay} ${bountyData.token}`],
+                      ["Service Fee", `${feeDisplay} ${bountyData.token}`],
                     ].map(([label, value], index) => (
                       <div
                         key={label}
@@ -1034,14 +1261,14 @@ function Create() {
                       </span>
 
                       <span className="text-lg font-bold text-[#8f6c12]">
-                        {totalAmount.toFixed(4)} {bountyData.token}
+                        {totalAmountDisplay} {bountyData.token}
                       </span>
                     </div>
 
                     {/* Multiple Winners */}
                     <div className="flex flex-col sm:flex-row sm:justify-between gap-2 px-5 py-4 border-b border-[#e7e3da]">
                       <span className="text-xs font-semibold uppercase tracking-wider text-[#898378]">
-                        Multiple Winners
+                        Winner Type
                       </span>
 
                       <span className="text-sm font-medium text-[#25231e] sm:text-right">
@@ -1051,7 +1278,7 @@ function Create() {
                             : `Yes (${percentageArray.length} winners, ${percentageArray.join(
                                 "% / ",
                               )}%)`
-                          : "No (Single winner)"}
+                          : "Single winner"}
                       </span>
                     </div>
 

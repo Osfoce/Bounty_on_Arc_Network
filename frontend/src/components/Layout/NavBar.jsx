@@ -1,14 +1,10 @@
-
 import HappyBounty from "../../assets/images/HappyBounty.png";
 import Connect from "../Connect";
 import SignUp from "../SignUp";
 import { useAccount } from "wagmi";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import {
-  FiArrowRight,
-  FiChevronDown,
-} from "react-icons/fi";
+import { FiArrowRight, FiChevronDown } from "react-icons/fi";
 
 function NavBar() {
   const { address, isConnected } = useAccount();
@@ -29,12 +25,20 @@ function NavBar() {
 
   // Redirect when connected
   useEffect(() => {
-    if (pathname !== "/") return;
+    if (pathname === "/") {
+      const timer = setTimeout(() => {
+        if (address && isConnected) {
+          navigate("/dashboard");
+          console.log(`Connected account: ${address}`);
+        }
+      }, 1000);
 
+      return () => clearTimeout(timer);
+    }
     const timer = setTimeout(() => {
-      if (address && isConnected) {
-        navigate("/dashboard");
-        console.log(`Connected account: ${address}`);
+      if (!address && !isConnected) {
+        navigate("/");
+        // console.log(`User signed out`);
       }
     }, 1000);
 
@@ -554,4 +558,3 @@ function NavBar() {
 }
 
 export default NavBar;
-

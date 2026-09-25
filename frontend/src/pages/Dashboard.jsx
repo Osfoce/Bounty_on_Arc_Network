@@ -22,21 +22,21 @@ import BountyCard from "../components/Bounty/BountyCard";
 
 function Dashboard() {
   const { address, isConnected } = useAccount();
-
   const [loading, setLoading] = useState(true);
   const [bounties, setBounties] = useState([]);
   const [filter, setFilter] = useState("all");
   const [pagination, setPagination] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
-
   const [stats, setStats] = useState({
     completed: 0,
     inProgress: 0,
     earnings: 0,
   });
 
-  const bountyApi = "https://fresh-bounty.onrender.com/api/task";
-  const userInfoApi = `https://fresh-bounty.onrender.com/api/dashboard/${address}`;
+  const API_URL = import.meta.env.VITE_API_URL;
+
+  const bountyApi = `${API_URL}/bounty/bounties`;
+  const userInfoApi = `${API_URL}/user/details/${address}`;
 
   const loadBounties = async () => {
     setLoading(true);

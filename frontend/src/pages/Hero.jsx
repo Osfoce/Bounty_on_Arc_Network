@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { FiArrowUpRight } from "react-icons/fi";
 import Usdc from "../assets/images/usdc.png";
+import { useNav } from "../hooks/useNav";
 
 const heroMessages = [
   "Earn USDC.",
@@ -14,6 +15,7 @@ export default function Hero() {
   const [heroText, setHeroText] = useState(0);
   const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
+  const { handleNavigate } = useNav();
 
   const visualRef = useRef(null);
 
@@ -70,6 +72,7 @@ export default function Hero() {
       const rotateX = (y / rect.height - 0.5) * -12;
 
       visual.style.setProperty("--rotate-x", `${rotateX}deg`);
+
       visual.style.setProperty("--rotate-y", `${rotateY}deg`);
     };
 
@@ -267,6 +270,10 @@ export default function Hero() {
             <div className="mt-6 flex w-full flex-wrap justify-center gap-3 sm:justify-start">
               <Link
                 to="/dashboard"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavigate("/dashboard");
+                }}
                 className="group relative overflow-hidden rounded-lg bg-[#D4AF37] px-6 py-3 text-sm font-bold text-white shadow-[0_8px_25px_rgba(212,175,55,0.18)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#B8962E] hover:shadow-[0_12px_30px_rgba(212,175,55,0.28)]"
               >
                 <span className="relative z-10 flex items-center gap-2">
@@ -279,6 +286,10 @@ export default function Hero() {
 
               <Link
                 to="/create"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavigate("/create");
+                }}
                 className="group flex items-center gap-2 rounded-lg border-2 border-black/10 bg-white px-6 py-3 text-sm font-bold text-black shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[#D4AF37] hover:text-[#B8860B]"
               >
                 Create a Bounty
