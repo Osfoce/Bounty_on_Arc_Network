@@ -156,7 +156,7 @@ const bountySchema = new mongoose.Schema(
       trim: true,
       uppercase: true,
       enum: {
-        values: ["USDC", "NATIVE"],
+        values: ["USDC"],
         message: "{VALUE} is not a supported token",
       },
     },

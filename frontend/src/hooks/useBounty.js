@@ -23,14 +23,14 @@ import {
   getBountiesByCreatorConfig,
   getUserSubmissionsConfig,
   getTotalEthFeesConfig,
-  // getTotalUsdcFeesConfig,
+  getBountyCounterConfig,
   getFeePercentConfig,
   getMaxWinnersConfig,
   getOwnerConfig,
   prepareWithdrawTx,
   formatReward,
 } from "../services/bountyService";
-import { BOUNTY_ABI } from "contract";
+import { BOUNTY_ABI } from "../utils/abi";
 
 export const useBounty = () => {
   const { address: account } = useAccount();

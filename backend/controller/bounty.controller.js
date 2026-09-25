@@ -212,7 +212,7 @@ const updateBounty = async (req, res) => {
 };
 
 const deleteBounty = async (req, res) => {
-  bounty = await Bounty.findByIdAndDelete(req.params.id);
+  const bounty = await Bounty.findByIdAndDelete(req.params.id);
   if (!bounty) return res.status(404).json({ message: "Bounty not found" });
 
   res.status(200).json({ message: "Deleted sucessfully" });
