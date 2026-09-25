@@ -1,4 +1,4 @@
-import { arcTestnet, arcMainnet } from "wagmi/chains";
+// import { arcTestnet, arcMainnet } from "wagmi/chains";
 
 const arcTestnet = {
   id: 5042002,
