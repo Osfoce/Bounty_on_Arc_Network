@@ -1,13 +1,31 @@
+
+import { useEffect } from "react";
 import ConnectConfig from "./ConnectConfig";
 
 function AuthModal({ isOpen, onClose }) {
+  // Prevent background page from scrolling while modal is open
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const originalOverflow = document.body.style.overflow;
+
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   return (
     <div
       className="
-        fixed inset-0 z-50 mt-[50vh]
-        flex items-center justify-center
+        fixed inset-0 z-[100]
+        flex min-h-screen
+        items-center justify-center
+        overflow-y-auto
+        bg-black/10
         p-4
         backdrop-blur-md
         sm:p-6
@@ -135,10 +153,20 @@ function AuthModal({ isOpen, onClose }) {
         </p>
 
         {/* GOLD ACCENT */}
-        <div className="pointer-events-none absolute bottom-0 left-1/2 h-[2px] w-24 -translate-x-1/2 rounded-full bg-[#D4AF37]" />
+        <div
+          className="
+            pointer-events-none
+            absolute bottom-0 left-1/2
+            h-[2px] w-24
+            -translate-x-1/2
+            rounded-full
+            bg-[#D4AF37]
+          "
+        />
       </div>
     </div>
   );
 }
 
 export default AuthModal;
+

@@ -9,6 +9,8 @@ import { FiArrowRight, FiChevronDown } from "react-icons/fi";
 function NavBar() {
   const { address, isConnected } = useAccount();
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [resourcesHovered, setResourcesHovered] = useState(false);
 
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -58,39 +60,97 @@ function NavBar() {
   const handleResourcesClick = () => {
     if (isMobile()) {
       setIsOpen((prev) => !prev);
+    } else {
+      setIsOpen((prev) => !prev);
     }
   };
 
+  // Detect scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  // Desktop Resources expansion
+  const resourcesExpanded =
+    resourcesHovered || isOpen || scrolled;
+
   return (
-    <div className="fixed left-0 top-0 z-50 w-full px-3 pt-3 sm:px-4 md:px-6 lg:px-8">
+    <div
+      className={`
+        fixed left-0 top-0 z-50 w-full
+        transition-all duration-500 ease-out
+        ${
+          scrolled
+            ? "px-4 pt-3 sm:px-6 md:px-8"
+            : "px-3 pt-3 sm:px-4 md:px-6 lg:px-8"
+        }
+      `}
+    >
       <nav
-        className="
-          relative mx-auto flex h-[68px] max-w-[1500px]
+        className={`
+          relative mx-auto flex
           items-center justify-between
-          overflow-visible rounded-[20px]
-          border border-black/[0.07]
-          bg-white/95
-          px-3
-          shadow-[0_12px_45px_rgba(0,0,0,0.08)]
-          backdrop-blur-2xl
-          sm:px-5 md:px-6
-        "
+          overflow-visible
+          border
+          transition-all duration-500 ease-out
+          ${
+            scrolled
+              ? `
+                h-[62px]
+                max-w-[1180px]
+                rounded-full
+                border-black/[0.08]
+                bg-[#f6f5ef]/95
+                px-4
+                shadow-[0_12px_40px_rgba(0,0,0,0.10)]
+                backdrop-blur-xl
+                sm:px-5 md:px-6
+              `
+              : `
+                h-[74px]
+                max-w-[1500px]
+                rounded-[22px]
+                border-transparent
+                bg-transparent
+                px-3
+                shadow-none
+                sm:px-5 md:px-6
+              `
+          }
+        `}
       >
         {/* =====================================================
             GOLD TOP ACCENT
         ====================================================== */}
 
         <div
-          className="
-            pointer-events-none absolute left-1/2 top-0
-            h-[2px] w-40 -translate-x-1/2
+          className={`
+            pointer-events-none absolute
+            left-1/2 top-0
+            h-[2px]
+            -translate-x-1/2
             rounded-full
             bg-gradient-to-r
             from-transparent
             via-[#D4AF37]
             to-transparent
-            opacity-90
-          "
+            transition-all duration-500
+            ${
+              scrolled
+                ? "w-28 opacity-100"
+                : "w-40 opacity-90"
+            }
+          `}
         />
 
         {/* =====================================================
@@ -98,14 +158,22 @@ function NavBar() {
         ====================================================== */}
 
         <div
-          className="
+          className={`
             pointer-events-none absolute inset-0
-            rounded-[20px]
-            bg-gradient-to-b
-            from-[#D4AF37]/[0.035]
-            via-transparent
-            to-transparent
-          "
+            transition-all duration-500
+            ${
+              scrolled
+                ? `
+                  rounded-full
+                  bg-gradient-to-b
+                  from-[#D4AF37]/[0.035]
+                  via-transparent
+                  to-transparent
+                  opacity-100
+                `
+                : "rounded-[22px] bg-transparent opacity-0"
+            }
+          `}
         />
 
         {/* =====================================================
@@ -121,12 +189,16 @@ function NavBar() {
               aria-label="Go to dashboard"
             >
               <img
-                className="
-                  h-[66px] w-auto object-contain
-                  transition-all duration-300
+                className={`
+                  w-auto object-contain
+                  transition-all duration-500
                   group-hover:scale-[1.04]
-                  sm:h-[62px]
-                "
+                  ${
+                    scrolled
+                      ? "h-[52px]"
+                      : "h-[66px] sm:h-[62px]"
+                  }
+                `}
                 src={HappyBounty}
                 alt="Happy Bounty"
               />
@@ -139,12 +211,16 @@ function NavBar() {
               aria-label="Back to top"
             >
               <img
-                className="
-                  h-[66px] w-auto object-contain
-                  transition-all duration-300
+                className={`
+                  w-auto object-contain
+                  transition-all duration-500
                   group-hover:scale-[1.04]
-                  sm:h-[62px]
-                "
+                  ${
+                    scrolled
+                      ? "h-[52px]"
+                      : "h-[66px] sm:h-[62px]"
+                  }
+                `}
                 src={HappyBounty}
                 alt="Happy Bounty"
               />
@@ -171,11 +247,13 @@ function NavBar() {
             className="relative"
             onMouseEnter={() => {
               if (!isMobile()) {
+                setResourcesHovered(true);
                 setIsOpen(true);
               }
             }}
             onMouseLeave={() => {
               if (!isMobile()) {
+                setResourcesHovered(false);
                 setIsOpen(false);
               }
             }}
@@ -183,24 +261,66 @@ function NavBar() {
             <button
               type="button"
               onClick={handleResourcesClick}
+              aria-label="Resources"
               className={`
-                group flex items-center gap-2
-                rounded-xl border
-                px-3 py-2
+                group flex h-10 items-center
+                justify-center
+                overflow-hidden
+                rounded-full
+                border
                 text-[13px] font-bold
-                transition-all duration-200
+                transition-all duration-300 ease-out
+
                 ${
                   isOpen
                     ? "border-[#D4AF37]/30 bg-[#D4AF37]/[0.08] text-[#111111]"
-                    : "border-transparent text-[#222222] hover:border-[#D4AF37]/25 hover:bg-[#D4AF37]/[0.055] hover:text-[#111111]"
+                    : "border-black/[0.06] bg-white/[0.55] text-[#222222] hover:border-[#D4AF37]/25 hover:bg-[#D4AF37]/[0.055]"
+                }
+
+                /* Desktop */
+                md:px-0
+                ${
+                  resourcesExpanded
+                    ? "md:w-[126px] md:gap-2"
+                    : "md:w-10 md:gap-0"
+                }
+
+                /* Mobile */
+                max-md:px-3
+                max-md:gap-2
+                max-md:w-auto
+
+                ${
+                  scrolled
+                    ? "max-md:h-10 max-md:w-10 max-md:gap-0 max-md:px-0"
+                    : ""
                 }
               `}
             >
-              <span>Resources</span>
+              <span
+                className={`
+                  whitespace-nowrap
+                  transition-all duration-300 ease-out
+                  ${
+                    resourcesExpanded
+                      ? "md:max-w-[75px] md:opacity-100"
+                      : "md:max-w-0 md:opacity-0"
+                  }
+
+                  ${
+                    scrolled
+                      ? "max-md:hidden"
+                      : ""
+                  }
+                `}
+              >
+                Resources
+              </span>
 
               <FiChevronDown
                 className={`
                   h-4 w-4
+                  shrink-0
                   transition-all duration-300
                   ${
                     isOpen
@@ -258,9 +378,7 @@ function NavBar() {
                 </div>
               </div>
 
-              {/* =================================================
-                  FAQ
-              ================================================== */}
+              {/* FAQ */}
 
               <Link
                 to="/faqs"
@@ -306,9 +424,7 @@ function NavBar() {
                 />
               </Link>
 
-              {/* =================================================
-                  WHITE PAPER
-              ================================================== */}
+              {/* WHITE PAPER */}
 
               <Link
                 to="/whitepaper"
@@ -355,9 +471,7 @@ function NavBar() {
                 />
               </Link>
 
-              {/* =================================================
-                  CONTACT
-              ================================================== */}
+              {/* CONTACT */}
 
               <Link
                 to="/contact"
@@ -425,8 +539,17 @@ function NavBar() {
               CONNECT / SIGN UP
           ====================================================== */}
 
-          <div className="flex items-center">
-            {!isConnected && pathname === "/" ? <SignUp /> : <Connect />}
+          <div
+            className="
+              flex shrink-0 items-center
+              [&>button]:shrink-0
+            "
+          >
+            {!isConnected && pathname === "/" ? (
+              <SignUp />
+            ) : (
+              <Connect />
+            )}
           </div>
         </div>
       </nav>

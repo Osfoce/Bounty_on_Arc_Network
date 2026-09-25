@@ -114,14 +114,12 @@ export default function Hero() {
   ];
 
   return (
-    <section className="relative min-h-[620px] overflow-hidden bg-[#f6f5ef] text-black sm:min-h-[650px]">
+    <section className="relative min-h-[620px] w-full overflow-hidden bg-[#f6f5ef] text-black sm:min-h-[650px]">
       {/* =====================================================
           ARCHITECTURAL BRICK BACKGROUND
       ===================================================== */}
 
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        {/* Very subtle brick structure */}
-
         <div
           className="absolute -inset-20 scale-110 opacity-[0.035]"
           style={{
@@ -141,8 +139,6 @@ export default function Hero() {
             backgroundPosition: "0 0, 75px 38px",
           }}
         />
-
-        {/* Softer secondary brick layer */}
 
         <div
           className="absolute -inset-20 scale-110 opacity-[0.012]"
@@ -165,8 +161,6 @@ export default function Hero() {
           }}
         />
 
-        {/* Very soft architectural depth */}
-
         <div
           className="absolute -inset-20 scale-110 opacity-[0.018] blur-[8px]"
           style={{
@@ -183,21 +177,11 @@ export default function Hero() {
           }}
         />
 
-        {/* Soft center fade */}
-
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(246,245,239,0.62)_0%,rgba(246,245,239,0.3)_48%,rgba(246,245,239,0.08)_100%)]" />
-
-        {/* =================================================
-            VERY SUBTLE GOLD AMBIENT ACCENTS
-        ================================================= */}
 
         <div className="absolute left-[-180px] top-[8%] h-[380px] w-[380px] rounded-full bg-[#D4AF37]/[0.018] blur-[130px]" />
 
         <div className="absolute bottom-[-180px] right-[-100px] h-[400px] w-[400px] rounded-full bg-[#D4AF37]/[0.018] blur-[140px]" />
-
-        {/* =================================================
-            FINE GOLD DOT GRID
-        ================================================= */}
 
         <div
           className="absolute inset-0 opacity-[0.022]"
@@ -207,10 +191,6 @@ export default function Hero() {
             backgroundSize: "38px 38px",
           }}
         />
-
-        {/* =================================================
-            FLOATING GOLD DOTS
-        ================================================= */}
 
         {backgroundDots.map((dot, index) => (
           <span
@@ -226,10 +206,6 @@ export default function Hero() {
           />
         ))}
 
-        {/* =================================================
-            BOTTOM / CENTER FADE
-        ================================================= */}
-
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#f6f5ef] to-transparent" />
       </div>
 
@@ -237,13 +213,13 @@ export default function Hero() {
           MAIN CONTAINER
       ===================================================== */}
 
-      <div className="relative z-10 mx-auto flex min-h-[620px] max-w-7xl items-center px-5 py-12 sm:min-h-[650px] sm:px-8 sm:py-16 lg:px-10">
-        <div className="grid w-full items-center gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-8">
+      <div className="relative z-10 mx-auto flex w-full min-h-[620px] max-w-full items-center overflow-hidden px-5 py-12 sm:min-h-[650px] sm:px-8 sm:py-16 lg:px-10">
+        <div className="grid w-full min-w-0 items-center gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-8">
           {/* =================================================
               LEFT SIDE
           ================================================= */}
 
-          <div className="max-w-2xl text-center sm:text-left">
+          <div className="mx-auto w-full min-w-0 max-w-2xl text-center sm:text-left">
             {/* BADGE */}
 
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#D4AF37]/25 bg-white px-4 py-2 shadow-[0_5px_20px_rgba(17,17,17,0.04)]">
@@ -271,29 +247,27 @@ export default function Hero() {
 
               {/* TYPING TEXT */}
 
-              <div className="relative mt-1 h-[52px] overflow-hidden sm:h-[64px] md:h-[80px]">
-                <div className="absolute left-1/2 top-0 flex -translate-x-1/2 items-center whitespace-nowrap text-3xl font-extrabold leading-[1] sm:left-0 sm:translate-x-0 sm:text-4xl md:text-6xl lg:text-[4.2rem]">
+              <div className="relative mt-1 flex min-h-[52px] w-full min-w-0 items-start justify-center overflow-hidden sm:min-h-[64px] sm:justify-start md:min-h-[80px]">
+                <div className="flex max-w-full min-w-0 items-center whitespace-nowrap text-3xl font-extrabold leading-[1] sm:text-4xl md:text-6xl lg:text-[4.2rem]">
                   <span className="bg-gradient-to-r from-[#B8860B] via-[#D4AF37] to-[#B8860B] bg-clip-text text-transparent">
                     {displayText}
                   </span>
 
-                  <span className="ml-1 inline-block h-[0.8em] w-[3px] rounded-full bg-[#D4AF37]" />
+                  <span className="ml-1 inline-block h-[0.8em] w-[3px] shrink-0 rounded-full bg-[#D4AF37]" />
                 </div>
               </div>
             </div>
 
             {/* DESCRIPTION */}
 
-            <p className="mx-auto mt-3 max-w-xl text-sm font-semibold leading-relaxed text-black/65 sm:mx-0 sm:text-base md:mt-4">
+            <p className="mx-auto mt-3 w-full min-w-0 max-w-xl text-sm font-semibold leading-relaxed text-black/65 sm:mx-0 sm:text-base md:mt-4">
               Complete quests and earn USDC, tokens, and digital rewards. Post
               bounties and get quality work done — fully on-chain.
             </p>
 
             {/* BUTTONS */}
 
-            <div className="mt-6 flex flex-wrap justify-center gap-3 sm:justify-start">
-              {/* PRIMARY */}
-
+            <div className="mt-6 flex w-full flex-wrap justify-center gap-3 sm:justify-start">
               <Link
                 to="/dashboard"
                 onClick={(e) => {
@@ -309,8 +283,6 @@ export default function Hero() {
 
                 <span className="absolute inset-0 translate-x-[-100%] bg-white/20 transition-transform duration-700 group-hover:translate-x-[100%]" />
               </Link>
-
-              {/* SECONDARY */}
 
               <Link
                 to="/create"
@@ -353,22 +325,14 @@ export default function Hero() {
 
           <div
             ref={visualRef}
-            className="usdc-visual relative flex min-h-[360px] items-center justify-center sm:min-h-[430px] lg:min-h-[500px]"
+            className="usdc-visual relative flex min-h-[360px] min-w-0 items-center justify-center overflow-visible sm:min-h-[430px] lg:min-h-[500px]"
           >
-            <div className="usdc-scene relative flex h-[340px] w-[340px] items-center justify-center sm:h-[430px] sm:w-[430px] lg:h-[500px] lg:w-[500px]">
-              {/* LARGE SOFT GLOW */}
-
+            <div className="usdc-scene relative flex h-[340px] w-[340px] max-w-full items-center justify-center sm:h-[430px] sm:w-[430px] lg:h-[500px] lg:w-[500px]">
               <div className="absolute h-[230px] w-[230px] rounded-full bg-[#D4AF37]/10 blur-[75px] sm:h-[300px] sm:w-[300px]" />
-
-              {/* SUBTLE CIRCLE */}
 
               <div className="absolute h-[270px] w-[270px] rounded-full border border-[#D4AF37]/15 sm:h-[350px] sm:w-[350px] lg:h-[410px] lg:w-[410px]" />
 
-              {/* SECOND CIRCLE */}
-
               <div className="absolute h-[220px] w-[220px] rounded-full border border-[#D4AF37]/10 sm:h-[290px] sm:w-[290px] lg:h-[340px] lg:w-[340px]" />
-
-              {/* ROTATING IMAGE */}
 
               <div className="usdc-wrapper relative z-10">
                 <div className="usdc-image-container">
@@ -379,19 +343,13 @@ export default function Hero() {
                     draggable="false"
                   />
 
-                  {/* LIGHT REFLECTION */}
-
                   <div className="usdc-reflection" />
                 </div>
               </div>
 
-              {/* SMALL ORBIT DOTS */}
-
               <span className="usdc-dot usdc-dot-one" />
               <span className="usdc-dot usdc-dot-two" />
               <span className="usdc-dot usdc-dot-three" />
-
-              {/* FLOATING PARTICLES */}
 
               <span className="usdc-particle particle-one" />
               <span className="usdc-particle particle-two" />
@@ -407,10 +365,6 @@ export default function Hero() {
       ===================================================== */}
 
       <style>{`
-        /* =====================================================
-           BACKGROUND DOTS
-        ===================================================== */
-
         .hero-bg-dot {
           opacity: 0.14;
           box-shadow: 0 0 7px rgba(212, 175, 55, 0.22);
@@ -430,10 +384,6 @@ export default function Hero() {
           }
         }
 
-        /* =====================================================
-           USDC VISUAL
-        ===================================================== */
-
         .usdc-visual {
           --rotate-x: 0deg;
           --rotate-y: 0deg;
@@ -448,10 +398,6 @@ export default function Hero() {
           transition:
             transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
         }
-
-        /* =====================================================
-           USDC IMAGE
-        ===================================================== */
 
         .usdc-wrapper {
           transform-style: preserve-3d;
@@ -492,10 +438,6 @@ export default function Hero() {
           animation: reflectionMove 5s ease-in-out infinite;
         }
 
-        /* =====================================================
-           CIRCLES
-        ===================================================== */
-
         .usdc-scene::before {
           content: "";
           position: absolute;
@@ -515,10 +457,6 @@ export default function Hero() {
           border: 1px dashed rgba(212, 175, 55, 0.1);
           animation: circleRotateReverse 25s linear infinite;
         }
-
-        /* =====================================================
-           DOTS
-        ===================================================== */
 
         .usdc-dot {
           position: absolute;
@@ -552,10 +490,6 @@ export default function Hero() {
           animation: dotFloatThree 4.5s ease-in-out infinite;
         }
 
-        /* =====================================================
-           PARTICLES
-        ===================================================== */
-
         .usdc-particle {
           position: absolute;
           width: 4px;
@@ -588,10 +522,6 @@ export default function Hero() {
           left: 30%;
           animation: particleFour 5s ease-in-out infinite;
         }
-
-        /* =====================================================
-           ANIMATIONS
-        ===================================================== */
 
         @keyframes coinFloat {
           0%,
@@ -744,10 +674,6 @@ export default function Hero() {
           }
         }
 
-        /* =====================================================
-           RESPONSIVE
-        ===================================================== */
-
         @media (max-width: 640px) {
           .usdc-image-container {
             width: 205px;
@@ -769,10 +695,6 @@ export default function Hero() {
             height: 290px;
           }
         }
-
-        /* =====================================================
-           REDUCED MOTION
-        ===================================================== */
 
         @media (prefers-reduced-motion: reduce) {
           .hero-bg-dot,
