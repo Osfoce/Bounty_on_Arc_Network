@@ -4,7 +4,8 @@ const { formatEther, parseEventLogs } = require("viem");
 const Bounty = require("../modules/bounty.module");
 const Reward = require("../modules/reward.module");
 const User = require("../modules/user.module"); // adjust path/name
-const { getPublicClient, BOUNTY_ABI } = require("../config/chains");
+const { getPublicClient } = require("../config/chains");
+const { BOUNTY_ABI } = require("../config/abi");
 
 const isValidId = (id) => mongoose.Types.ObjectId.isValid(id);
 const isAddress = (a) => typeof a === "string" && /^0x[a-fA-F0-9]{40}$/.test(a);

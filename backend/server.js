@@ -39,7 +39,7 @@ app.get("/", (req, res) => {
   // http://localhost:5000/api/bounty/delete/id
   // http://localhost:5000/api/bounty/update/id
 
-  res.json({ message: "API working" });
+  res.json({ message: "ARC API working" });
 });
 
 // Connect to DB and start server
