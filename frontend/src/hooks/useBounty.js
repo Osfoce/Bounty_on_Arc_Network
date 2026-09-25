@@ -9,7 +9,7 @@ import {
 } from "wagmi";
 import { useState, useEffect } from "react";
 import { parseEventLogs } from "viem";
-import toast from "react-hot-toast";
+import { showToast } from "../components/UI/Toast";
 import {
   prepareCreateBountyTx,
   prepareClaimTx,
@@ -58,7 +58,7 @@ export const useBounty = () => {
     } else if (isSuccess) {
       setIsConfirming(false);
       setTxHash(null);
-      // Toast success is already shown inside executeTx, but we keep this for consistency
+      // showToast success is already shown inside executeTx, but we keep this for consistency
     }
   }, [isWaiting, isSuccess]);
 
@@ -69,11 +69,11 @@ export const useBounty = () => {
     const { successMessage = "Transaction successful", eventName } = options;
 
     if (!account) {
-      toast.error("Please connect your wallet");
+      showToast.error("Please connect your wallet");
       throw new Error("No account connected");
     }
     if (!chainId) {
-      toast.error("No network detected");
+      showToast.error("No network detected");
       throw new Error("No chain ID");
     }
 
@@ -84,12 +84,12 @@ export const useBounty = () => {
       txConfig = prepareFn({ ...params, account, chainId });
     } catch (err) {
       console.error("Failed to prepare transaction:", err);
-      toast.error(err.message || "Invalid transaction parameters");
+      showToast.error(err.message || "Invalid transaction parameters");
       throw err;
     }
 
     if (!txConfig.address) {
-      toast.error("Contract not deployed on this network");
+      showToast.error("Contract not deployed on this network");
       throw new Error("Contract address missing");
     }
 
@@ -99,7 +99,7 @@ export const useBounty = () => {
       // Send transaction
       const hash = await writeContractAsync(txConfig);
       setTxHash(hash);
-      toast.loading("Transaction sent. Waiting for confirmation...", {
+      showToast.loading("Transaction sent. Waiting for confirmation...", {
         id: hash,
       });
 
@@ -113,8 +113,8 @@ export const useBounty = () => {
         throw new Error("Transaction reverted");
       }
 
-      // Success toast
-      toast.success(successMessage, { id: hash });
+      // Success showToast
+      showToast.success(successMessage, { id: hash });
 
       // Parse event if requested
       let eventData = null;
@@ -134,7 +134,7 @@ export const useBounty = () => {
     } catch (err) {
       console.error(err);
       setTxError(err);
-      toast.error(err.shortMessage || err.message || "Transaction failed");
+      showToast.error(err.shortMessage || err.message || "Transaction failed");
       throw err;
     } finally {
       setIsPending(false);
@@ -167,7 +167,7 @@ export const useBounty = () => {
     console.log(typeof txHash);
 
     if (!txHash) {
-      toast.error("Transaction hash is required");
+      showToast.error("Transaction hash is required");
       return null;
     }
 
@@ -218,7 +218,7 @@ export const useBounty = () => {
       return counter !== undefined && counter !== null ? Number(counter) : null;
     } catch (error) {
       console.error(error);
-      toast.error("Failed to retrieve bountyId from transaction");
+      showToast.error("Failed to retrieve bountyId from transaction");
       return null;
     }
   };
