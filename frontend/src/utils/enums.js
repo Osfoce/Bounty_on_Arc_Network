@@ -1,8 +1,4 @@
-import {
-  // CHAIN_IDS,
-  NATIVE_TOKENS,
-  // TOKEN_ADDRESSES,
-} from "./chains.address";
+import { NATIVE_TOKENS } from "./chains.address";
 
 // Payout types for multiple winners
 export const PayoutType = {
@@ -14,11 +10,6 @@ export const PayoutType = {
 // For multiple winners, we have two options: equal split or percentage-based
 export const getPayoutType = ({ winnersAllowed, payoutType }) => {
   if (winnersAllowed === 1 || payoutType === "SINGLE") return PayoutType.SINGLE;
-
-  // if (!["MULTI_EQUAL", "MULTI_PERCENTAGE", "SINGLE"].includes(payoutType)) {
-  //   throw new Error("Invalid payout type");
-  // }
-
   if (payoutType === "MULTI_EQUAL") return PayoutType.MULTI_EQUAL;
   if (payoutType === "MULTI_PERCENTAGE") return PayoutType.MULTI_PERCENTAGE;
 
@@ -30,10 +21,7 @@ export const getPayoutType = ({ winnersAllowed, payoutType }) => {
 // Must match the Solidity enum order exactly.
 // ===============================
 export const TokenType = {
-  USDC: 0, // Solidity: ETH
-  // USDC: 1, // Solidity: USDC
-  // Add more here if/when the contract enum grows:
-  // USDT: 2,
+  USDC: 0,
 };
 
 // ===============================
@@ -41,8 +29,6 @@ export const TokenType = {
 // ===============================
 export const TOKENS = {
   NATIVE: "USDC",
-  // USDC: "USDC",
-  // USDT: "USDT",
 };
 
 // ===============================
@@ -57,7 +43,6 @@ export const buildUiTokenMap = (chainId) => {
   if (native) {
     // Map both the symbol and the canonical "NATIVE" key
     map[native.symbol.toUpperCase()] = TOKENS.NATIVE;
-    // map["NATIVE"] = TOKENS.NATIVE;
     // Optional aliases for the UI
     map["USDC"] = TOKENS.NATIVE;
   }
@@ -70,8 +55,6 @@ export const buildUiTokenMap = (chainId) => {
 // ===============================
 export const TOKEN_TYPE_MAP = {
   [TOKENS.NATIVE]: TokenType.NATIVE,
-  // [TOKENS.USDC]: TokenType.USDC,
-  // [TOKENS.USDT]: TokenType.USDT,
 };
 
 // ===============================
