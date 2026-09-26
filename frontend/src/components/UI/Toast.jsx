@@ -1,14 +1,6 @@
 import toast from "react-hot-toast";
 
-/*
-|--------------------------------------------------------------------------
-| SHARED TOAST STYLES
-|--------------------------------------------------------------------------
-| Warm cream cards with subtle borders, matching the Happy Bounty
-| white/gold design system. Each variant keeps the same base chrome
-| and swaps the left border + icon colour.
-|--------------------------------------------------------------------------
-*/
+/* ---------- SHARED STYLES (unchanged) ---------- */
 
 const BASE_STYLE = {
   background: "#f9f8f3",
@@ -22,36 +14,14 @@ const BASE_STYLE = {
   maxWidth: "380px",
 };
 
-const SUCCESS_STYLE = {
-  ...BASE_STYLE,
-  borderLeft: "3px solid #d4af37",
-};
-
-const ERROR_STYLE = {
-  ...BASE_STYLE,
-  borderLeft: "3px solid #c62828",
-};
-
-const INFO_STYLE = {
-  ...BASE_STYLE,
-  borderLeft: "3px solid #b28b20",
-};
-
-const LOADING_STYLE = {
-  ...BASE_STYLE,
-  borderLeft: "3px solid #d4af37",
-};
+const SUCCESS_STYLE = { ...BASE_STYLE, borderLeft: "3px solid #d4af37" };
+const ERROR_STYLE = { ...BASE_STYLE, borderLeft: "3px solid #c62828" };
+const INFO_STYLE = { ...BASE_STYLE, borderLeft: "3px solid #b28b20" };
+const LOADING_STYLE = { ...BASE_STYLE, borderLeft: "3px solid #d4af37" };
 
 const POSITION = "top-right";
 
-/*
-|--------------------------------------------------------------------------
-| GOLD SPINNER FOR LOADING
-|--------------------------------------------------------------------------
-| react-hot-toast's default loading spinner is neutral. We replace it
-| with a small gold ring that matches the theme.
-|--------------------------------------------------------------------------
-*/
+/* ---------- GOLD SPINNER (unchanged) ---------- */
 
 const GoldSpinner = () => (
   <span
@@ -67,50 +37,56 @@ const GoldSpinner = () => (
   />
 );
 
-// Inject the keyframes once
 if (
   typeof document !== "undefined" &&
   !document.getElementById("hb-toast-spin")
 ) {
   const style = document.createElement("style");
   style.id = "hb-toast-spin";
-  style.textContent = `
-    @keyframes happyBountySpin {
-      to { transform: rotate(360deg); }
-    }
-  `;
+  style.textContent = `@keyframes happyBountySpin { to { transform: rotate(360deg); } }`;
   document.head.appendChild(style);
 }
 
-/*
-|--------------------------------------------------------------------------
-| REUSABLE TOAST FUNCTIONS
-|--------------------------------------------------------------------------
-*/
+/* ---------- ARGUMENT PARSER ---------- */
+
+/**
+ * Normalise the second and third arguments so callers can pass either:
+ *   showToast.success(msg)
+ *   showToast.success(msg, 5000)
+ *   showToast.success(msg, { id: hash })
+ *   showToast.success(msg, 5000, { id: hash })
+ */
+const parseArgs = (second, third, defaultDuration) => {
+  if (typeof second === "number") {
+    return { duration: second, options: third || {} };
+  }
+  if (second && typeof second === "object") {
+    return { duration: defaultDuration, options: second };
+  }
+  return { duration: defaultDuration, options: third || {} };
+};
+
+/* ---------- PUBLIC API ---------- */
 
 export const showToast = {
-  success: (message, duration = 3000, options = {}) => {
+  success: (message, second, third) => {
+    const { duration, options } = parseArgs(second, third, 3000);
     return toast.success(message, {
       duration,
       position: POSITION,
       style: SUCCESS_STYLE,
-      iconTheme: {
-        primary: "#d4af37",
-        secondary: "#f9f8f3",
-      },
+      iconTheme: { primary: "#d4af37", secondary: "#f9f8f3" },
       ...options,
     });
   },
 
-  error: (message, duration = 1000, options = {}) => {
+  error: (message, second, third) => {
+    const { duration, options } = parseArgs(second, third, 4000);
     return toast.error(message, {
       duration,
       position: POSITION,
       style: ERROR_STYLE,
-      iconTheme: {
-        primary: "#c62828",
-        secondary: "#f9f8f3",
-      },
+      iconTheme: { primary: "#c62828", secondary: "#f9f8f3" },
       ...options,
     });
   },
@@ -124,33 +100,18 @@ export const showToast = {
     });
   },
 
-  info: (message, duration = 3000, options = {}) => {
+  info: (message, second, third) => {
+    const { duration, options } = parseArgs(second, third, 3000);
     return toast(message, {
       duration,
       position: POSITION,
       style: INFO_STYLE,
       icon: "ℹ",
-      iconTheme: {
-        primary: "#b28b20",
-        secondary: "#f9f8f3",
-      },
+      iconTheme: { primary: "#b28b20", secondary: "#f9f8f3" },
       ...options,
     });
   },
 
-  /**
-   * Promise-based toast — perfect for blockchain transactions.
-   *
-   * @example
-   * showToast.promise(
-   *   writeContractAsync(txConfig),
-   *   {
-   *     loading: "Confirming transaction...",
-   *     success: "Bounty created!",
-   *     error: (err) => err.shortMessage || "Transaction failed",
-   *   },
-   * );
-   */
   promise: (promise, messages, options = {}) => {
     return toast.promise(
       promise,
@@ -180,4 +141,7 @@ export const showToast = {
       },
     );
   },
+
+  dismiss: (id) => toast.dismiss(id),
+  remove: (id) => toast.remove(id),
 };
