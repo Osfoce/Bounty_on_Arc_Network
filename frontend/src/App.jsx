@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import LandingPage from "./pages/LandingPage";
@@ -17,8 +17,26 @@ import LoadingScreen from "./components/LoadingScreen";
 function App() {
   const [loading, setLoading] = useState(true);
 
+  // Remember the user's theme after refresh
+  const [dark, setDark] = useState(() => {
+    return localStorage.getItem("theme") === "dark";
+  });
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", dark);
+
+    // Save the current theme
+    localStorage.setItem("theme", dark ? "dark" : "light");
+  }, [dark]);
+
   return (
-    <>
+    <div
+      className={`min-h-screen transition-colors duration-300 ${
+        dark
+          ? "bg-[#080908] text-white"
+          : "bg-[#f6f5ef] text-[#111111]"
+      }`}
+    >
       {loading && (
         <LoadingScreen onComplete={() => setLoading(false)} />
       )}
@@ -38,7 +56,7 @@ function App() {
           <Route path="*" element={<h1>404 Not Found</h1>} />
         </Routes>
       </BrowserRouter>
-    </>
+    </div>
   );
 }
 
