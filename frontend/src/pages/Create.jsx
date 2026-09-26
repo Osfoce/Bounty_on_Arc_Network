@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { useAccount, useChainId, useSwitchChain } from "wagmi";
 import { Link, useNavigate } from "react-router-dom";
-import{ showToast } from "../components/UI/Toast";
+import { showToast } from "../components/UI/Toast";
 import axios from "axios";
 import {
   FiArrowLeft,

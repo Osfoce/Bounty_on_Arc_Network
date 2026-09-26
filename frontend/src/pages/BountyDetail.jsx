@@ -433,7 +433,7 @@ const BountyDetail = () => {
     if (!address) return showToast.error("Please connect your wallet");
     if (!newComment.trim()) return showToast.error("Enter a comment");
     try {
-      const { data } = await axios.post(`${API_URL}/comments/${id}`, {
+      const { data } = await axios.post(`${API_URL}/comments/add/${id}`, {
         user: address,
         text: newComment.trim(),
       });

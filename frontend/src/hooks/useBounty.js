@@ -98,7 +98,9 @@ export const useBounty = () => {
     try {
       // Send transaction
       const hash = await writeContractAsync(txConfig);
+      
       setTxHash(hash);
+
       showToast.loading("Transaction sent. Waiting for confirmation...", {
         id: hash,
       });
@@ -106,6 +108,7 @@ export const useBounty = () => {
       // ...........
       // Wait for receipt using public client
       const receipt = await publicClient.waitForTransactionReceipt({ hash });
+
       console.log("Receipt logs:", receipt.logs);
       console.log("Full receipt:", receipt);
 
