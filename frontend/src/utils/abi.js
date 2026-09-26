@@ -1,4 +1,4 @@
-const BOUNTY_ABI = [
+export const BOUNTY_ABI = [
   {
     type: "constructor",
     inputs: [
@@ -369,5 +369,3 @@ const BOUNTY_ABI = [
   },
   { type: "error", name: "ReentrancyGuardReentrantCall", inputs: [] },
 ];
-
-module.exports = { BOUNTY_ABI };

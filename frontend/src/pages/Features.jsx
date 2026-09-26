@@ -9,10 +9,12 @@ import {
   FiArrowRight,
 } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import { useNav } from "../hooks/useNav";
 
 function Features() {
   const sectionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
+  const { handleNavigate } = useNav();
 
   const [dark, setDark] = useState(
     document.documentElement.classList.contains("dark"),
@@ -239,9 +241,7 @@ function Features() {
               }`}
             >
               Everything You Need to{" "}
-              <span className="text-[#B28B20]">
-                Earn
-              </span>
+              <span className="text-[#B28B20]">Earn</span>
             </h2>
 
             <p
@@ -252,6 +252,10 @@ function Features() {
               Fresh Bounty connects creators and contributors through
               on-chain opportunities, with Arc and USDC powering a
               faster way to fund, complete, and reward Web3 work.
+            <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-[#77736b] md:text-base">
+              Fresh Bounty connects creators and contributors through on-chain
+              opportunities, with Arc and USDC powering a faster way to fund,
+              complete, and reward Web3 work.
             </p>
           </div>
 
@@ -306,6 +310,10 @@ function Features() {
                   >
                     Complete approved bounties and work toward earning
                     rewards through a USDC-powered bounty experience.
+                  <p className="mt-4 text-sm leading-6 text-[#77736b]">
+                    Complete approved bounties and work toward earning rewards
+                    through a USDC-powered bounty experience.
+
                   </p>
                 </div>
 
@@ -369,6 +377,9 @@ function Features() {
                     A bounty experience designed around Arc, giving
                     creators and contributors a focused on-chain
                     environment for Web3 work.
+                  <p className="mt-4 text-sm leading-6 text-[#77736b]">
+                    A bounty experience designed around Arc, giving creators and
+                    contributors a focused on-chain environment for Web3 work.
                   </p>
                 </div>
 
@@ -493,6 +504,9 @@ function Features() {
                   >
                     Keep bounty activity, submissions, and reward flows
                     visible through a transparent Web3 experience.
+                  <p className="mt-4 text-sm leading-6 text-[#77736b]">
+                    Keep bounty activity, submissions, and reward flows visible
+                    through a transparent Web3 experience.
                   </p>
                 </div>
 
@@ -562,6 +576,11 @@ function Features() {
                   ? "border-[#D4AF37]/30 bg-[#151715] text-[#D4AF37]"
                   : "border-[#D4AF37]/30 bg-white text-[#B28B20]"
               }`}
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavigate("/dashboard");
+              }}
+              className="group flex items-center gap-2 rounded-xl border border-[#D4AF37]/30 bg-white px-5 py-2.5 text-sm font-semibold text-[#B28B20] transition-all duration-300 hover:border-[#D4AF37] hover:bg-[#D4AF37] hover:text-white hover:shadow-[0_10px_30px_rgba(212,175,55,0.18)]"
             >
               <span>Explore Opportunities</span>
 
@@ -617,4 +636,5 @@ function Features() {
   );
 }
 
+export default Features;
 export default Features;

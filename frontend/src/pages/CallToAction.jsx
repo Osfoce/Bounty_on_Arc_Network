@@ -1,5 +1,7 @@
+
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useNav } from "../hooks/useNav";
 import {
   FiArrowUpRight,
   FiCheck,
@@ -28,6 +30,8 @@ function CallToAction() {
 
     return () => observer.disconnect();
   }, []);
+      const { handleNavigate } = useNav();
+
 
   return (
     <section
@@ -303,6 +307,10 @@ function CallToAction() {
           <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
               to="/dashboard"
+               onClick={(e) => {
+                  e.preventDefault();
+                  handleNavigate("/dashboard");
+                }}
               className="group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-[#D4AF37] px-6 py-3 text-sm font-bold text-white shadow-[0_10px_30px_rgba(212,175,55,0.18)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#B28B20] hover:shadow-[0_15px_40px_rgba(212,175,55,0.25)] sm:w-auto"
             >
               <span className="relative z-10">Explore Bounties</span>
@@ -322,6 +330,11 @@ function CallToAction() {
                 backgroundColor: dark ? "#151715" : "#f6f5ef",
                 color: dark ? "#ffffff" : "#111111",
               }}
+               onClick={(e) => {
+                  e.preventDefault();
+                  handleNavigate("/dashboard");
+                }}
+              className="group inline-flex w-full items-center justify-center gap-2 rounded-xl border border-black/[0.09] bg-[#f6f5ef] px-6 py-3 text-sm font-semibold text-[#111111] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-[#D4AF37]/40 hover:bg-white sm:w-auto"
             >
               <FiPlus
                 className={`transition-transform duration-300 group-hover:rotate-90 ${

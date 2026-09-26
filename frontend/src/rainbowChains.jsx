@@ -1,51 +1,47 @@
-import { sepolia } from "wagmi/chains";
+// import { arcTestnet, arcMainnet } from "wagmi/chains";
 
-// const injectiveTestnetRpcUrl =
-//   "https://k8s.testnet.json-rpc.injective.network/";
-// const injectiveTestnetExplorerUrl =
-//   "https://testnet.explorer.injective.network/";
-
-// Injective Testnet Configuration
-const injectiveTestnet = {
-  id: 1439,
-  name: "INJ Testnet",
-  nativeCurrency: { name: "Injective", symbol: "INJ", decimals: 18 },
-  rpcUrls: {
-    default: { http: ["https://k8s.testnet.json-rpc.injective.network/"] },
-  },
-  blockExplorers: {
-    default: {
-      name: "Injective Explorer",
-      url:  "https://testnet.explorer.injective.network/",
-    },
-  },
-  testnet: true,
-};
-
-export const creditcoinTestnet = {
-  id: 102031,
-  name: "Creditcoin Testnet",
+const arcTestnet = {
+  id: 5042002,
+  name: "Arc Testnet",
   nativeCurrency: {
-    name: "Creditcoin Testnet",
-    symbol: "tCTC",
+    name: "USDC",
+    symbol: "USDC",
     decimals: 18,
   },
   rpcUrls: {
     default: {
-      http: ["https://rpc.cc3-testnet.creditcoin.network"],
+      http: ["https://rpc.testnet.arc.io"],
     },
   },
   blockExplorers: {
     default: {
-      name: "Creditcoin Explorer",
-      url: "https://creditcoin-testnet.blockscout.com",
+      name: "Arc Explorer",
+      url: "https://explorer.testnet.arc.io",
     },
   },
   testnet: true,
 };
 
-export const supportedChains = [
-  sepolia,
-  injectiveTestnet,
-  creditcoinTestnet,
-];
+const arcMainnet = {
+  id: 5042,
+  name: "Arc",
+  nativeCurrency: {
+    name: "USDC",
+    symbol: "USDC",
+    decimals: 18,
+  },
+  rpcUrls: {
+    default: {
+      http: ["https://rpc.mainnet.arc.io"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "Arc Explorer",
+      url: "https://explorer.arc.io",
+    },
+  },
+  testnet: false,
+};
+
+export const supportedChains = [arcMainnet, arcTestnet];

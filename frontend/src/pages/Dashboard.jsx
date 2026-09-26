@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAccount } from "wagmi";
 import axios from "axios";
-import toast from "react-hot-toast";
+import{ showToast } from "../components/UI/Toast";
 import {
   FiActivity,
   FiArrowRight,
@@ -22,21 +22,21 @@ import BountyCard from "../components/Bounty/BountyCard";
 
 function Dashboard() {
   const { address, isConnected } = useAccount();
-
   const [loading, setLoading] = useState(true);
   const [bounties, setBounties] = useState([]);
   const [filter, setFilter] = useState("all");
   const [pagination, setPagination] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
-
   const [stats, setStats] = useState({
     completed: 0,
     inProgress: 0,
     earnings: 0,
   });
 
-  const bountyApi = "https://fresh-bounty.onrender.com/api/task";
-  const userInfoApi = `https://fresh-bounty.onrender.com/api/dashboard/${address}`;
+  const API_URL = import.meta.env.VITE_API_URL;
+
+  const bountyApi = `${API_URL}/bounty/bounties`;
+  const userInfoApi = `${API_URL}/user/details/${address}`;
 
   const loadBounties = async () => {
     setLoading(true);
@@ -54,7 +54,7 @@ function Dashboard() {
       setPagination(response.data.pagination);
     } catch (err) {
       console.error("Error loading bounties:", err);
-      toast.error("Couldn't fetch bounties");
+      showToast.error("Couldn't fetch bounties");
     } finally {
       setLoading(false);
     }
@@ -71,7 +71,7 @@ function Dashboard() {
       });
     } catch (err) {
       console.error("Error loading userInfo:", err);
-      toast.error("Couldn't fetch user info");
+      showToast.error("Couldn't fetch user info");
     }
   };
 

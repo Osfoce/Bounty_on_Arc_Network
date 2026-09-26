@@ -1,41 +1,61 @@
 // chains.js
-const { sepolia, baseSepolia } = require("viem/chains");
+const { arcTestnet } = require("viem/chains");
 const { createPublicClient, http } = require("viem");
 
- const CHAINS = {
-  11155111: {
-    chain: sepolia,
-    rpc: process.env.SEPOLIA_RPC,
+// const arcTestnet = {
+//   id: 5042002,
+//   name: "Arc Testnet",
+//   nativeCurrency: {
+//     name: "USDC",
+//     symbol: "USDC",
+//     decimals: 18,
+//   },
+//   rpcUrls: {
+//     default: {
+//       http: ["https://rpc.testnet.arc.io"],
+//     },
+//   },
+//   blockExplorers: {
+//     default: {
+//       name: "Arc Explorer",
+//       url: "https://explorer.testnet.arc.io",
+//     },
+//   },
+//   testnet: true,
+// };
+
+const arcMainnet = {
+  id: 5042,
+  name: "Arc",
+  nativeCurrency: {
+    name: "USDC",
+    symbol: "USDC",
+    decimals: 18,
   },
-  84532: {
-    chain: baseSepolia,
-    rpc: process.env.BASE_RPC,
-  },
-  5611: {
-    chain: {
-      id: 5611,
-      name: "opBNB Testnet",
-      nativeCurrency: { name: "BNB", symbol: "BNB", decimals: 18 },
-      rpcUrls: { default: { http: ["https://opbnb-testnet-rpc"] } },
+  rpcUrls: {
+    default: {
+      http: ["https://rpc.mainnet.arc.io"],
     },
-    rpc: process.env.OPBNB_RPC,
   },
-  1439: {
-    chain: {
-      id: 1439,
-      name: "Injective Testnet",
-      nativeCurrency: { name: "INJ", symbol: "INJ", decimals: 18 },
-      rpcUrls: {
-        default: {
-          http: ["https://k8s.testnet.json-rpc.injective.network/"],
-        },
-      },
+  blockExplorers: {
+    default: {
+      name: "Arc Explorer",
+      url: "https://explorer.arc.io",
     },
-    rpc: "https://k8s.testnet.json-rpc.injective.network/",
+  },
+  testnet: false,
+};
+
+const CHAINS = {
+  5042002: {
+    chain: arcTestnet,
+  },
+  5042: {
+    chain: arcMainnet,
   },
 };
 
- const getPublicClient = (chainId) => {
+const getPublicClient = (chainId) => {
   const config = CHAINS[chainId];
 
   if (!config) {
@@ -48,4 +68,4 @@ const { createPublicClient, http } = require("viem");
   });
 };
 
-module.exports = {CHAINS, getPublicClient}
+module.exports = { CHAINS, getPublicClient };
