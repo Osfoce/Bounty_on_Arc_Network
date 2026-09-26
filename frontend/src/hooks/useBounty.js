@@ -94,16 +94,21 @@ export const useBounty = () => {
     }
 
     setIsPending(true);
+    setIsConfirming(false);
     setTxError(null);
     try {
       // Send transaction
       const hash = await writeContractAsync(txConfig);
-      
+
       setTxHash(hash);
+      setIsPending(false);
+      setIsConfirming(true);
 
       showToast.loading("Transaction sent. Waiting for confirmation...", {
         id: hash,
       });
+
+      setIsConfirming(false); // block mined
 
       // ...........
       // Wait for receipt using public client
@@ -137,7 +142,12 @@ export const useBounty = () => {
     } catch (err) {
       console.error(err);
       setTxError(err);
-      showToast.error(err.shortMessage || err.message || "Transaction failed");
+      setIsPending(false);
+      setIsConfirming(false);
+      showToast.error(
+        err.shortMessage || err.message || "Transaction failed",
+        hash ? { id: hash } : undefined,
+      );
       throw err;
     } finally {
       setIsPending(false);
