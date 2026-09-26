@@ -49,7 +49,7 @@ const userEnrollment = async (req, res) => {
   }
 };
 
-// GET 
+// GET
 const getUserEnrollment = async (req, res) => {
   const { wallet } = req.params;
 
@@ -58,17 +58,12 @@ const getUserEnrollment = async (req, res) => {
   }
 
   try {
-    const enrollments = await Enrollment.find({ user: wallet })
-      .populate("bountyId") // optional: hydrate bounty details
-      .lean();
+    const enrollments = await Enrollment.find({ user: wallet }).lean();
 
     const formatted = enrollments.map((e) => ({
       ...e,
       _id: e._id.toString(),
-      bountyId:
-        e.bountyId && e.bountyId._id
-          ? { ...e.bountyId, _id: e.bountyId._id.toString() }
-          : e.bountyId?.toString(),
+      bountyId: e.bountyId.toString(),
     }));
 
     res.status(200).json({ enrollments: formatted });
