@@ -2,7 +2,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import{ showToast } from "../components/UI/Toast";
+import { showToast } from "../components/UI/Toast";
 import {
   FiArrowLeft,
   FiCheck,
@@ -65,7 +65,10 @@ const BountyDetail = () => {
   const [imageSizeWarning, setImageSizeWarning] = useState("");
   const [winnerAddresses, setWinnerAddresses] = useState([]);
 
+  const [enrollmentStatus, setEnrollmentStatus] = useState("checking");
+
   const API_URL = import.meta.env.VITE_API_URL;
+
   const fileInputRef = useRef(null);
 
   const blockchainId =
@@ -155,7 +158,9 @@ const BountyDetail = () => {
 
   const checkUserSubmission = async (wallet, bountyId) => {
     try {
-      const { data } = await axios.get(`${API_URL}/bounty/submissions/${wallet}`);
+      const { data } = await axios.get(
+        `${API_URL}/bounty/submissions/${wallet}`,
+      );
       const existing = (data.submissions || []).find(
         (sub) => String(sub.bountyId) === String(bountyId),
       );
@@ -230,7 +235,13 @@ const BountyDetail = () => {
           setIsCreator(
             bountyData.creator?.toLowerCase() === address.toLowerCase(),
           );
-          setIsEnrolled(await checkUserEnrollment(address, id));
+          try {
+            const enrolled = await checkUserEnrollment(address, id);
+            setEnrollmentStatus(enrolled ? "enrolled" : "not-enrolled");
+          } catch {
+            setEnrollmentStatus("not-enrolled");
+          }
+          // setIsEnrolled(await checkUserEnrollment(address, id));
           await checkUserSubmission(address, id);
           await loadWinnersData(id);
         }
@@ -251,23 +262,65 @@ const BountyDetail = () => {
   const handleEnroll = async () => {
     if (!address) return showToast.error("Please connect your wallet");
     setIsEnrolling(true);
-    const loadingshowToast = showToast.loading("Enrolling in bounty...");
+    const loadingToast = showToast.loading("Enrolling in bounty...");
     try {
       await axios.post(`${API_URL}/user/enrollment`, {
         bountyId: id,
         user: address,
       });
-      showToast.success("Enrolled!", { id: loadingshowToast });
-      setIsEnrolled(true);
+      showToast.success("Enrolled!", { id: loadingToast });
+      setEnrollmentStatus("enrolled"); // ← flip the state machine
     } catch (err) {
-      showToast.error(
-        err.response?.status === 400 ? "Already enrolled" : "Enrollment failed",
-        { id: loadingshowToast },
-      );
+      const alreadyEnrolled =
+        err.response?.status === 400 &&
+        err.response.data?.error?.toLowerCase().includes("already");
+      if (alreadyEnrolled) {
+        showToast.success("You're already enrolled", { id: loadingToast });
+        setEnrollmentStatus("enrolled");
+      } else {
+        showToast.error(err.response?.data?.error || "Enrollment failed", {
+          id: loadingToast,
+        });
+      }
     } finally {
       setIsEnrolling(false);
     }
   };
+
+  // const handleEnroll = async () => {
+  //   if (!address) return showToast.error("Please connect your wallet");
+
+  //   setIsEnrolling(true);
+  //   const loadingToast = showToast.loading("Enrolling in bounty...");
+
+  //   try {
+  //     await axios.post(`${API_URL}/user/enrollment`, {
+  //       bountyId: id,
+  //       user: address,
+  //     });
+  //     showToast.success("Enrolled!", { id: loadingToast });
+  //     setEnrollmentStatus("enrolled");
+  //   } catch (err) {
+  //     const isAlreadyEnrolled =
+  //       err.response?.status === 400 &&
+  //       err.response.data?.error?.toLowerCase().includes("already");
+
+  //     if (isAlreadyEnrolled) {
+  //       // Not an error — the user is already in. Just sync state and move on.
+  //       showToast.success("You're already enrolled", { id: loadingToast });
+  //     } else {
+  //       showToast.error(err.response?.data?.error || "Enrollment failed", {
+  //         id: loadingToast,
+  //       });
+  //       setIsEnrolling(false);
+  //       return; // ← don't set isEnrolled on real failure
+  //     }
+  //   }
+
+  //   // Both the 201 path and the "already enrolled" path land here
+  //   setIsEnrolled(true);
+  //   setIsEnrolling(false);
+  // };
 
   /* ---------------- Submission ---------------- */
 
@@ -412,9 +465,12 @@ const BountyDetail = () => {
       setShowDistributeModal(false);
       await loadWinnersData(id);
     } catch (err) {
-      showToast.error(err.shortMessage || err.message || "Distribution failed", {
-        id: loadingshowToast,
-      });
+      showToast.error(
+        err.shortMessage || err.message || "Distribution failed",
+        {
+          id: loadingshowToast,
+        },
+      );
     } finally {
       setDistributing(false);
     }
@@ -447,7 +503,7 @@ const BountyDetail = () => {
 
   /* ---------------- Derived ---------------- */
 
-  const canSubmit = () =>
+  // const canSubmit = () =>
     !isCreator &&
     isEnrolled &&
     !hasUserSubmitted &&
@@ -647,23 +703,49 @@ const BountyDetail = () => {
 
               {/* Action buttons */}
               <div className="flex flex-wrap gap-3 pt-4 border-t border-[#e7e3da]">
-                {bounty.status === "active" && !isEnrolled && !isCreator && (
-                  <button
-                    onClick={handleEnroll}
-                    disabled={isEnrolling}
-                    className="px-5 py-2.5 rounded-xl bg-[#d4af37] text-[#171714] font-semibold hover:bg-[#c49b2c] transition disabled:opacity-50"
-                  >
-                    {isEnrolling ? "Enrolling..." : "Start Task"}
-                  </button>
+                {/* ------------------------------------------------------------------ */}
+                {/* ENROLLMENT FLOW                                                     */}
+                {/*   checking      → status pill                                       */}
+                {/*   not-enrolled  → Start Task                                        */}
+                {/*   enrolled      → Submit Task (if canSubmit) or status pill         */}
+                {/* ------------------------------------------------------------------ */}
+
+                {!isCreator && bounty.status === "active" && (
+                  <>
+                    {enrollmentStatus === "checking" && (
+                      <div className="px-5 py-2.5 rounded-xl bg-[#f2f0ea] border border-[#dedad0] text-[#aaa59b] text-sm">
+                        Checking enrollment...
+                      </div>
+                    )}
+
+                    {enrollmentStatus === "not-enrolled" && (
+                      <button
+                        onClick={handleEnroll}
+                        disabled={isEnrolling}
+                        className="px-5 py-2.5 rounded-xl bg-[#d4af37] text-[#171714] font-semibold hover:bg-[#c49b2c] transition disabled:opacity-50"
+                      >
+                        {isEnrolling ? "Enrolling..." : "Start Task"}
+                      </button>
+                    )}
+
+                    {enrollmentStatus === "enrolled" &&
+                      !hasUserSubmitted &&
+                      bounty.status === "active" && (
+                        <button
+                          onClick={() => setShowSubmitModal(true)}
+                          className="px-5 py-2.5 rounded-xl bg-white border border-[#d8d3c6] text-[#292720] font-semibold hover:border-[#c49b2c] transition"
+                        >
+                          Submit Task
+                        </button>
+                      )}
+                  </>
                 )}
-                {canSubmit() && (
-                  <button
-                    onClick={() => setShowSubmitModal(true)}
-                    className="px-5 py-2.5 rounded-xl bg-white border border-[#d8d3c6] text-[#292720] font-semibold hover:border-[#c49b2c] transition"
-                  >
-                    Submit Task
-                  </button>
-                )}
+
+                {/* ------------------------------------------------------------------ */}
+                {/* CLAIM                                                               */}
+                {/*   Shown only if the connected wallet has an unclaimed reward.       */}
+                {/* ------------------------------------------------------------------ */}
+
                 {canClaim() && (
                   <button
                     onClick={handleClaimReward}
@@ -677,6 +759,11 @@ const BountyDetail = () => {
                         : `Claim ${displayClaimable()} ${bounty.token}`}
                   </button>
                 )}
+
+                {/* ------------------------------------------------------------------ */}
+                {/* DISTRIBUTE (creator only)                                           */}
+                {/* ------------------------------------------------------------------ */}
+
                 {canDistribute() && (
                   <button
                     onClick={openDistributeModal}
@@ -685,6 +772,12 @@ const BountyDetail = () => {
                     Distribute Reward
                   </button>
                 )}
+
+                {/* ------------------------------------------------------------------ */}
+                {/* SUBMISSION STATUS PILL                                              */}
+                {/*   Replaces the Submit button once the user has submitted.           */}
+                {/* ------------------------------------------------------------------ */}
+
                 {hasUserSubmitted && userSubmission && (
                   <div className="px-4 py-2.5 rounded-xl bg-[#f4ecd5] border border-[#e5d9b8] text-[#8f6c12] text-xs font-semibold">
                     {userSubmission.status === "pending" &&

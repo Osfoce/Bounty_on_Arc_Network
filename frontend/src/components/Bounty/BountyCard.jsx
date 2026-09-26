@@ -117,7 +117,7 @@ const BountyCard = ({ bounty }) => {
           duration: 2000,
         });
         setIsEnrolled(true);
-        navigate(`/task/${bounty._id}`);
+        navigate(`/bounty/${bounty._id}`);
       }
     } catch (error) {
       console.error("Enrollment error:", error);
@@ -332,7 +332,7 @@ const BountyCard = ({ bounty }) => {
           {/* Action button varies by state */}
           {isCreator ? (
             <Link
-              to={`/task/${bounty._id}`}
+              to={`/bounty/${bounty._id}`}
               className="
                 relative min-w-0 overflow-hidden rounded-xl bg-[#171714]
                 px-3 py-3 text-xs font-bold text-[#d4af37] shadow-sm
@@ -351,7 +351,7 @@ const BountyCard = ({ bounty }) => {
             </Link>
           ) : isEnrolled ? (
             <Link
-              to={`/task/${bounty._id}`}
+              to={`/bounty/${bounty._id}`}
               className="
                 relative min-w-0 overflow-hidden rounded-xl bg-[#171714]
                 px-3 py-3 text-xs font-bold text-[#d4af37] shadow-sm
