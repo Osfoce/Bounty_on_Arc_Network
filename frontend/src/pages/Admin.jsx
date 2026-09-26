@@ -9,8 +9,7 @@ import {
 import { parseEther, formatEther } from "viem";
 import {
   getOwnerConfig,
-  getTotalEthFeesConfig,
-  getTotalUsdcFeesConfig,
+  getTotalFeesConfig,
   getFeePercentConfig,
   prepareWithdrawTx,
   prepareTransferOwnershipTx,
@@ -34,17 +33,17 @@ export default function AdminPage() {
 
   // Read: Total ETH fees
   const { data: totalEthFeesRaw } = useReadContract({
-    ...getTotalEthFeesConfig({ chainId }),
+    ...getTotalFeesConfig({ chainId }),
     query: { enabled: !!chainId },
   });
   console.log("Total ETH Fees (raw):", totalEthFeesRaw);
 
   // Read: Total USDC fees
-  const { data: totalUsdcFeesRaw } = useReadContract({
-    ...getTotalUsdcFeesConfig({ chainId }),
-    query: { enabled: !!chainId },
-  });
-  console.log("Total USDC Fees (raw):", totalUsdcFeesRaw);
+  // const { data: totalUsdcFeesRaw } = useReadContract({
+  //   ...getTotalUsdcFeesConfig({ chainId }),
+  //   query: { enabled: !!chainId },
+  // });
+  // console.log("Total USDC Fees (raw):", totalUsdcFeesRaw);
 
   // Read: Fee percent
   const { data: feePercentRaw } = useReadContract({
@@ -118,7 +117,7 @@ export default function AdminPage() {
 
   // Format fee values
   const totalEthFees = totalEthFeesRaw ? formatEther(totalEthFeesRaw) : "0";
-  const totalUsdcFees = totalUsdcFeesRaw ? formatEther(totalUsdcFeesRaw) : "0"; // USDC has 6 decimals
+  // const totalUsdcFees = totalUsdcFeesRaw ? formatEther(totalUsdcFeesRaw) : "0"; // USDC has 6 decimals
   const feePercent = feePercentRaw ? feePercentRaw.toString() : "0";
 
   // Access denied if not owner and we have both addresses
