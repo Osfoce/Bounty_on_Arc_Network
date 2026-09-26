@@ -27,7 +27,7 @@ function LandingPage({ dark, setDark }) {
   const [loading, setLoading] = useState(true);
   const { handleNavigate } = useNav();
 
-  const [stats, setStats] = useState({
+  const [, setStats] = useState({
     totalBounties: 0,
     totalRewards: 0,
     totalUsers: 0,
@@ -58,6 +58,9 @@ function LandingPage({ dark, setDark }) {
 
     return () => clearInterval(interval);
   }, []);
+
+  // Prevent unused-state warning while preserving hero text rotation.
+  void heroText;
 
   // FETCH FEATURED BOUNTIES AND STATS
   useEffect(() => {
@@ -122,10 +125,21 @@ function LandingPage({ dark, setDark }) {
       },
     );
 
-    if (card1Ref.current) observer.observe(card1Ref.current);
-    if (card2Ref.current) observer.observe(card2Ref.current);
-    if (card3Ref.current) observer.observe(card3Ref.current);
-    if (statsRef.current) observer.observe(statsRef.current);
+    if (card1Ref.current) {
+      observer.observe(card1Ref.current);
+    }
+
+    if (card2Ref.current) {
+      observer.observe(card2Ref.current);
+    }
+
+    if (card3Ref.current) {
+      observer.observe(card3Ref.current);
+    }
+
+    if (statsRef.current) {
+      observer.observe(statsRef.current);
+    }
 
     if (testimonialsRef.current) {
       observer.observe(testimonialsRef.current);
@@ -200,12 +214,12 @@ function LandingPage({ dark, setDark }) {
           FEATURED BOUNTIES
       ========================================== */}
       <section
-        className={`
+        className="
           relative z-10 my-16
           overflow-hidden px-6
           transition-colors duration-500
           md:px-10 lg:px-16
-        `}
+        "
       >
         {/* =========================================
             HEADER
